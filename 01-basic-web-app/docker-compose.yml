@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  eregold-db:
+    image: postgres:14.0-alpine
+    container_name: eregold-db
+    environment:
+      POSTGRES_DB: eregold_db
+      POSTGRES_USER: eregold_user
+      POSTGRES_PASSWORD: eregold_pass
+    ports:
+      - "2345:5432"
+    volumes:
+      - ./database/data-dump/volume:/var/lib/postgresql/data/
+
+networks:
+  eregold-network:
+    driver: bridge
