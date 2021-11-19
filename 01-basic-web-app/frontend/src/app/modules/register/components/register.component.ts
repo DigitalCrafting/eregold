@@ -16,7 +16,7 @@ export class RegisterComponent {
     passwordCheck: new FormControl('', Validators.required),
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required)
-  }, EregoldRegisterValidators.ValidatePassword);
+  }, EregoldRegisterValidators.PasswordGroupValidator);
 
   constructor(private _registerService: RegisterService) { }
 
