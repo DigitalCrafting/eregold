@@ -4,17 +4,18 @@
             <div class="col-12">
                 <form [formGroup]="formGroup">
                     <div class="form-group">
-                        <label for="inputUsername">Email address</label>
+                        <label for="inputEmail">Email address</label>
                         <input
-                                [class.is-invalid]="formGroup.get('username').invalid"
-                                formControlName="username"
+                                [class.is-invalid]="formGroup.get('email').invalid"
+                                formControlName="email"
                                 type="email"
                                 class="form-control"
-                                id="inputUsername"
+                                id="inputEmail"
                                 aria-describedby="usernameHelp"
                                 placeholder="Enter email"
                         >
-                        <small id="usernameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <small id="usernameHelp" class="form-text text-muted">We'll never share your email with anyone
+                            else.</small>
                     </div>
                     <div class="form-group">
                         <label for="inputFirstName">First name</label>
@@ -61,12 +62,14 @@
                     <button type="button"
                             class="btn btn-secondary"
                             (click)="onCancelClicked()"
-                    >Cancel</button>
+                    >Cancel
+                    </button>
                     <button type="submit"
                             class="btn btn-primary float-right"
                             (click)="onRegisterClicked()"
                             [disabled]="formGroup.invalid"
-                    >Register</button>
+                    >Register
+                    </button>
                 </form>
             </div>
         </div>

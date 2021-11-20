@@ -9,7 +9,7 @@ ALTER TABLE users
 
 CREATE TABLE customers
 (
-    customer_id VARCHAR(10) NOT NULL,
+    customer_id VARCHAR(8)  NOT NULL,
     first_name  VARCHAR(20) NOT NULL,
     last_name   VARCHAR(20) NOT NULL,
     email       VARCHAR(20) NOT NULL

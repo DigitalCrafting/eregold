@@ -5,6 +5,29 @@
 <mapper namespace="org.digitalcrafting.eregold.dataAccess.repository.customers.CustomersMapper">
     <resultMap id="CustomerEntityMap"
                type="org.digitalcrafting.eregold.dataAccess.repository.customers.CustomerEntity">
-        <!-- TODO -->
+        <!-- Mybatis config will map this automatically-->
     </resultMap>
+
+    <select id="getByEmail" resultMap="CustomerEntityMap" parameterType="java.lang.String">
+        SELECT *
+        FROM customers
+        WHERE email = #{email}
+    </select>
+
+    <select id="getByCustomerId" resultMap="CustomerEntityMap" parameterType="java.lang.String">
+        SELECT *
+        FROM customers
+        WHERE customer_id = #{customerId}
+    </select>
+
+    <insert id="insert" parameterType="org.digitalcrafting.eregold.dataAccess.repository.customers.CustomerEntity">
+        INSERT INTO customers (customer_id,
+                               first_name,
+                               last_name,
+                               email)
+        VALUES (#{customerId}
+            #{firstName}
+            #{lastName}
+            #{email})
+    </insert>
 </mapper>

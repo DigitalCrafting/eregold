@@ -5,6 +5,19 @@
 <mapper namespace="org.digitalcrafting.eregold.dataAccess.repository.users.UsersMapper">
     <resultMap id="UserEntityMap"
                type="org.digitalcrafting.eregold.dataAccess.repository.users.UserEntity">
-        <!-- TODO -->
+        <!-- Mybatis config will map this automatically-->
     </resultMap>
+
+    <select id="getByUserId" resultMap="UserEntityMap" parameterType="java.lang.String">
+        SELECT *
+        FROM users
+        WHERE user_id = #{userId}
+    </select>
+
+    <insert id="insert" parameterType="org.digitalcrafting.eregold.dataAccess.repository.users.UserEntity">
+        INSERT INTO users (user_id,
+                           password_hash)
+        VALUES (#{userId},
+                #{passwordHash})
+    </insert>
 </mapper>

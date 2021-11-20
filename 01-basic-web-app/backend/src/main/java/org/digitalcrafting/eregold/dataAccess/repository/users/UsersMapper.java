@@ -4,5 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UsersMapper {
-    // TODO
+    UserEntity getByUserId(String userId);
+
+    void insert(UserEntity entity);
 }
