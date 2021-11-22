@@ -1,4 +1,4 @@
-config.debug.allow.cors: true
+disable-cors: true
 
 spring.datasource:
   url: jdbc:postgresql://localhost:2345/eregold_db

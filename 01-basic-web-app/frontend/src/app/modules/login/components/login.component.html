@@ -4,13 +4,13 @@
       <div class="col-12">
         <form [formGroup]="formGroup">
           <div class="form-group">
-            <label for="inputCustomerId">Customer ID</label>
+            <label for="inputUserId">User ID</label>
             <input
-              [class.is-invalid]="formGroup.get('customerId')?.invalid"
-              formControlName="customerId"
+              [class.is-invalid]="formGroup.get('userId')?.invalid"
+              formControlName="userId"
               type="text"
               class="form-control"
-              id="inputCustomerId"
+              id="inputUserId"
               placeholder="Enter your ID"
             >
           </div>
@@ -24,6 +24,15 @@
               id="inputPassword"
               placeholder="Password">
           </div>
+          <button type="button"
+                  class="btn btn-secondary"
+                  (click)="onRegisterClicked()"
+          >Register</button>
+          <button type="submit"
+                  class="btn btn-primary float-right"
+                  (click)="onLoginClicked()"
+                  [disabled]="formGroup.invalid"
+          >Login</button>
         </form>
       </div>
     </div>
