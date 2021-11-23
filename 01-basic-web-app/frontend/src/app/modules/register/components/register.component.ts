@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EregoldRegisterValidators} from "../utils/register.validators";
 import {RegisterService} from "../service/register.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-register',
@@ -10,6 +11,7 @@ import {RegisterService} from "../service/register.service";
 })
 export class RegisterComponent {
 
+    // TODO more validators
     formGroup: FormGroup = new FormGroup({
         email: new FormControl('', Validators.required),
         password: new FormControl('', Validators.required),
@@ -18,16 +20,25 @@ export class RegisterComponent {
         lastName: new FormControl('', Validators.required)
     }, EregoldRegisterValidators.PasswordGroupValidator);
 
-    constructor(private _registerService: RegisterService) {
+    constructor(private _registerService: RegisterService,
+                private _router: Router) {
     }
 
     onCancelClicked() {
-        // TODO event emitter
+        this._router.navigate(['login']);
     }
 
     onRegisterClicked() {
+        // TODO restApiDispatcher that will handle common errors and show popup
         if (this.formGroup.valid) {
-            // TODO call _registerService.register
+            this._registerService.register(this.formGroup.value).subscribe(
+                (resp) => {
+                    // TODO show successful message and redirect to login
+                },
+                (error) => {
+                    // TODO show error
+                }
+            )
         }
     }
 }

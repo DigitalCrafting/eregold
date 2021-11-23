@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class LoginService {
+  // TODO user environment variable to distinguish different hosts
   private baseUrl = "http://localhost:8080/v1/login";
 
   constructor(private _httpClient: HttpClient) { }
