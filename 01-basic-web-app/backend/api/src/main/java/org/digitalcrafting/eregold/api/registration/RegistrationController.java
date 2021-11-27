@@ -7,7 +7,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/registration")
+@RequestMapping("/registration")
 public class RegistrationController {
     private final RegistrationControllerService service;
 

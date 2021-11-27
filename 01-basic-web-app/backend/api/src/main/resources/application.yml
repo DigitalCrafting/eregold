@@ -1,5 +1,3 @@
-disable-cors: true
-
 spring.datasource:
   url: jdbc:postgresql://localhost:2345/eregold_db
   username: eregold_user

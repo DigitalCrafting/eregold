@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {LoginService} from "../services/login.service";
+import {LoginRequest, LoginResponse, LoginService} from "../services/login.service";
 import {UserContext} from "../../common/user.context";
 import {Router} from "@angular/router";
 
@@ -31,9 +31,16 @@ export class LoginComponent implements OnInit {
         if (this.formGroup.valid) {
             let pass = this.formGroup.get('password').value;
             let userId = this.formGroup.get('userId').value;
-            // TODO change to getContext => authentication is done in filter anyways
-            this._loginService.login(userId, pass).subscribe(
-                (resp) => {
+
+            let request: LoginRequest = <LoginRequest>{
+                userId: userId,
+                password: [...pass]
+            }
+
+            this._loginService.login(request).subscribe(
+                (resp: LoginResponse) => {
+                    console.dir(resp)
+                    localStorage.setItem("token", resp.token);
                     this._userContext.isLoggedIn = true;
                     this._router.navigate(['ui']);
                 },

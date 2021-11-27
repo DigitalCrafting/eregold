@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/user")
 public class UserController {
     @GetMapping
-    public String login() {
+    public String getContext() {
         // TODO change to getContext, authentication takes place in the Spring Security filter
         return "SUCCESS";
     }

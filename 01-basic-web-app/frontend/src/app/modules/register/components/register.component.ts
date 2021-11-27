@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EregoldRegisterValidators} from "../utils/register.validators";
-import {RegisterService} from "../service/register.service";
+import {RegisterRequest, RegisterService} from "../service/register.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -31,6 +31,14 @@ export class RegisterComponent {
     onRegisterClicked() {
         // TODO restApiDispatcher that will handle common errors and show popup
         if (this.formGroup.valid) {
+            let request: RegisterRequest = <RegisterRequest>{
+                email: this.formGroup.get('email').value,
+                password: [...this.formGroup.get('password').value],
+                firstName: this.formGroup.get('firstName').value,
+                lastName: this.formGroup.get('lastName').value,
+            };
+
+
             this._registerService.register(this.formGroup.value).subscribe(
                 (resp) => {
                     // TODO show successful message and redirect to login

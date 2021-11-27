@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public class EregoldAuthentication implements Authentication {
     private boolean isAuthenticated;
-    private String passwordHash;
+    private String token;
     private EregoldPrincipal principal;
     private Collection<? extends GrantedAuthority> grantedAuthorities;
 
@@ -54,11 +54,11 @@ public class EregoldAuthentication implements Authentication {
         this.principal = principal;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getToken() {
+        return token;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

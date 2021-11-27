@@ -3,20 +3,16 @@ package org.digitalcrafting.eregold.config;
 import org.digitalcrafting.eregold.authentication.EregoldAuthenticationConverter;
 import org.digitalcrafting.eregold.authentication.EregoldAuthenticationFilter;
 import org.digitalcrafting.eregold.authentication.EregoldAuthenticationProvider;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,10 +21,6 @@ import java.util.Collections;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Value("${disable-cors}")
-    private Boolean disableCors;
-
     private final EregoldAuthenticationFilter eregoldAuthenticationFilter;
 
     public SecurityConfig(EregoldAuthenticationProvider authenticationProvider,
@@ -36,35 +28,44 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.eregoldAuthenticationFilter = new EregoldAuthenticationFilter(authenticationProvider, authenticationConverter);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().requestMatchers(
-                new OrRequestMatcher(
-                        new AntPathRequestMatcher("/actuator"),
-                        new AntPathRequestMatcher("/actuator/**"),
-                        new AntPathRequestMatcher("/v1/registration"),
-                        new AntPathRequestMatcher("/v1/registration/**")
-                )
-        );
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().requestMatchers(
+//                new OrRequestMatcher(
+//                        new AntPathRequestMatcher("/actuator"),
+//                        new AntPathRequestMatcher("/actuator/**"),
+//                        new AntPathRequestMatcher("/registration"),
+//                        new AntPathRequestMatcher("/registration/**"),
+//                        new AntPathRequestMatcher("/login"),
+//                        new AntPathRequestMatcher("/login/**")
+//                )
+//        );
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        if (this.disableCors) {
-            http.cors().configurationSource(corsConfigurationSource());
-        }
-
-        http.formLogin().disable()
-                .addFilterBefore(eregoldAuthenticationFilter, AnonymousAuthenticationFilter.class)
+        http.cors()
+                .and()
+                .csrf().disable()
+                .formLogin().disable()
                 .authorizeRequests()
+                // Public endpoints
+                .antMatchers("/actuator").permitAll()
+                .antMatchers("/actuator/**").permitAll()
+                .antMatchers("/registration").permitAll()
+                .antMatchers("/registration/**").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/login/**").permitAll()
+                // The rest
                 .anyRequest().authenticated();
+
+        http.addFilterBefore(eregoldAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    // TODO check if @Bean annotation is required
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
         configuration.setAllowCredentials(false);

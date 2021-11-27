@@ -6,17 +6,18 @@ import {LoginService} from "./services/login.service";
 import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
-  declarations: [
-    LoginComponent
-  ],
-  imports: [
-    HttpClientModule,
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule
-  ],
-  providers: [
-    LoginService
-  ]
+    declarations: [
+        LoginComponent
+    ],
+    imports: [
+        HttpClientModule,
+        FormsModule,
+        CommonModule,
+        ReactiveFormsModule
+    ],
+    providers: [
+        LoginService
+    ]
 })
-export class LoginModule { }
+export class LoginModule {
+}

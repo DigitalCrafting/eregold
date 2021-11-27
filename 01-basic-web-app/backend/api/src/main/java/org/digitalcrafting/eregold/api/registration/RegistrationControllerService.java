@@ -6,7 +6,7 @@ import org.digitalcrafting.eregold.repository.customers.CustomerEntity;
 import org.digitalcrafting.eregold.repository.customers.CustomersMapper;
 import org.digitalcrafting.eregold.repository.users.UserEntity;
 import org.digitalcrafting.eregold.repository.users.UsersMapper;
-import org.digitalcrafting.eregold.utils.EregoldHashUtils;
+import org.digitalcrafting.eregold.utils.EregoldPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,14 +37,14 @@ public class RegistrationControllerService {
 
     @Transactional
     public Optional<String> createCustomer(RegisterRequest request) {
-        Optional<String> passHash = EregoldHashUtils.createPassHash(request.getPassword(), request.getEmail());
-        if (passHash.isEmpty()) {
+        Optional<String> encodedPassword = EregoldPasswordEncoder.encodePassword(request.getPassword(), request.getEmail());
+        if (encodedPassword.isEmpty()) {
             return Optional.empty();
         }
 
         UserEntity userEntity = UserEntity.builder()
                 .userId(request.getEmail())
-                .passwordHash(passHash.get())
+                .passwordHash(encodedPassword.get())
                 .build();
         usersMapper.insert(userEntity);
 
