@@ -22,7 +22,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
         DashboardModule
     ],
     providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     ],
     bootstrap: [AppComponent]
 })

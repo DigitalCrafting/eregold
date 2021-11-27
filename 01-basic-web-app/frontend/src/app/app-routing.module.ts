@@ -5,15 +5,15 @@ import {RegisterComponent} from "./modules/register/components/register.componen
 import {DashboardComponent} from "./modules/dashboard/components/dashboard.component";
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: 'ui', component: DashboardComponent},
-  {path: '**', component: LoginComponent}
+    {path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
+    {path: 'ui', component: DashboardComponent},
+    {path: '**', component: LoginComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {
 }
