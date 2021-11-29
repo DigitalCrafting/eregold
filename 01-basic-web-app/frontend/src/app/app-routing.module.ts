@@ -1,14 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from "./modules/login/components/login.component";
-import {RegisterComponent} from "./modules/register/components/register.component";
-import {DashboardComponent} from "./modules/dashboard/components/dashboard.component";
 
 const routes: Routes = [
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
-    {path: 'ui', component: DashboardComponent},
-    {path: '**', component: LoginComponent}
+    {path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule) },
+    {path: 'register', loadChildren: () => import('./modules/register/register.module').then(m => m.RegisterModule)},
+    {path: 'ui', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)},
+    {path: '**', redirectTo: 'login'}
 ];
 
 @NgModule({

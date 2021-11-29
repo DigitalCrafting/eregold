@@ -5,7 +5,7 @@ import {RegisterRequest, RegisterService} from "../service/register.service";
 import {Router} from "@angular/router";
 
 @Component({
-    selector: 'app-register',
+    selector: 'register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss']
 })

@@ -4,16 +4,25 @@ import {LoginComponent} from './components/login.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LoginService} from "./services/login.service";
 import {HttpClientModule} from "@angular/common/http";
+import {RouterModule, Routes} from "@angular/router";
+
+const routes: Routes = [
+    {
+        path: '',
+        component: LoginComponent
+    }
+];
 
 @NgModule({
-    declarations: [
-        LoginComponent
-    ],
     imports: [
+        RouterModule.forChild(routes),
         HttpClientModule,
         FormsModule,
         CommonModule,
         ReactiveFormsModule
+    ],
+    declarations: [
+        LoginComponent
     ],
     providers: [
         LoginService
