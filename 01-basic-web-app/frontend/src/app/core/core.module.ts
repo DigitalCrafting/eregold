@@ -1,10 +1,13 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DynamicComponentManagerComponent} from './dynamic-component-manager/dynamic-component-manager.component';
+import {DynamicComponentManager} from './dynamic-component-manager/dynamic-component-manager';
 
 @NgModule({
     declarations: [
-        DynamicComponentManagerComponent
+        DynamicComponentManager
+    ],
+    exports: [
+        DynamicComponentManager
     ],
     imports: [
         CommonModule

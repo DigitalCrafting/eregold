@@ -5,7 +5,7 @@ import {ObjectsUtils} from "../utils/eregold-utils";
     selector: 'dynamic-component-manager',
     template: `<ng-template #container></ng-template>`
 })
-export class DynamicComponentManagerComponent implements OnDestroy {
+export class DynamicComponentManager implements OnDestroy {
     // @ts-ignore
     @ViewChild('container', {read: ViewContainerRef}) container;
 

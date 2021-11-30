@@ -4,6 +4,8 @@ import {DashboardComponent} from './components/dashboard.component';
 import {RouterModule, Routes} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AccountsModule} from "../accounts/accounts.module";
+import {CoreModule} from "../../core/core.module";
 
 const routes: Routes = [
     {
@@ -19,6 +21,9 @@ const routes: Routes = [
         CommonModule,
         ReactiveFormsModule,
         RouterModule.forChild(routes),
+
+        AccountsModule,
+        CoreModule
     ],
     declarations: [
         DashboardComponent,
