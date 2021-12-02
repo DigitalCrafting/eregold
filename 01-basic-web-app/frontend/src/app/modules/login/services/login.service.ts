@@ -15,8 +15,9 @@ export class LoginService {
     public login(request: LoginRequest): Observable<LoginResponse> {
         let httpOptions = {
             headers: new HttpHeaders({
-                'Content-Type': 'application/json'
-            })
+                'Content-Type': 'application/json',
+            }),
+            withCredentials: true
         };
         // @ts-ignore
         return this._httpClient.post(`${this.baseUrl}`, request, httpOptions).pipe();

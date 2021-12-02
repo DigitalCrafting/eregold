@@ -10,6 +10,5 @@ import org.springframework.stereotype.Component;
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class EregoldSessionContext {
     private String userId;
-    // TODO expiration
     private String token;
 }

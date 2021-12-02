@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserContext} from "../../common/user.context";
 import {Router} from "@angular/router";
 import {DynamicComponentManager} from "../../../core/dynamic-component-manager/dynamic-component-manager";
@@ -9,10 +9,12 @@ import {AccountsListComponent} from "../../accounts/accounts-list/components/acc
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('componentManager')
     componentManager: DynamicComponentManager;
+
+    accountsListComponent: AccountsListComponent;
 
     constructor(private _userContext: UserContext,
                 private _router: Router) {
@@ -25,6 +27,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.componentManager.show(AccountsListComponent);
+        this.accountsListComponent = this.componentManager.show(AccountsListComponent);
+    }
+
+    ngOnDestroy() {
+        this.cleanUp();
+    }
+
+    private cleanUp() {
+        delete this.accountsListComponent;
     }
 }

@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {AccountModel, AccountsService} from "../../services/accounts.service";
 
 @Component({
-  selector: 'accounts-list',
-  templateUrl: './accounts-list.component.html',
-  styleUrls: ['./accounts-list.component.scss']
+    selector: 'accounts-list',
+    templateUrl: './accounts-list.component.html',
+    styleUrls: ['./accounts-list.component.scss']
 })
-export class AccountsListComponent implements OnInit {
+export class AccountsListComponent {
 
-  constructor() { }
+    accountsList: Array<AccountModel>;
 
-  ngOnInit(): void {
-  }
-
+    constructor(private _accountsService: AccountsService) {
+        this._accountsService.getAccounts()
+            .subscribe((list: Array<AccountModel>) => {
+                    this.accountsList = list;
+                }
+            )
+    }
 }

@@ -11,7 +11,8 @@ export class RegisterService {
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'
-        })
+        }),
+        withCredentials: true
     };
 
     constructor(private _httpClient: HttpClient) {

@@ -7,8 +7,6 @@ import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
 @Slf4j
 @Component
@@ -19,11 +17,9 @@ public class EregoldAuthenticationConverter implements AuthenticationConverter {
         log.info("===========TESTING============ Inside EregoldAuthenticationConverter");
         String authorizationHeader = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            String encoded = authorizationHeader.substring("Basic ".length());
-            byte[] tokenAsByteArr = Base64.getDecoder().decode(encoded.getBytes(StandardCharsets.UTF_8));
-
+            String token = authorizationHeader.substring("Bearer ".length());
             EregoldAuthentication eregoldAuthentication = new EregoldAuthentication();
-            eregoldAuthentication.setToken(new String(tokenAsByteArr));
+            eregoldAuthentication.setToken(token);
             return eregoldAuthentication;
         } else {
             return null;

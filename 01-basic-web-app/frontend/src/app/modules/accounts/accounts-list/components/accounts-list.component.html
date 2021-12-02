@@ -1,1 +1,23 @@
-<p>accounts-list works!</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Account number</th>
+        <th scope="col">Current balance</th>
+        <th scope="col">Currency</th>
+        <th scope="col">Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngIf="accountsList">
+        <ng-container *ngFor="let account of accountsList">
+            <tr>
+                <td>{{account?.accountNumber}}</td>
+                <td>{{account?.currentBalance}}</td>
+                <td>{{account?.currency}}</td>
+                <td>{{account?.type}}</td>
+            </tr>
+        </ng-container>
+    </ng-container>
+    </tbody>
+</table>
+

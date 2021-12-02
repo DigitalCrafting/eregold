@@ -38,7 +38,7 @@ public class EregoldAuthenticationProvider implements AuthenticationProvider {
 
     private boolean isTokenValid(String token) {
         if (sessionContext.getToken() != null && sessionContext.getToken().equals(token)) {
-            return jwtUtils.validate(token);
+            return jwtUtils.validate(token) && jwtUtils.getUserId(token).equals(sessionContext.getUserId());
         }
         return false;
     }

@@ -11,6 +11,6 @@ export class UserContext {
     }
 
     get isLoggedIn() {
-        return this._isLoggedIn || (localStorage.getItem('token') != null && localStorage.getItem('token') !== undefined);
+        return this._isLoggedIn;
     }
 }

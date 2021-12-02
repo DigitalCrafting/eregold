@@ -39,14 +39,13 @@ export class LoginComponent implements OnInit {
 
             this._loginService.login(request).subscribe(
                 (resp: LoginResponse) => {
-                    console.dir(resp)
                     localStorage.setItem("token", resp.token);
                     this._userContext.isLoggedIn = true;
                     this._router.navigate(['ui']);
                 },
                 (error) => {
                     // TODO message for user
-                    console.log("Invalid credentials")
+                    console.log("Invalid credentials", error)
                 });
         }
     }
