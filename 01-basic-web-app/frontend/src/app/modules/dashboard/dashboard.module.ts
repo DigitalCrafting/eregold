@@ -6,6 +6,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AccountsModule} from "../accounts/accounts.module";
 import {CoreModule} from "../../core/core.module";
+import {TopBarModule} from "../top-bar/top-bar.module";
 
 const routes: Routes = [
     {
@@ -23,6 +24,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
 
         AccountsModule,
+        TopBarModule,
         CoreModule
     ],
     declarations: [
