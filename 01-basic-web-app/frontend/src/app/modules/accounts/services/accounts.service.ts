@@ -28,6 +28,11 @@ export interface AccountModel {
   accountNumber: string;
   currentBalance: number;
   currency: string;
-  // TODO enum
-  type: string;
+  type: AccountTypeEnum;
 }
+
+export type AccountTypeEnum = 'DEBIT' | 'SAVING';
+export const AccountTypeEnum = {
+  DEBIT: 'DEBIT' as AccountTypeEnum,
+  SAVING: 'SAVING' as AccountTypeEnum
+};

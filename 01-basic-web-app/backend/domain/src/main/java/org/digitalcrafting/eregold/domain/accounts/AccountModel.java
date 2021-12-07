@@ -9,5 +9,5 @@ public class AccountModel {
     private String accountNumber;
     private Double currentBalance;
     private String currency;
-    private String type;
+    private AccountTypeEnum type;
 }

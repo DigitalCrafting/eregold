@@ -1,6 +1,7 @@
 package org.digitalcrafting.eregold.api.accounts;
 
 import org.digitalcrafting.eregold.domain.accounts.AccountModel;
+import org.digitalcrafting.eregold.domain.accounts.AccountTypeEnum;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -13,8 +14,14 @@ public class AccountsControllerService {
                 .accountNumber("12ERGD213792136123")
                 .currency("GLD")
                 .currentBalance(1200.00)
-                .type("Debit")
+                .type(AccountTypeEnum.DEBIT)
                 .build();
-        return List.of(account);
+        AccountModel account2 = AccountModel.builder()
+                .accountNumber("12ERGD213792138291")
+                .currency("GLD")
+                .currentBalance(4300.00)
+                .type(AccountTypeEnum.SAVING)
+                .build();
+        return List.of(account, account2);
     }
 }
