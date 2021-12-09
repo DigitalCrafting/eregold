@@ -2,6 +2,8 @@ package org.digitalcrafting.eregold.api.login;
 
 import lombok.RequiredArgsConstructor;
 import org.digitalcrafting.eregold.authentication.EregoldSessionContext;
+import org.digitalcrafting.eregold.repository.customers.CustomerEntity;
+import org.digitalcrafting.eregold.repository.customers.CustomersMapper;
 import org.digitalcrafting.eregold.repository.users.UserEntity;
 import org.digitalcrafting.eregold.repository.users.UsersMapper;
 import org.digitalcrafting.eregold.utils.EregoldJWTUtils;
@@ -16,6 +18,7 @@ import java.nio.charset.Charset;
 @RequiredArgsConstructor
 public class LoginControllerService {
     private final UsersMapper usersMapper;
+    private final CustomersMapper customersMapper;
     private final EregoldJWTUtils jwtUtils;
     private final EregoldSessionContext sessionContext;
 
@@ -30,6 +33,9 @@ public class LoginControllerService {
             String token = jwtUtils.generateAccessToken(userEntity.getUserId());
             sessionContext.setToken(token);
             sessionContext.setUserId(request.getUserId());
+
+            CustomerEntity customerEntity = customersMapper.getByEmail(request.getUserId());
+            sessionContext.setCustomerId(customerEntity.getCustomerId());
             return ResponseEntity.ok(new LoginResponse(token));
         }
 

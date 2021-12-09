@@ -5,6 +5,29 @@
 <mapper namespace="org.digitalcrafting.eregold.repository.accounts.AccountsMapper">
     <resultMap id="AccountEntityMap"
                type="org.digitalcrafting.eregold.repository.accounts.AccountEntity">
-        <!-- TODO -->
     </resultMap>
+
+    <select id="getByAccountNumber" parameterType="java.land.String" resultMap="AccountEntityMap">
+        SELECT *
+        FROM accounts
+        WHERE account_number = #{accountNumber}
+    </select>
+
+    <select id="getAccountsForCustomer" resultMap="AccountEntityMap" parameterType="java.lang.String">
+        SELECT acc.account_number, acc.current_balance, acc.currency, acc.type
+        FROM accounts AS acc
+                 JOIN customer_accounts AS ca ON acc.account_number = ac.account_number
+        WHERE ac.customer_id = #{customerId}
+    </select>
+
+    <insert id="insertAccount" parameterType="org.digitalcrafting.eregold.repository.accounts.AccountEntity">
+        INSERT INTO accounts (account_number, current_balance, currency, type)
+        VALUES (#{accountNumber}, #{currentBalance}, #{currency}, #{type})
+    </insert>
+
+    <insert id="insertCustomerAccount"
+            parameterType="org.digitalcrafting.eregold.repository.accounts.CustomerAccountEntity">
+        INSERT INTO customer_accounts (customer_id, account_number)
+        VALUES (#{customerId}, #{ccountNumber})
+    </insert>
 </mapper>
