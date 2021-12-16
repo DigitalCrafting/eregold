@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EregoldRegisterValidators} from "../utils/register.validators";
-import {RegisterRequest, RegisterService} from "../service/register.service";
+import {RegisterRequest, RegisterService} from "../../../services/register.service";
 import {Router} from "@angular/router";
 
 @Component({

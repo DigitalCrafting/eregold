@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AccountModel, AccountsService} from "../../services/accounts.service";
+import {AccountModel, AccountsService} from "../../../../services/accounts.service";
 
 @Component({
     selector: 'accounts-list',
