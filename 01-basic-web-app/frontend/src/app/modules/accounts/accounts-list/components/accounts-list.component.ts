@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter} from '@angular/core';
 import {AccountModel, AccountsService} from "../../../../services/accounts.service";
 
 @Component({
@@ -8,6 +8,7 @@ import {AccountModel, AccountsService} from "../../../../services/accounts.servi
 })
 export class AccountsListComponent {
 
+    accountsListEventEmitter: EventEmitter<AccountListAction> = new EventEmitter<AccountListAction>();
     accountsList: Array<AccountModel>;
 
     constructor(private _accountsService: AccountsService) {
@@ -17,4 +18,13 @@ export class AccountsListComponent {
                 }
             )
     }
+
+    onAddAccountClicked() {
+        this.accountsListEventEmitter.emit(AccountListAction.ADD_ACCOUNT);
+    }
 }
+
+export type AccountListAction = 'ADD_ACCOUNT';
+export const AccountListAction = {
+    ADD_ACCOUNT: 'ADD_ACCOUNT' as AccountListAction
+};

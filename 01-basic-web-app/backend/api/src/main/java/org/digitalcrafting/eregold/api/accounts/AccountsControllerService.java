@@ -27,7 +27,7 @@ public class AccountsControllerService {
         AccountEntity accountEntity = new AccountEntity();
         accountEntity.setAccountNumber(generateAccountNumber());
         accountEntity.setType(request.getAccountType().name());
-        accountEntity.setCurrency("GLD");
+        accountEntity.setCurrency(request.getCurrency().name());
         accountEntity.setCurrentBalance(BigDecimal.ZERO);
         accountsEntityManager.createAccount(accountEntity, sessionContext.getCustomerId());
     }

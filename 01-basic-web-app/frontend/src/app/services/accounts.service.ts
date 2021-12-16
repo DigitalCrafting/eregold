@@ -27,7 +27,7 @@ export class AccountsService {
 export interface AccountModel {
   accountNumber: string;
   currentBalance: number;
-  currency: string;
+  currency: CurrencyEnum;
   type: AccountTypeEnum;
 }
 
@@ -36,3 +36,9 @@ export const AccountTypeEnum = {
   DEBIT: 'DEBIT' as AccountTypeEnum,
   SAVING: 'SAVING' as AccountTypeEnum
 };
+
+export type CurrencyEnum = 'GLD';
+export const CurrencyEnum = {
+  GLD: 'GLD' as CurrencyEnum
+};
+

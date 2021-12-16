@@ -10,6 +10,6 @@ import java.math.BigDecimal;
 public class AccountModel {
     private String accountNumber;
     private BigDecimal currentBalance;
-    private String currency;
+    private CurrencyEnum currency;
     private AccountTypeEnum type;
 }

@@ -2,6 +2,7 @@ package org.digitalcrafting.eregold.api.accounts;
 
 import org.digitalcrafting.eregold.domain.accounts.AccountModel;
 import org.digitalcrafting.eregold.domain.accounts.AccountTypeEnum;
+import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
 import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public final class AccountsConverter {
 
         return AccountModel.builder()
                 .accountNumber(entity.getAccountNumber())
-                .currency(entity.getCurrency())
+                .currency(CurrencyEnum.valueOf(entity.getCurrency()))
                 .type(AccountTypeEnum.valueOf(entity.getType()))
                 .currentBalance(entity.getCurrentBalance())
                 .build();

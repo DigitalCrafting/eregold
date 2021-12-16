@@ -1,0 +1,25 @@
+<form [formGroup]="formGroup">
+    <select class="form-select" aria-label="Account type" formControlName="accountType">
+        <ng-container *ngFor="let option of accountTypeOptions">
+            <option [value]="option.value">{{ option.display}}</option>
+        </ng-container>
+    </select>
+
+    <select class="form-select" aria-label="Currency" formControlName="currency">
+        <ng-container *ngFor="let option of currencyOptions">
+            <option [value]="option.value">{{ option.display}}</option>
+        </ng-container>
+    </select>
+</form>
+<button type="button"
+        class="btn btn-secondary"
+        (click)="onCancelClicked()"
+>Cancel
+</button>
+<button type="submit"
+        class="btn btn-primary float-right"
+        (click)="onAddClicked()"
+        [disabled]="formGroup.invalid"
+>Add
+</button>
+
