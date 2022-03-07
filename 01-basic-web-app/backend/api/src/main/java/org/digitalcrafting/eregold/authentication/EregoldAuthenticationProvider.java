@@ -22,7 +22,6 @@ public class EregoldAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        log.info("===========TESTING============ Inside EregoldAuthenticationProvider");
         if (authentication instanceof EregoldAuthentication) {
             EregoldAuthentication eregoldAuthentication = (EregoldAuthentication) authentication;
             String token = ((EregoldAuthentication) authentication).getToken();

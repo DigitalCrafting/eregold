@@ -14,7 +14,6 @@ public class EregoldAuthenticationConverter implements AuthenticationConverter {
 
     @Override
     public Authentication convert(HttpServletRequest httpServletRequest) {
-        log.info("===========TESTING============ Inside EregoldAuthenticationConverter");
         String authorizationHeader = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring("Bearer ".length());

@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EregoldRegisterValidators} from "../utils/register.validators";
 import {RegisterRequest, RegisterService} from "../../../services/register.service";
 import {Router} from "@angular/router";
+import {EregoldRoutes} from "../../../utils/routes.enum";
 
 @Component({
     selector: 'register',
@@ -25,7 +26,7 @@ export class RegisterComponent {
     }
 
     onCancelClicked() {
-        this._router.navigate(['login']);
+        this._router.navigate([EregoldRoutes.LOGIN]);
     }
 
     onRegisterClicked() {

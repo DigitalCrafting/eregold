@@ -11,6 +11,6 @@ export class UserContext {
     }
 
     get isLoggedIn() {
-        return this._isLoggedIn;
+        return this._isLoggedIn || !!sessionStorage.getItem("token");
     }
 }

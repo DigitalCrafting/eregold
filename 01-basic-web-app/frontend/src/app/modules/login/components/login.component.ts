@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginRequest, LoginResponse, LoginService} from "../../../services/login.service";
 import {UserContext} from "../../common/user.context";
 import {Router} from "@angular/router";
+import {EregoldRoutes} from "../../../utils/routes.enum";
 
 @Component({
     selector: 'login',
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         if (this._userContext.isLoggedIn) {
-            this._router.navigate(['ui'])
+            this._router.navigate([EregoldRoutes.UI])
         }
     }
 
@@ -39,9 +40,9 @@ export class LoginComponent implements OnInit {
 
             this._loginService.login(request).subscribe(
                 (resp: LoginResponse) => {
-                    localStorage.setItem("token", resp.token);
+                    sessionStorage.setItem("token", resp.token);
                     this._userContext.isLoggedIn = true;
-                    this._router.navigate(['ui']);
+                    this._router.navigate([EregoldRoutes.UI]);
                 },
                 (error) => {
                     // TODO message for user
@@ -51,6 +52,6 @@ export class LoginComponent implements OnInit {
     }
 
     onRegisterClicked() {
-        this._router.navigate(['register']);
+        this._router.navigate([EregoldRoutes.REGISTER]);
     }
 }

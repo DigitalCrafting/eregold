@@ -10,7 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(req);
         }
 
-        const token = localStorage.getItem("token"); // you probably want to store it in localStorage or something
+        const token = sessionStorage.getItem("token"); // you probably want to store it in localStorage or something
 
         if (!token) {
             return next.handle(req);

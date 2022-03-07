@@ -11,6 +11,7 @@ import {
     AccountCreateAction,
     AccountCreateComponent
 } from "../../accounts/account-create/components/account-create.component";
+import {EregoldRoutes} from "../../../utils/routes.enum";
 
 @Component({
     selector: 'dashboard',
@@ -34,7 +35,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit(): void {
         if (!this._userContext.isLoggedIn) {
-            this._router.navigate(['login']);
+            this._router.navigate([EregoldRoutes.LOGIN]);
         }
     }
 
