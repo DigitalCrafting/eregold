@@ -1,6 +1,6 @@
 import {Component, EventEmitter} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AccountTypeEnum, CurrencyEnum} from "../../../../services/accounts.service";
+import {AccountsService, AccountTypeEnum, CurrencyEnum} from "../../../../services/accounts.service";
 
 @Component({
   selector: 'account-create',
@@ -33,14 +33,18 @@ export class AccountCreateComponent {
     }
   ]
 
+  constructor(private _accountsService: AccountsService) {
+  }
+
   onCancelClicked() {
     this.accountCreateEventEmitter.emit(AccountCreateAction.SHOW_LIST);
   }
 
   onAddClicked() {
     if (this.formGroup.valid) {
-      // TODO Api call
-      this.accountCreateEventEmitter.emit(AccountCreateAction.SHOW_LIST);
+      this._accountsService.createAccount(this.formGroup.value).subscribe(response => {
+        this.accountCreateEventEmitter.emit(AccountCreateAction.SHOW_LIST);
+      });
     }
   }
 }

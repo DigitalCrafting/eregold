@@ -22,6 +22,10 @@ export class AccountsService {
       return this._httpClient.get(this.baseUrl, this.httpOptions).pipe();
   }
 
+  public createAccount(request: CreateAccountRequest) {
+    return this._httpClient.post(this.baseUrl, request, this.httpOptions).pipe();
+  }
+
 }
 
 export interface AccountModel {
@@ -42,3 +46,7 @@ export const CurrencyEnum = {
   GLD: 'GLD' as CurrencyEnum
 };
 
+export interface CreateAccountRequest {
+  accountType: AccountTypeEnum;
+  currency: CurrencyEnum;
+}

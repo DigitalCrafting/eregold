@@ -12,5 +12,5 @@ public interface AccountsMapper {
 
     void insertAccount(AccountEntity entity);
 
-    void insertCustomerAccount(String customerEntity, String accountNumber);
+    void insertCustomerAccount(String customerId, String accountNumber);
 }

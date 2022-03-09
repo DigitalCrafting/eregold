@@ -28,6 +28,6 @@
     <insert id="insertCustomerAccount"
             parameterType="org.digitalcrafting.eregold.repository.accounts.CustomerAccountEntity">
         INSERT INTO customer_accounts (customer_id, account_number)
-        VALUES (#{customerId}, #{ccountNumber})
+        VALUES (#{customerId}, #{accountNumber})
     </insert>
 </mapper>
