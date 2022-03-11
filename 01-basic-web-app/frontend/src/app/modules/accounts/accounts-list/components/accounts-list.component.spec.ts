@@ -1,25 +1,37 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AccountsListComponent } from './accounts-list.component';
+import {AccountsListComponent} from './accounts-list.component';
+import {AccountsService} from "../../../../services/accounts.service";
+import {of} from "rxjs";
 
 describe('AccountsListComponent', () => {
-  let component: AccountsListComponent;
-  let fixture: ComponentFixture<AccountsListComponent>;
+    let component: AccountsListComponent;
+    let fixture: ComponentFixture<AccountsListComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ AccountsListComponent ]
-    })
-    .compileComponents();
-  });
+    let accountsService: AccountsService;
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AccountsListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(async () => {
+        accountsService = {
+            getAccounts() {
+                return of([])
+            }
+        } as AccountsService;
+        await TestBed.configureTestingModule({
+            declarations: [AccountsListComponent],
+            providers: [
+                {provide: AccountsService, useValue: accountsService}
+            ]
+        })
+        .compileComponents();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AccountsListComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

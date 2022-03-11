@@ -1,7 +1,7 @@
 import {FormControl, FormGroup} from "@angular/forms";
 import {EregoldRegisterValidators} from "./register.validators";
 
-fdescribe('Register validators', () => {
+describe('Register validators', () => {
     let passwordFormControl = new FormControl();
     let passwordCheckFormControl = new FormControl();
 
