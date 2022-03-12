@@ -50,4 +50,17 @@ describe('RegisterComponent', () => {
 
         expect(registerButton.nativeElement.disabled).toBeTruthy();
     })
+
+    it('should have register enabled when form is filled', () => {
+        component.formGroup.get('email').setValue("test@test.com");
+        component.formGroup.get('firstName').setValue("Test");
+        component.formGroup.get('lastName').setValue("Testowy");
+        component.formGroup.get('password').setValue("verystrongpass");
+        component.formGroup.get('passwordCheck').setValue("verystrongpass");
+
+        fixture.detectChanges(true);
+
+        const registerButton = fixture.debugElement.query(By.css('#registerRegisterButton'));
+        expect(registerButton.nativeElement.disabled).toBeFalsy();
+    })
 });
