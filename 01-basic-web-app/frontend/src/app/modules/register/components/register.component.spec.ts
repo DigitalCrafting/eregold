@@ -46,12 +46,12 @@ describe('RegisterComponent', () => {
     });
 
     it('should have register button disabled initially', () => {
-        const registerButton = fixture.debugElement.query(By.css('#registerRegisterButton'));
+        const registerButton = fixture.debugElement.query(By.css('#registerButton'));
 
         expect(registerButton.nativeElement.disabled).toBeTruthy();
     })
 
-    it('should have register enabled when form is filled', () => {
+    it('should have register button enabled when form is filled', () => {
         component.formGroup.get('email').setValue("test@test.com");
         component.formGroup.get('firstName').setValue("Test");
         component.formGroup.get('lastName').setValue("Testowy");
@@ -60,7 +60,7 @@ describe('RegisterComponent', () => {
 
         fixture.detectChanges(true);
 
-        const registerButton = fixture.debugElement.query(By.css('#registerRegisterButton'));
+        const registerButton = fixture.debugElement.query(By.css('#registerButton'));
         expect(registerButton.nativeElement.disabled).toBeFalsy();
     })
 });

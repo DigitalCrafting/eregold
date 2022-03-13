@@ -3,6 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {LoginComponent} from './login.component';
 import {LoginService} from "../../../services/login.service";
 import {Router} from "@angular/router";
+import {By} from "@angular/platform-browser";
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -31,4 +32,20 @@ describe('LoginComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should have login button disabled initially', () => {
+        const registerButton = fixture.debugElement.query(By.css('#loginButton'));
+
+        expect(registerButton.nativeElement.disabled).toBeTruthy();
+    })
+
+    it('should have login button enabled when form is filled', () => {
+        component.formGroup.get('password').setValue("verystrongpass");
+        component.formGroup.get('userId').setValue("test");
+
+        fixture.detectChanges(true);
+
+        const registerButton = fixture.debugElement.query(By.css('#loginButton'));
+        expect(registerButton.nativeElement.disabled).toBeFalsy();
+    })
 });
