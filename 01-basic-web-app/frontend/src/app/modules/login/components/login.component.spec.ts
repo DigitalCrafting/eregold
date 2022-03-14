@@ -45,7 +45,7 @@ describe('LoginComponent', () => {
 
         fixture.detectChanges(true);
 
-        const registerButton = fixture.debugElement.query(By.css('#loginButton'));
-        expect(registerButton.nativeElement.disabled).toBeFalsy();
+        const loginButton = fixture.debugElement.query(By.css('#loginButton'));
+        expect(loginButton.nativeElement.disabled).toBeFalsy();
     })
 });
