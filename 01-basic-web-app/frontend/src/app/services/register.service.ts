@@ -29,3 +29,14 @@ export interface RegisterRequest {
     firstName: string;
     lastName: string;
 }
+
+export enum RegisterStatusEnum {
+    CREATED = 'CREATED',
+    ALREADY_EXISTS = 'ALREADY_EXISTS',
+    CREATION_FAILED = 'CREATION_FAILED'
+}
+
+export interface RegisterResponse {
+    customerId: string;
+    status: RegisterStatusEnum;
+}

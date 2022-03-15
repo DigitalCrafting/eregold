@@ -1,7 +1,12 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EregoldRegisterValidators} from "../utils/register.validators";
-import {RegisterRequest, RegisterService} from "../../../services/register.service";
+import {
+    RegisterRequest,
+    RegisterResponse,
+    RegisterService,
+    RegisterStatusEnum
+} from "../../../services/register.service";
 import {Router} from "@angular/router";
 import {EregoldRoutes} from "../../../utils/routes.enum";
 
@@ -39,10 +44,12 @@ export class RegisterComponent {
                 lastName: this.formGroup.get('lastName').value,
             };
 
-
-            this._registerService.register(this.formGroup.value).subscribe(
-                (resp) => {
-                    // TODO show successful message and redirect to login
+            this._registerService.register(request).subscribe(
+                (resp: RegisterResponse) => {
+                    if (resp.status === RegisterStatusEnum.CREATED) {
+                        console.log(resp.customerId);
+                        this._router.navigate([EregoldRoutes.LOGIN]);
+                    }
                 },
                 (error) => {
                     // TODO show error
