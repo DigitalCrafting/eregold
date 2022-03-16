@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccountCreateComponent } from './account-create.component';
-import {AccountsService} from "../../../../services/accounts.service";
+import {AccountsService, CreateAccountRequest} from "../../../../services/accounts.service";
+import {Observable, of} from "rxjs";
+import {By} from "@angular/platform-browser";
 
 describe('AccountCreateComponent', () => {
   let component: AccountCreateComponent;
@@ -10,7 +12,11 @@ describe('AccountCreateComponent', () => {
   let accountsService: AccountsService;
 
   beforeEach(async () => {
-    accountsService = new AccountsService(null);
+    accountsService = {
+      createAccount(request: CreateAccountRequest): Observable<Object> {
+        return of(true);
+      }
+    } as AccountsService;
     await TestBed.configureTestingModule({
       declarations: [ AccountCreateComponent ],
       providers: [
@@ -29,4 +35,14 @@ describe('AccountCreateComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call create account with default values on click', () => {
+    // @ts-ignore
+    const spy = spyOn(component._accountsService, 'createAccount');
+
+    const addAccountButton = fixture.debugElement.query(By.css('#addAccountButton'));
+    addAccountButton.nativeElement.click();
+
+    expect(spy).toHaveBeenCalledWith(component.formGroup.value);
+  })
 });
