@@ -5,6 +5,25 @@
 <mapper namespace="org.digitalcrafting.eregold.repository.transactions.TransactionsMapper">
     <resultMap id="TransactionEntityMap"
                type="org.digitalcrafting.eregold.repository.transactions.TransactionEntity">
-        <!-- TODO -->
+        <!-- Mybatis config will map this automatically-->
     </resultMap>
+
+    <insert id="insert" parameterType="org.digitalcrafting.eregold.repository.transactions.TransactionEntity">
+        INSERT INTO transactions (id,
+                                  src_account,
+                                  dst_account,
+                                  amount,
+                                  currency,
+                                  date,
+                                  description,
+                                  type)
+        VALUES (#{id},
+                #{srcAccount},
+                #{dstAccount},
+                #{amount},
+                #{currency},
+                #{date},
+                #{description},
+                #{type})
+    </insert>
 </mapper>

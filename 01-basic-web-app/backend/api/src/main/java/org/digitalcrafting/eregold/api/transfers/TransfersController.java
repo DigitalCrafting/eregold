@@ -1,6 +1,8 @@
 package org.digitalcrafting.eregold.api.transfers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,5 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransfersController {
     private final TransfersControllerService service;
 
-    // TODO
+    @PostMapping
+    public void transfer(@RequestBody TransferRequest request) {
+        service.transfer(request);
+    }
 }

@@ -5,5 +5,5 @@ import org.apache.ibatis.annotations.Mapper;
 // TODO introduce EntityManager
 @Mapper
 public interface TransactionsMapper {
-    // TODO
+    void insert(TransactionEntity entity);
 }
