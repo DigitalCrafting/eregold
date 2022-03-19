@@ -1,1 +1,0 @@
-ALTER TABLE transactions ADD type VARCHAR(20);

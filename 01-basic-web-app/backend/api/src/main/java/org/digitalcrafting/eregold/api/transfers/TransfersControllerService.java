@@ -6,6 +6,8 @@ import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
 import org.digitalcrafting.eregold.repository.transactions.TransactionsMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class TransfersControllerService {
@@ -14,7 +16,17 @@ public class TransfersControllerService {
     private final AccountsEntityManager accountsEntityManager;
 
     public void transfer(TransferRequest request) {
-        TransactionEntity entity = TransferConverter.convert(request);
-        // TODO verify amount and save to db
+        /*
+        * TODO
+        * When making a transfer:
+        * - srcTransaction is always created, and srcAccount balance should be updated
+        * - dstTransaction is created if the transfer is inside the bank, meaning: if the dstAccount exists in Eregold,
+        *   and dstAccount balance is updated
+        *
+        * - create service that handles the update of balances
+        * */
+        Date transactionDate = new Date();
+        TransactionEntity srcTransaction = TransferConverter.convertToSrcTransaction(request, transactionDate);
+        TransactionEntity dstTransaction = TransferConverter.convertToDstTransaction(request, transactionDate);
     }
 }
