@@ -11,6 +11,7 @@
     <insert id="insert" parameterType="org.digitalcrafting.eregold.repository.transactions.TransactionEntity">
         INSERT INTO transactions (id,
                                   account_number,
+                                  dst_account_number,
                                   amount,
                                   currency,
                                   date,
@@ -18,6 +19,7 @@
                                   type)
         VALUES (#{id},
                 #{accountNumber},
+                #{dstAccountNumber},
                 #{amount},
                 #{currency},
                 #{date},

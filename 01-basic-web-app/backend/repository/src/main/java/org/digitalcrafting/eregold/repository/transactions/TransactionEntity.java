@@ -9,6 +9,7 @@ import java.util.Date;
 public class TransactionEntity {
     private Long id;
     private String accountNumber;
+    private String dstAccountNumber;
     private String description;
     private String type;
     private String currency;

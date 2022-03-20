@@ -51,6 +51,7 @@ CREATE TABLE transactions
 (
     id          NUMERIC(64)    NOT NULL,
     account_number VARCHAR(40)    NOT NULL,
+    dst_account_number VARCHAR(40)    NOT NULL,
     amount      DECIMAL(10, 2) NOT NULL,
     currency    VARCHAR(3)     NOT NULL,
     date        timestamp      NOT NULL,

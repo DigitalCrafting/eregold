@@ -3,30 +3,28 @@ package org.digitalcrafting.eregold.api.transfers;
 import lombok.RequiredArgsConstructor;
 import org.digitalcrafting.eregold.repository.accounts.AccountsEntityManager;
 import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
-import org.digitalcrafting.eregold.repository.transactions.TransactionsMapper;
+import org.digitalcrafting.eregold.repository.transactions.TransactionsEntityManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TransfersControllerService {
 
-    private final TransactionsMapper transactionsMapper;
+    private final TransactionsEntityManager transactionsEntityManager;
     private final AccountsEntityManager accountsEntityManager;
 
     public void transfer(TransferRequest request) {
-        /*
-        * TODO
-        * When making a transfer:
-        * - srcTransaction is always created, and srcAccount balance should be updated
-        * - dstTransaction is created if the transfer is inside the bank, meaning: if the dstAccount exists in Eregold,
-        *   and dstAccount balance is updated
-        *
-        * - create service that handles the update of balances
-        * */
         Date transactionDate = new Date();
         TransactionEntity srcTransaction = TransferConverter.convertToSrcTransaction(request, transactionDate);
-        TransactionEntity dstTransaction = TransferConverter.convertToDstTransaction(request, transactionDate);
+
+        if (this.accountsEntityManager.getByAccountNumber(request.getDstAccount()) != null) {
+            TransactionEntity dstTransaction = TransferConverter.convertToDstTransaction(request, transactionDate);
+            this.transactionsEntityManager.insert(List.of(srcTransaction, dstTransaction));
+        } else {
+            this.transactionsEntityManager.insert(srcTransaction);
+        }
     }
 }
