@@ -24,11 +24,12 @@ public class AccountsControllerService {
     }
 
     public void createAccount(CreateAccountRequest request) {
-        AccountEntity accountEntity = new AccountEntity();
-        accountEntity.setAccountNumber(generateAccountNumber());
-        accountEntity.setType(request.getAccountType().name());
-        accountEntity.setCurrency(request.getCurrency().name());
-        accountEntity.setCurrentBalance(BigDecimal.ZERO);
+        AccountEntity accountEntity = AccountEntity.builder()
+                .accountNumber(generateAccountNumber())
+                .type(request.getAccountType().name())
+                .currency(request.getCurrency().name())
+                .currentBalance(BigDecimal.ZERO)
+                .build();
         accountsEntityManager.createAccount(accountEntity, sessionContext.getCustomerId());
     }
 
@@ -37,7 +38,7 @@ public class AccountsControllerService {
         do {
             number = new StringBuilder("12ERGD");
             // toEpochMilli should return number of length 13 at the time of writing this code, so we want to limit ourselves to 12
-            number.append(String.valueOf(Instant.now().toEpochMilli()).substring(0,12));
+            number.append(String.valueOf(Instant.now().toEpochMilli()).substring(0, 12));
         } while (accountsEntityManager.getByAccountNumber(number.toString()) != null);
         return number.toString();
     }

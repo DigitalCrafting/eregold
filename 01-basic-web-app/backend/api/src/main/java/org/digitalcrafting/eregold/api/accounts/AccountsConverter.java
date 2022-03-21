@@ -6,6 +6,7 @@ import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
 import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class AccountsConverter {
@@ -15,6 +16,7 @@ public final class AccountsConverter {
         if (entityList != null && !entityList.isEmpty()) {
             accountModelList = entityList.stream()
                     .map(AccountsConverter::convert)
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         }
 
