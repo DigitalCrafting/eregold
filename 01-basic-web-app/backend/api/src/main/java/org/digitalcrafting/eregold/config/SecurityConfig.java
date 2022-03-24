@@ -28,20 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.eregoldAuthenticationFilter = new EregoldAuthenticationFilter(authenticationProvider, authenticationConverter);
     }
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().requestMatchers(
-//                new OrRequestMatcher(
-//                        new AntPathRequestMatcher("/actuator"),
-//                        new AntPathRequestMatcher("/actuator/**"),
-//                        new AntPathRequestMatcher("/registration"),
-//                        new AntPathRequestMatcher("/registration/**"),
-//                        new AntPathRequestMatcher("/login"),
-//                        new AntPathRequestMatcher("/login/**")
-//                )
-//        );
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
