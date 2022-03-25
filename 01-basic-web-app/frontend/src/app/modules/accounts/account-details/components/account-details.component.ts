@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'account-details',
-  templateUrl: './account-details.component.html',
-  styleUrls: ['./account-details.component.scss']
+    selector: 'account-details',
+    templateUrl: './account-details.component.html',
+    styleUrls: ['./account-details.component.scss']
 })
 export class AccountDetailsComponent implements OnInit {
 
-  constructor() { }
+    backToDetailsEventEmitter: EventEmitter<any> = new EventEmitter<any>();
 
-  ngOnInit(): void {
-  }
+    private accountNumber: string;
 
+    constructor() {
+    }
+
+    setContext(accountNumber: string) {
+        this.accountNumber = accountNumber;
+    }
+
+    ngOnInit(): void {
+    }
+
+    onGoBackClicked() {
+        this.backToDetailsEventEmitter.emit();
+    }
 }

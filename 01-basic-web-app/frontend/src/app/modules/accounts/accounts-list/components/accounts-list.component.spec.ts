@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {AccountListAction, AccountsListComponent} from './accounts-list.component';
+import {AccountsListComponent} from './accounts-list.component';
 import {AccountsService, AccountTypeEnum, CurrencyEnum} from "../../../../services/accounts.service";
 import {of} from "rxjs";
 import {By} from "@angular/platform-browser";
@@ -55,10 +55,10 @@ describe('AccountsListComponent', () => {
     });
 
     it('should emit event on \"add account\" click', () => {
-        const spy = spyOn(component.accountsListEventEmitter, 'emit');
+        const spy = spyOn(component.createAccountEventEmitter, 'emit');
         const addAccountButton = fixture.debugElement.query(By.css('#addAccountButton'));
 
         addAccountButton.nativeElement.click();
-        expect(spy).toHaveBeenCalledWith(AccountListAction.ADD_ACCOUNT);
+        expect(spy).toHaveBeenCalled();
     });
 });

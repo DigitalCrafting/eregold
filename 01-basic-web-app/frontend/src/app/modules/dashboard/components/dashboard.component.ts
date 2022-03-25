@@ -2,16 +2,14 @@ import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/c
 import {UserContext} from "../../common/user.context";
 import {Router} from "@angular/router";
 import {DynamicComponentManager} from "../../../core/dynamic-component-manager/dynamic-component-manager";
-import {
-    AccountListAction,
-    AccountsListComponent
-} from "../../accounts/accounts-list/components/accounts-list.component";
+import {AccountsListComponent} from "../../accounts/accounts-list/components/accounts-list.component";
 import {Subscription} from "rxjs";
 import {
     AccountCreateAction,
     AccountCreateComponent
 } from "../../accounts/account-create/components/account-create.component";
 import {EregoldRoutes} from "../../../utils/routes.enum";
+import {AccountDetailsComponent} from "../../accounts/account-details/components/account-details.component";
 
 @Component({
     selector: 'dashboard',
@@ -24,10 +22,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     componentManager: DynamicComponentManager;
 
     accountsListComponent: AccountsListComponent;
-    accountsListEventSubscription: Subscription;
+    createAccountSubscription: Subscription;
+    showDetailsSubscription: Subscription;
 
     accountCreateComponent: AccountCreateComponent;
     accountCreateEventSubscription: Subscription;
+
+    accountDetailsComponent: AccountDetailsComponent;
+    backToListSubscription: Subscription;
 
     constructor(private _userContext: UserContext,
                 private _router: Router) {
@@ -50,11 +52,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private showAccountsList() {
         this.cleanUp();
         this.accountsListComponent = this.componentManager.show(AccountsListComponent);
-        this.accountsListEventSubscription = this.accountsListComponent.accountsListEventEmitter.subscribe((action: AccountListAction) => {
-            if (action === AccountListAction.ADD_ACCOUNT) {
-                this.showAccountCreate();
-            }
+        this.createAccountSubscription = this.accountsListComponent.createAccountEventEmitter.subscribe(() => {
+            this.showAccountCreate();
         });
+        this.showDetailsSubscription = this.accountsListComponent.showDetailsEventEmitter.subscribe(accountNumber => {
+            this.showAccountDetails(accountNumber);
+        })
     }
 
     private showAccountCreate() {
@@ -67,18 +70,27 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
+    private showAccountDetails(accountNumber: string) {
+        this.cleanUp();
+        this.accountDetailsComponent = this.componentManager.show(AccountDetailsComponent, accountNumber);
+        this.backToListSubscription = this.accountDetailsComponent.backToDetailsEventEmitter.subscribe(() => {
+            this.showAccountsList();
+        })
+
+    }
+
     private cleanUp() {
-        if (this.accountsListEventSubscription) {
-            this.accountsListEventSubscription.unsubscribe();
-        }
-        if (this.accountCreateEventSubscription) {
-            this.accountCreateEventSubscription.unsubscribe();
-        }
-
-        delete this.accountsListEventSubscription;
-        delete this.accountsListComponent;
-
+        this.showDetailsSubscription?.unsubscribe();
+        delete this.showDetailsSubscription;
+        this.createAccountSubscription?.unsubscribe();
+        delete this.createAccountSubscription;
+        this.accountCreateEventSubscription?.unsubscribe();
         delete this.accountCreateEventSubscription;
+        this.backToListSubscription?.unsubscribe();
+        delete this.backToListSubscription;
+
         delete this.accountCreateComponent;
+        delete this.accountsListComponent;
+        delete this.accountDetailsComponent;
     }
 }

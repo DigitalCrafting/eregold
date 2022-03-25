@@ -8,7 +8,8 @@ import {AccountModel, AccountsService} from "../../../../services/accounts.servi
 })
 export class AccountsListComponent {
 
-    accountsListEventEmitter: EventEmitter<AccountListAction> = new EventEmitter<AccountListAction>();
+    createAccountEventEmitter: EventEmitter<any> = new EventEmitter();
+    showDetailsEventEmitter: EventEmitter<string> = new EventEmitter<string>();
     accountsList: Array<AccountModel>;
 
     constructor(private _accountsService: AccountsService) {
@@ -19,12 +20,11 @@ export class AccountsListComponent {
             )
     }
 
+    onDetailsClicked(accountNumber: string) {
+        this.showDetailsEventEmitter.emit(accountNumber);
+    }
+
     onAddAccountClicked() {
-        this.accountsListEventEmitter.emit(AccountListAction.ADD_ACCOUNT);
+        this.createAccountEventEmitter.emit();
     }
 }
-
-export type AccountListAction = 'ADD_ACCOUNT';
-export const AccountListAction = {
-    ADD_ACCOUNT: 'ADD_ACCOUNT' as AccountListAction
-};

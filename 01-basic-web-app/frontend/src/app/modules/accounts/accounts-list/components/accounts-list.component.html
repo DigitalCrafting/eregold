@@ -5,6 +5,7 @@
         <th scope="col">Current balance</th>
         <th scope="col">Currency</th>
         <th scope="col">Type</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -15,6 +16,11 @@
                 <td>{{account?.currentBalance}}</td>
                 <td>{{account?.currency}}</td>
                 <td>{{account?.type}}</td>
+                <td>
+                    <button type="button" class="btn btn-outline-secondary" (click)="onDetailsClicked(account?.accountNumber)">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </button>
+                </td>
             </tr>
         </ng-container>
     </ng-container>
