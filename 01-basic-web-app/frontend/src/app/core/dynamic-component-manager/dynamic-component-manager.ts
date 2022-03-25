@@ -3,7 +3,8 @@ import {ObjectsUtils} from "../utils/eregold-utils";
 
 @Component({
     selector: 'dynamic-component-manager',
-    template: `<ng-template #container></ng-template>`
+    template: `
+        <ng-template #container></ng-template>`
 })
 export class DynamicComponentManager implements OnDestroy {
     // @ts-ignore

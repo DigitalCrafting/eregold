@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AccountDetailsComponent } from './components/account-details.component';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {AccountDetailsComponent} from './components/account-details.component';
 
 
 @NgModule({
-  declarations: [
-    AccountDetailsComponent
-  ],
-  imports: [
-    CommonModule
-  ]
+    declarations: [
+        AccountDetailsComponent
+    ],
+    imports: [
+        CommonModule
+    ]
 })
-export class AccountDetailsModule { }
+export class AccountDetailsModule {
+}

@@ -1,21 +1,21 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { AccountsService } from './accounts.service';
+import {AccountsService} from './accounts.service';
 import {HttpClientModule} from "@angular/common/http";
 
 describe('AccountsService', () => {
-  let service: AccountsService;
+    let service: AccountsService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule
-      ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientModule
+            ]
+        });
+        service = TestBed.inject(AccountsService);
     });
-    service = TestBed.inject(AccountsService);
-  });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });

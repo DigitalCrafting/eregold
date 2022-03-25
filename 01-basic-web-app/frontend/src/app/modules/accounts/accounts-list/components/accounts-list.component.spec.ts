@@ -36,7 +36,7 @@ describe('AccountsListComponent', () => {
                 {provide: AccountsService, useValue: accountsService}
             ]
         })
-        .compileComponents();
+            .compileComponents();
     });
 
     beforeEach(() => {
@@ -50,8 +50,8 @@ describe('AccountsListComponent', () => {
     });
 
     it('should show 2 accounts', () => {
-       const rows = fixture.debugElement.queryAll(By.css('table > tbody > tr'));
-       expect(rows.length).toEqual(2);
+        const rows = fixture.debugElement.queryAll(By.css('table > tbody > tr'));
+        expect(rows.length).toEqual(2);
     });
 
     it('should emit event on \"add account\" click', () => {

@@ -8,8 +8,8 @@ import {Component, HostListener} from '@angular/core';
 export class AppComponent {
     title = 'eregold-ui';
 
-    @HostListener("window:onbeforeunload",["$event"])
-    clearLocalStorage(event: any){
+    @HostListener("window:onbeforeunload", ["$event"])
+    clearLocalStorage(event: any) {
         localStorage.clear();
     }
 }

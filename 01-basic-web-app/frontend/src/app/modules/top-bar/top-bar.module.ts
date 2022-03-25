@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TopBarComponent } from './components/top-bar.component';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {TopBarComponent} from './components/top-bar.component';
 
 
 @NgModule({
@@ -15,4 +14,5 @@ import { TopBarComponent } from './components/top-bar.component';
         CommonModule
     ]
 })
-export class TopBarModule { }
+export class TopBarModule {
+}
