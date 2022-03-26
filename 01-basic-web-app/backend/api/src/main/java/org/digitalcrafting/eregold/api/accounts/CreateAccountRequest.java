@@ -6,6 +6,7 @@ import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
 
 @Data
 public class CreateAccountRequest {
+    private String accountName;
     private AccountTypeEnum accountType;
     private CurrencyEnum currency;
 }

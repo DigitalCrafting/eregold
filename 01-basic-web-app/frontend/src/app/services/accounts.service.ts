@@ -30,6 +30,7 @@ export class AccountsService {
 
 export interface AccountModel {
     accountNumber: string;
+    accountName: string;
     currentBalance: number;
     currency: CurrencyEnum;
     type: AccountTypeEnum;

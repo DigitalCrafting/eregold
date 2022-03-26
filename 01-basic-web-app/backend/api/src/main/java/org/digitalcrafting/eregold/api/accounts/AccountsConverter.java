@@ -30,6 +30,7 @@ public final class AccountsConverter {
 
         return AccountModel.builder()
                 .accountNumber(entity.getAccountNumber())
+                .accountName(entity.getAccountName())
                 .currency(CurrencyEnum.valueOf(entity.getCurrency()))
                 .type(AccountTypeEnum.valueOf(entity.getType()))
                 .currentBalance(entity.getCurrentBalance())

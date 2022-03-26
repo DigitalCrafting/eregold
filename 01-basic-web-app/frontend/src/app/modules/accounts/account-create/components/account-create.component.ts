@@ -1,4 +1,4 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AccountsService, AccountTypeEnum, CurrencyEnum} from "../../../../services/accounts.service";
 
@@ -7,10 +7,13 @@ import {AccountsService, AccountTypeEnum, CurrencyEnum} from "../../../../servic
     templateUrl: './account-create.component.html',
     styleUrls: ['./account-create.component.scss']
 })
-export class AccountCreateComponent {
+export class AccountCreateComponent implements OnInit {
+    static DEFAULT_DEBIT_NAME: string = "Debit account";
+    static DEFAULT_SAVING_NAME: string = "Saving account";
     accountCreateEventEmitter: EventEmitter<AccountCreateAction> = new EventEmitter<AccountCreateAction>();
 
     formGroup = new FormGroup({
+        accountName: new FormControl(AccountCreateComponent.DEFAULT_DEBIT_NAME, Validators.required),
         accountType: new FormControl(AccountTypeEnum.DEBIT, Validators.required),
         currency: new FormControl(CurrencyEnum.GLD, Validators.required)
     });
@@ -34,6 +37,16 @@ export class AccountCreateComponent {
     ]
 
     constructor(private _accountsService: AccountsService) {
+    }
+
+    ngOnInit() {
+        this.formGroup.get('accountType').valueChanges.subscribe((value) => {
+            if (value === AccountTypeEnum.DEBIT && this.formGroup.get("accountName").value === AccountCreateComponent.DEFAULT_SAVING_NAME) {
+                this.formGroup.get("accountName").setValue(AccountCreateComponent.DEFAULT_DEBIT_NAME);
+            } else if (value === AccountTypeEnum.SAVING && this.formGroup.get("accountName").value === AccountCreateComponent.DEFAULT_DEBIT_NAME) {
+                this.formGroup.get("accountName").setValue(AccountCreateComponent.DEFAULT_SAVING_NAME);
+            }
+        });
     }
 
     onCancelClicked() {

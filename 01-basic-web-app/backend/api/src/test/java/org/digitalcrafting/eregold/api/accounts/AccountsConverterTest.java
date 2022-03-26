@@ -62,6 +62,7 @@ class AccountsConverterTest {
                 .currentBalance(BigDecimal.ZERO)
                 .currency(CurrencyEnum.GLD.name())
                 .accountNumber("12ERGD123456")
+                .accountName("Test account")
                 .build()
         );
 
@@ -75,5 +76,6 @@ class AccountsConverterTest {
         assertEquals(CurrencyEnum.GLD, modelList.get(0).getCurrency());
         assertEquals(BigDecimal.ZERO, modelList.get(0).getCurrentBalance());
         assertEquals("12ERGD123456", modelList.get(0).getAccountNumber());
+        assertEquals("Test account", modelList.get(0).getAccountName());
     }
 }

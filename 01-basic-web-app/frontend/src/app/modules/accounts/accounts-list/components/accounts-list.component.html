@@ -1,6 +1,7 @@
 <table class="table">
     <thead>
     <tr>
+        <th scope="col">Account name</th>
         <th scope="col">Account number</th>
         <th scope="col">Current balance</th>
         <th scope="col">Currency</th>
@@ -12,6 +13,7 @@
     <ng-container *ngIf="accountsList">
         <ng-container *ngFor="let account of accountsList">
             <tr>
+                <td>{{account?.accountName}}</td>
                 <td>{{account?.accountNumber}}</td>
                 <td>{{account?.currentBalance}}</td>
                 <td>{{account?.currency}}</td>

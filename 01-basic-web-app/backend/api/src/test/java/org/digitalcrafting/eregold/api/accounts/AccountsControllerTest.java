@@ -48,6 +48,7 @@ class AccountsControllerTest {
                         .currentBalance(BigDecimal.ZERO)
                         .currency(CurrencyEnum.GLD)
                         .accountNumber("12ERGD123456")
+                        .accountName("Test account")
                         .build()
         );
         when(service.getAccounts()).thenReturn(modelList);
@@ -56,6 +57,7 @@ class AccountsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(
                         "[{\"accountNumber\":\"12ERGD123456\"," +
+                                "\"accountName\":\"Test account\"," +
                                 "\"currentBalance\":0," +
                                 "\"currency\":\"GLD\"," +
                                 "\"type\":\"DEBIT\"}]"

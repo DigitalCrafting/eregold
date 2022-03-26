@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Builder
 public class AccountEntity {
     private String accountNumber;
+    private String accountName;
     private BigDecimal currentBalance;
     private String currency;
     private String type;

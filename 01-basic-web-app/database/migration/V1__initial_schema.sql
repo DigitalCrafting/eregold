@@ -24,6 +24,7 @@ ALTER TABLE customers
 CREATE TABLE accounts
 (
     account_number  VARCHAR(40)                 NOT NULL,
+    account_name    VARCHAR(40)                 NOT NULL,
     current_balance DECIMAL(10, 2) DEFAULT 0.00 NOT NULL,
     currency        VARCHAR(3)                  NOT NULL,
     type            VARCHAR(20)                 NOT NULL

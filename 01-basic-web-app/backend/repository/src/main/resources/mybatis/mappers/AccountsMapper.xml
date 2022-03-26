@@ -14,15 +14,15 @@
     </select>
 
     <select id="getAccountsForCustomer" resultMap="AccountEntityMap" parameterType="java.lang.String">
-        SELECT acc.account_number, acc.current_balance, acc.currency, acc.type
+        SELECT acc.account_number, acc.account_name, acc.current_balance, acc.currency, acc.type
         FROM accounts AS acc
                  JOIN customer_accounts AS ca ON acc.account_number = ca.account_number
         WHERE ca.customer_id = #{customerId}
     </select>
 
     <insert id="insertAccount" parameterType="org.digitalcrafting.eregold.repository.accounts.AccountEntity">
-        INSERT INTO accounts (account_number, current_balance, currency, type)
-        VALUES (#{accountNumber}, #{currentBalance}, #{currency}, #{type})
+        INSERT INTO accounts (account_number, account_name, current_balance, currency, type)
+        VALUES (#{accountNumber}, #{accountName}, #{currentBalance}, #{currency}, #{type})
     </insert>
 
     <insert id="insertCustomerAccount"

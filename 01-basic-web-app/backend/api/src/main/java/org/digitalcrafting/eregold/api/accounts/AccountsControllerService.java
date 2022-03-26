@@ -2,6 +2,7 @@ package org.digitalcrafting.eregold.api.accounts;
 
 import lombok.RequiredArgsConstructor;
 import org.digitalcrafting.eregold.authentication.EregoldSessionContext;
+import org.digitalcrafting.eregold.domain.accounts.AccountDetailsModel;
 import org.digitalcrafting.eregold.domain.accounts.AccountModel;
 import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
 import org.digitalcrafting.eregold.repository.accounts.AccountsEntityManager;
@@ -26,6 +27,7 @@ public class AccountsControllerService {
     public void createAccount(CreateAccountRequest request) {
         AccountEntity accountEntity = AccountEntity.builder()
                 .accountNumber(generateAccountNumber())
+                .accountName(request.getAccountName())
                 .type(request.getAccountType().name())
                 .currency(request.getCurrency().name())
                 .currentBalance(BigDecimal.ZERO)
@@ -41,5 +43,9 @@ public class AccountsControllerService {
             number.append(String.valueOf(Instant.now().toEpochMilli()).substring(0, 12));
         } while (accountsEntityManager.getByAccountNumber(number.toString()) != null);
         return number.toString();
+    }
+
+    public AccountDetailsModel getAccountDetails(String accountNumber) {
+        return null;
     }
 }
