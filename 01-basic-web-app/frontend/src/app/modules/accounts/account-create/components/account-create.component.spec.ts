@@ -1,9 +1,10 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AccountCreateComponent} from './account-create.component';
-import {AccountsService, CreateAccountRequest} from "../../../../services/accounts.service";
+import {AccountsService} from "../../../../services/accounts.service";
 import {Observable, of} from "rxjs";
 import {By} from "@angular/platform-browser";
+import {CreateAccountRequest} from "../../../../models/account.models";
 
 describe('AccountCreateComponent', () => {
     let component: AccountCreateComponent;

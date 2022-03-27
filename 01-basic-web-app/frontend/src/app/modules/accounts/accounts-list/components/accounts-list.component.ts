@@ -1,23 +1,23 @@
-import {Component, EventEmitter} from '@angular/core';
-import {AccountModel, AccountsService} from "../../../../services/accounts.service";
+import {Component, EventEmitter, OnInit} from '@angular/core';
+import {AccountModel} from "../../../../models/account.models";
+import {EregoldUserContext} from "../../../../context/eregold-user-context";
 
 @Component({
     selector: 'accounts-list',
     templateUrl: './accounts-list.component.html',
     styleUrls: ['./accounts-list.component.scss']
 })
-export class AccountsListComponent {
+export class AccountsListComponent implements OnInit {
 
     createAccountEventEmitter: EventEmitter<any> = new EventEmitter();
     showDetailsEventEmitter: EventEmitter<string> = new EventEmitter<string>();
     accountsList: Array<AccountModel>;
 
-    constructor(private _accountsService: AccountsService) {
-        this._accountsService.getAccounts()
-            .subscribe((list: Array<AccountModel>) => {
-                    this.accountsList = list;
-                }
-            )
+    constructor(private _userContext: EregoldUserContext) {
+    }
+
+    async ngOnInit() {
+        this.accountsList = await this._userContext.getAccounts();
     }
 
     onDetailsClicked(accountNumber: string) {

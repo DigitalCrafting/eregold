@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AccountsService, AccountTypeEnum, CurrencyEnum} from "../../../../services/accounts.service";
+import {AccountsService} from "../../../../services/accounts.service";
+import {AccountTypeEnum, CurrencyEnum} from "../../../../models/account.models";
 
 @Component({
     selector: 'account-create',
