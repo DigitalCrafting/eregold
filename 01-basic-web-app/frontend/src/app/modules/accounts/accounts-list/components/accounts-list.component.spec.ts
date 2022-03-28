@@ -1,42 +1,45 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {AccountsListComponent} from './accounts-list.component';
-import {AccountsService, AccountTypeEnum, CurrencyEnum} from "../../../../services/accounts.service";
-import {of} from "rxjs";
 import {By} from "@angular/platform-browser";
+import {AccountModel, AccountTypeEnum, CurrencyEnum} from "../../../../models/account.models";
+import {EregoldUserContext} from "../../../../context/eregold-user-context";
 
 describe('AccountsListComponent', () => {
     let component: AccountsListComponent;
     let fixture: ComponentFixture<AccountsListComponent>;
+    let eregoldUserContext: EregoldUserContext;
 
-    let accountsService: AccountsService;
+    let mockAccountsList = Promise.resolve([
+        {
+            accountNumber: '12ERGD12345',
+            accountName: 'Test name',
+            currentBalance: 12.0,
+            currency: CurrencyEnum.GLD,
+            type: AccountTypeEnum.DEBIT
+        } as AccountModel,
+        {
+            accountNumber: '12ERGD67890',
+            accountName: 'Test name',
+            currentBalance: 90.0,
+            currency: CurrencyEnum.GLD,
+            type: AccountTypeEnum.SAVING
+        } as AccountModel
+    ]);
 
     beforeEach(async () => {
-        accountsService = {
-            getAccounts() {
-                return of([
-                    {
-                        accountNumber: '12ERGD12345',
-                        currentBalance: 12.0,
-                        currency: CurrencyEnum.GLD,
-                        type: AccountTypeEnum.DEBIT
-                    },
-                    {
-                        accountNumber: '12ERGD67890',
-                        currentBalance: 90.0,
-                        currency: CurrencyEnum.GLD,
-                        type: AccountTypeEnum.SAVING
-                    }
-                ])
+        eregoldUserContext = {
+            async getAccounts(): Promise<Array<AccountModel>> {
+                return mockAccountsList;
             }
-        } as AccountsService;
+        } as EregoldUserContext;
+
         await TestBed.configureTestingModule({
             declarations: [AccountsListComponent],
             providers: [
-                {provide: AccountsService, useValue: accountsService}
+                {provide: EregoldUserContext, useValue: eregoldUserContext}
             ]
-        })
-            .compileComponents();
+        }).compileComponents();
     });
 
     beforeEach(() => {
@@ -49,7 +52,14 @@ describe('AccountsListComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should show 2 accounts', () => {
+    it('should show 2 accounts', async () => {
+        await component.ngOnInit();
+
+        expect(component.accountsList).toBeTruthy();
+        expect(component.accountsList.length).toEqual(2);
+
+        fixture.detectChanges();
+
         const rows = fixture.debugElement.queryAll(By.css('table > tbody > tr'));
         expect(rows.length).toEqual(2);
     });
