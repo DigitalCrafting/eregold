@@ -7,6 +7,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AccountsModule} from "../accounts/accounts.module";
 import {CoreModule} from "../../core/core.module";
 import {TopBarModule} from "../top-bar/top-bar.module";
+import {TransferModule} from "../transfer/transfer.module";
 
 const routes: Routes = [
     {
@@ -24,6 +25,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
 
         AccountsModule,
+        TransferModule,
         TopBarModule,
         CoreModule
     ],

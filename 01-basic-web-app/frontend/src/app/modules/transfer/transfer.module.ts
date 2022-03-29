@@ -1,13 +1,14 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {TransferComponent} from './components/transfer.component';
+import {OwnTransferModule} from "./own-transfer/own-transfer.module";
 
 @NgModule({
-    declarations: [
-        TransferComponent
-    ],
     imports: [
-        CommonModule
+        CommonModule,
+        OwnTransferModule
+    ],
+    exports: [
+        OwnTransferModule
     ]
 })
 export class TransferModule {

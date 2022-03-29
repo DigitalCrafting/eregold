@@ -8,6 +8,7 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 export class AccountDetailsComponent implements OnInit {
 
     backToDetailsEventEmitter: EventEmitter<any> = new EventEmitter<any>();
+    makeOwnTransferEventEmitter: EventEmitter<any> = new EventEmitter<any>();
 
     private accountNumber: string;
 
@@ -23,5 +24,9 @@ export class AccountDetailsComponent implements OnInit {
 
     onGoBackClicked() {
         this.backToDetailsEventEmitter.emit();
+    }
+
+    onMakeOwnTransferClicked() {
+        this.makeOwnTransferEventEmitter.emit();
     }
 }

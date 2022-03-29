@@ -63,7 +63,6 @@ export class AccountCreateComponent implements OnInit {
     }
 }
 
-export type AccountCreateAction = 'SHOW_LIST';
-export const AccountCreateAction = {
-    SHOW_LIST: 'SHOW_LIST' as AccountCreateAction
-};
+export enum AccountCreateAction {
+    SHOW_LIST= 'SHOW_LIST'
+}

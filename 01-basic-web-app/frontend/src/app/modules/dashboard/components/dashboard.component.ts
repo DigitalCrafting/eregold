@@ -10,6 +10,7 @@ import {
 } from "../../accounts/account-create/components/account-create.component";
 import {EregoldRoutes} from "../../../utils/routes.enum";
 import {AccountDetailsComponent} from "../../accounts/account-details/components/account-details.component";
+import {OwnTransferComponent} from "../../transfer/own-transfer/components/own-transfer.component";
 
 @Component({
     selector: 'dashboard',
@@ -30,6 +31,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     accountDetailsComponent: AccountDetailsComponent;
     backToListSubscription: Subscription;
+    makeOwnTransferSubscription: Subscription;
+
+    ownTransferComponent: OwnTransferComponent;
+    ownTransferBackSubscription: Subscription;
 
     constructor(private _userContext: UserContext,
                 private _router: Router) {
@@ -76,7 +81,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.backToListSubscription = this.accountDetailsComponent.backToDetailsEventEmitter.subscribe(() => {
             this.showAccountsList();
         })
+        this.makeOwnTransferSubscription = this.accountDetailsComponent.makeOwnTransferEventEmitter.subscribe(() => {
+            this.showOwnTransfer(accountNumber);
+        });
+    }
 
+    private showOwnTransfer(accountNumber: string) {
+        this.cleanUp();
+        this.ownTransferComponent = this.componentManager.show(OwnTransferComponent, accountNumber);
+        this.ownTransferBackSubscription = this.ownTransferComponent.backEventEmitter.subscribe(() => {
+            this.showAccountDetails(accountNumber);
+        })
     }
 
     private cleanUp() {
@@ -88,9 +103,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         delete this.accountCreateEventSubscription;
         this.backToListSubscription?.unsubscribe();
         delete this.backToListSubscription;
+        this.makeOwnTransferSubscription?.unsubscribe();
+        delete this.makeOwnTransferSubscription;
+        this.ownTransferBackSubscription?.unsubscribe();
+        delete this.ownTransferBackSubscription;
 
         delete this.accountCreateComponent;
         delete this.accountsListComponent;
         delete this.accountDetailsComponent;
+        delete this.ownTransferComponent;
     }
 }
