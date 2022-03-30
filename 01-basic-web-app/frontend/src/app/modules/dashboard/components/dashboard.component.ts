@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, ViewChild} from '@angular/core';
 import {UserContext} from "../../common/user.context";
 import {Router} from "@angular/router";
 import {DynamicComponentManager} from "../../../core/dynamic-component-manager/dynamic-component-manager";
@@ -17,7 +17,7 @@ import {OwnTransferComponent} from "../../transfer/own-transfer/components/own-t
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DashboardComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild('componentManager')
     componentManager: DynamicComponentManager;
@@ -40,14 +40,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 private _router: Router) {
     }
 
-    ngOnInit(): void {
+    ngAfterViewInit() {
         if (!this._userContext.isLoggedIn) {
             this._router.navigate([EregoldRoutes.LOGIN]);
+        } else {
+            this.showAccountsList();
         }
-    }
-
-    ngAfterViewInit() {
-        this.showAccountsList();
     }
 
     ngOnDestroy() {

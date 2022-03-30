@@ -10,7 +10,7 @@ public final class TransferConverter {
         TransactionEntity entity = new TransactionEntity();
 
         entity.setAccountNumber(transfer.getSrcAccount());
-        entity.setDstAccountNumber(transfer.getDstAccount());
+        entity.setForeignAccountNumber(transfer.getDstAccount());
         entity.setDescription(transfer.getDescription());
         entity.setType(TransactionTypeEnum.TRANSFER.name());
         entity.setCurrency(transfer.getCurrency().name());
@@ -24,7 +24,7 @@ public final class TransferConverter {
         TransactionEntity entity = new TransactionEntity();
 
         entity.setAccountNumber(transfer.getDstAccount());
-        entity.setDstAccountNumber(transfer.getSrcAccount());
+        entity.setForeignAccountNumber(transfer.getSrcAccount());
         entity.setDescription(transfer.getDescription());
         entity.setType(TransactionTypeEnum.TRANSFER.name());
         entity.setCurrency(transfer.getCurrency().name());

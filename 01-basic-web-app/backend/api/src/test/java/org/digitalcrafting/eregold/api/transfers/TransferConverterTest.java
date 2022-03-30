@@ -32,7 +32,7 @@ class TransferConverterTest {
         assertEquals(CurrencyEnum.GLD.name(), srcTransactionEntity.getCurrency());
         assertEquals("Test transfer", srcTransactionEntity.getDescription());
         assertEquals("12ERGD12345", srcTransactionEntity.getAccountNumber());
-        assertEquals("12ERGD67890", srcTransactionEntity.getDstAccountNumber());
+        assertEquals("12ERGD67890", srcTransactionEntity.getForeignAccountNumber());
     }
 
     @Test
@@ -46,7 +46,7 @@ class TransferConverterTest {
         assertEquals(BigDecimal.TEN, dstTransactionEntity.getAmount());
         assertEquals(CurrencyEnum.GLD.name(), dstTransactionEntity.getCurrency());
         assertEquals("Test transfer", dstTransactionEntity.getDescription());
-        assertEquals("12ERGD12345", dstTransactionEntity.getDstAccountNumber());
+        assertEquals("12ERGD12345", dstTransactionEntity.getForeignAccountNumber());
         assertEquals("12ERGD67890", dstTransactionEntity.getAccountNumber());
     }
 }

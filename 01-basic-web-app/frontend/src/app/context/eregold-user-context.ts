@@ -11,8 +11,8 @@ export class EregoldUserContext {
     constructor(private _accountsService: AccountsService) {
     }
 
-    async getAccounts(): Promise<Array<AccountModel>> {
-        if (!this._accounts) {
+    async getAccounts(reload = false): Promise<Array<AccountModel>> {
+        if (!this._accounts || reload) {
             this._accounts = await this._accountsService.getAccounts();
         }
         return this._accounts;

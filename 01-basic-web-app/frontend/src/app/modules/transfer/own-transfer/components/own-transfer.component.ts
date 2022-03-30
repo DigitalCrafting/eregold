@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {EregoldUserContext} from "../../../../context/eregold-user-context";
 import {AccountModel, CurrencyEnum} from "../../../../models/account.models";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {TransfersService} from "../../../../services/transfers.service";
 
 @Component({
     selector: 'own-transfer',
@@ -29,7 +30,8 @@ export class OwnTransferComponent implements OnInit {
     private initialAccountNumber: string;
     private allAccountsList: Array<AccountModel>;
 
-    constructor(private _userContext: EregoldUserContext) {
+    constructor(private _userContext: EregoldUserContext,
+                private _transfersService: TransfersService) {
     }
 
     setContext(accountNumber: string) {
@@ -53,9 +55,11 @@ export class OwnTransferComponent implements OnInit {
 
     onTransferClicked() {
         if (this.formGroup.valid) {
-            // TODO Api call
+            this._transfersService.transfer(this.formGroup.getRawValue()).subscribe(async () => {
+                await this._userContext.getAccounts(true);
+                this.backEventEmitter.emit();
+            });
         }
-        this.backEventEmitter.emit();
     }
 
     private initFormGroupHandlers() {

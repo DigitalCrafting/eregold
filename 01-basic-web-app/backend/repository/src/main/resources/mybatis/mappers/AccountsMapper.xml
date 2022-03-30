@@ -30,4 +30,10 @@
         INSERT INTO customer_accounts (customer_id, account_number)
         VALUES (#{customerId}, #{accountNumber})
     </insert>
+
+    <update id="updateAccountBalance">
+        UPDATE accounts
+        SET current_balance = #{balance}
+        WHERE account_number = #{accountNumber}
+    </update>
 </mapper>
