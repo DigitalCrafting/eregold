@@ -5,7 +5,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 @Injectable({
     providedIn: 'root'
 })
-export class TransfersService {
+export class TransferService {
     private baseUrl = "http://localhost:8080/v1/transfers";
     private httpOptions = {
         headers: new HttpHeaders({

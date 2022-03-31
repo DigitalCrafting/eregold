@@ -4,12 +4,48 @@ import {OwnTransferComponent} from './own-transfer.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import {EregoldUserContext} from "../../../../context/eregold-user-context";
+import {AccountModel, AccountTypeEnum, CurrencyEnum} from "../../../../models/account.models";
+import {By} from "@angular/platform-browser";
+import {TransferRequest, TransferService} from "../../../../services/transfer.service";
+import {Observable, of} from "rxjs";
 
 describe('OwnTransferComponent', () => {
     let component: OwnTransferComponent;
     let fixture: ComponentFixture<OwnTransferComponent>;
+    let eregoldUserContext: EregoldUserContext;
+    let transferService: TransferService;
+
+    let mockAccountsList = Promise.resolve([
+        {
+            accountNumber: '12ERGD12345',
+            accountName: 'Test name',
+            currentBalance: 12.0,
+            currency: CurrencyEnum.GLD,
+            type: AccountTypeEnum.DEBIT
+        } as AccountModel,
+        {
+            accountNumber: '12ERGD67890',
+            accountName: 'Test name',
+            currentBalance: 90.0,
+            currency: CurrencyEnum.GLD,
+            type: AccountTypeEnum.SAVING
+        } as AccountModel
+    ]);
 
     beforeEach(async () => {
+        eregoldUserContext = {
+            async getAccounts(): Promise<Array<AccountModel>> {
+                return mockAccountsList;
+            }
+        } as EregoldUserContext;
+
+        transferService = {
+            transfer(request: TransferRequest): Observable<any> {
+                return of(true);
+            }
+        } as TransferService;
+
         await TestBed.configureTestingModule({
             imports: [
                 HttpClientModule,
@@ -17,7 +53,11 @@ describe('OwnTransferComponent', () => {
                 ReactiveFormsModule,
                 CommonModule
             ],
-            declarations: [OwnTransferComponent]
+            declarations: [OwnTransferComponent],
+            providers: [
+                {provide: EregoldUserContext, useValue: eregoldUserContext},
+                {provide: TransferService, useValue: transferService}
+            ]
         })
             .compileComponents();
     });
@@ -30,5 +70,63 @@ describe('OwnTransferComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should init form group and limit dstAccountList', async () => {
+        component.setContext('12ERGD12345')
+        await component.ngOnInit();
+
+        expect(component.srcAccountList).toBeTruthy();
+        expect(component.dstAccountList).toBeTruthy();
+        expect(component.dstAccountList.length).toEqual(1);
+        expect(component.dstAccountList[0].accountNumber).toEqual('12ERGD67890')
+    });
+
+    it('should have "transfer" button disabled initially', () => {
+        const transferButton = fixture.debugElement.query(By.css('#transferButton'));
+        expect(transferButton.nativeElement.disabled).toBeTruthy();
+    });
+
+    describe("when the form is filled", async () => {
+        beforeEach(async () => {
+            component.setContext('12ERGD12345')
+            await component.ngOnInit();
+
+            component.formGroup.patchValue({
+                dstAccount: '12ERGD67890',
+                description: 'Test',
+                amount: 10
+            });
+
+            fixture.detectChanges();
+        })
+
+        it('should have "transfer" button enabled', async () => {
+            const transferButton = fixture.debugElement.query(By.css('#transferButton'));
+            expect(transferButton.nativeElement.disabled).toBeFalsy();
+        });
+
+        it('should call transfer api on "transfer" click', async () => {
+            const spy = spyOn(transferService, 'transfer');
+
+            const transferButton = fixture.debugElement.query(By.css('#transferButton'));
+            transferButton.nativeElement.click();
+
+            expect(spy).toHaveBeenCalledWith({
+                srcAccount: '12ERGD12345',
+                dstAccount: '12ERGD67890',
+                description: 'Test',
+                amount: 10,
+                currency: CurrencyEnum.GLD
+            });
+        });
+    })
+
+    it('should emit event on \"cancel\" click', () => {
+        const spy = spyOn(component.backEventEmitter, 'emit');
+        const cancelButton = fixture.debugElement.query(By.css('#transferCancelButton'));
+
+        cancelButton.nativeElement.click();
+        expect(spy).toHaveBeenCalled();
     });
 });

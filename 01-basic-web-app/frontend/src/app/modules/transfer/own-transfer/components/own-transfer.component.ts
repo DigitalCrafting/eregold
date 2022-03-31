@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {EregoldUserContext} from "../../../../context/eregold-user-context";
 import {AccountModel, CurrencyEnum} from "../../../../models/account.models";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {TransfersService} from "../../../../services/transfers.service";
+import {TransferService} from "../../../../services/transfer.service";
 
 @Component({
     selector: 'own-transfer',
@@ -31,7 +31,7 @@ export class OwnTransferComponent implements OnInit {
     private allAccountsList: Array<AccountModel>;
 
     constructor(private _userContext: EregoldUserContext,
-                private _transfersService: TransfersService) {
+                private _transfersService: TransferService) {
     }
 
     setContext(accountNumber: string) {
