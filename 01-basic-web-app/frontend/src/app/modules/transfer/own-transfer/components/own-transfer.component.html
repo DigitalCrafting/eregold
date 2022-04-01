@@ -12,7 +12,10 @@
                                     formControlName="srcAccount"
                             >
                                 <ng-container *ngFor="let account of srcAccountList">
-                                    <option [value]="account.accountNumber">{{ account.accountNumber}}</option>
+                                    <option [value]="account.accountNumber">
+                                        {{ account.accountName }}
+                                        {{ account.accountNumber}}
+                                    </option>
                                 </ng-container>
                             </select>
                         </div>
@@ -26,7 +29,10 @@
                                     formControlName="dstAccount"
                             >
                                 <ng-container *ngFor="let account of dstAccountList">
-                                    <option [value]="account.accountNumber">{{ account.accountNumber}}</option>
+                                    <option [value]="account.accountNumber">
+                                        {{ account.accountName }}
+                                        {{ account.accountNumber}}
+                                    </option>
                                 </ng-container>
                             </select>
                         </div>

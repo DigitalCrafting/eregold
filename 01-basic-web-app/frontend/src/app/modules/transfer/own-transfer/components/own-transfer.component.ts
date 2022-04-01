@@ -65,10 +65,9 @@ export class OwnTransferComponent implements OnInit {
     private initFormGroupHandlers() {
         this.formGroup.get('srcAccount').valueChanges.subscribe(chosenAcc => {
             this.dstAccountList = this.allAccountsList.filter(account => account.accountNumber !== chosenAcc)
-        });
-
-        this.formGroup.get('dstAccount').valueChanges.subscribe(chosenAcc => {
-            this.srcAccountList = this.allAccountsList.filter(account => account.accountNumber !== chosenAcc)
+            if (this.dstAccountList.length > 0) {
+                this.formGroup.get('dstAccount').setValue(this.dstAccountList[0].accountNumber);
+            }
         });
     }
 }
