@@ -12,6 +12,13 @@ import {EregoldRoutes} from "../../../utils/routes.enum";
 import {AccountDetailsComponent} from "../../accounts/account-details/components/account-details.component";
 import {OwnTransferComponent} from "../../transfer/own-transfer/components/own-transfer.component";
 
+enum DashboardPage {
+    ACCOUNTS_LIST = 'ACCOUNTS_LIST',
+    ACCOUNT_DETAILS = 'ACCOUNT_DETAILS',
+    ACCOUNT_CREATE = 'ACCOUNT_CREATE',
+    OWN_TRANSFER = 'OWN_TRANSFER'
+}
+
 @Component({
     selector: 'dashboard',
     templateUrl: './dashboard.component.html',
@@ -61,6 +68,9 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
         this.showDetailsSubscription = this.accountsListComponent.showDetailsEventEmitter.subscribe(accountNumber => {
             this.showAccountDetails(accountNumber);
         })
+        this.makeOwnTransferSubscription = this.accountsListComponent.makeOwnTransferEventEmitter.subscribe(() => {
+           this.showOwnTransfer(DashboardPage.ACCOUNTS_LIST);
+        });
     }
 
     private showAccountCreate() {
@@ -80,15 +90,19 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
             this.showAccountsList();
         })
         this.makeOwnTransferSubscription = this.accountDetailsComponent.makeOwnTransferEventEmitter.subscribe(() => {
-            this.showOwnTransfer(accountNumber);
+            this.showOwnTransfer(DashboardPage.ACCOUNT_DETAILS, accountNumber);
         });
     }
 
-    private showOwnTransfer(accountNumber: string) {
+    private showOwnTransfer(backTo: DashboardPage, accountNumber?: string) {
         this.cleanUp();
         this.ownTransferComponent = this.componentManager.show(OwnTransferComponent, accountNumber);
         this.ownTransferBackSubscription = this.ownTransferComponent.backEventEmitter.subscribe(() => {
-            this.showAccountDetails(accountNumber);
+            if (backTo === DashboardPage.ACCOUNTS_LIST) {
+                this.showAccountsList();
+            } else if (backTo === DashboardPage.ACCOUNT_DETAILS) {
+                this.showAccountDetails(accountNumber);
+            }
         })
     }
 

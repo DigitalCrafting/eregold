@@ -10,6 +10,7 @@ import {EregoldUserContext} from "../../../../context/eregold-user-context";
 export class AccountsListComponent implements OnInit {
 
     createAccountEventEmitter: EventEmitter<any> = new EventEmitter();
+    makeOwnTransferEventEmitter: EventEmitter<any> = new EventEmitter();
     showDetailsEventEmitter: EventEmitter<string> = new EventEmitter<string>();
     accountsList: Array<AccountModel>;
 
@@ -26,5 +27,9 @@ export class AccountsListComponent implements OnInit {
 
     onAddAccountClicked() {
         this.createAccountEventEmitter.emit();
+    }
+
+    onMakeOwnTransferClicked() {
+        this.makeOwnTransferEventEmitter.emit();
     }
 }
