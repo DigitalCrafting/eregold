@@ -29,4 +29,8 @@ public class TransactionsEntityManager {
         entity.setId(transactionId);
         this.mapper.insert(entity);
     }
+
+    public List<TransactionEntity> getByAccountNumber(String accountNumber) {
+        return this.mapper.getByAccountNumber(accountNumber);
+    }
 }

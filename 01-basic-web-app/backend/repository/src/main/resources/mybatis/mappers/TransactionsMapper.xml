@@ -26,4 +26,8 @@
                 #{description},
                 #{type})
     </insert>
+
+    <select id="getByAccountNumber" parameterType="java.lang.String" resultMap="TransactionEntityMap">
+        SELECT * FROM transactions WHERE account_number = #{accountNumber}
+    </select>
 </mapper>

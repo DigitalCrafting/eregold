@@ -1,5 +1,6 @@
 package org.digitalcrafting.eregold.api.accounts;
 
+import org.digitalcrafting.eregold.domain.accounts.AccountDetailsModel;
 import org.digitalcrafting.eregold.domain.accounts.AccountModel;
 import org.digitalcrafting.eregold.domain.accounts.AccountTypeEnum;
 import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
@@ -10,12 +11,14 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class AccountsConverter {
-    public static List<AccountModel> convert(List<AccountEntity> entityList) {
+    private AccountsConverter() {}
+
+    public static List<AccountModel> toModelList(List<AccountEntity> entityList) {
         List<AccountModel> accountModelList = null;
 
         if (entityList != null && !entityList.isEmpty()) {
             accountModelList = entityList.stream()
-                    .map(AccountsConverter::convert)
+                    .map(AccountsConverter::toModel)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         }
@@ -23,7 +26,7 @@ public final class AccountsConverter {
         return accountModelList;
     }
 
-    public static AccountModel convert(AccountEntity entity) {
+    public static AccountModel toModel(AccountEntity entity) {
         if (entity == null) {
             return null;
         }
@@ -34,6 +37,20 @@ public final class AccountsConverter {
                 .currency(CurrencyEnum.valueOf(entity.getCurrency()))
                 .type(AccountTypeEnum.valueOf(entity.getType()))
                 .currentBalance(entity.getCurrentBalance())
+                .build();
+    }
+
+    public static AccountDetailsModel toDetailsModel(AccountEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+
+        return AccountDetailsModel.builder()
+                .accountNumber(entity.getAccountNumber())
+                .accountName(entity.getAccountName())
+                .currentBalance(entity.getCurrentBalance())
+                .currency(CurrencyEnum.valueOf(entity.getCurrency()))
+                .type(AccountTypeEnum.valueOf(entity.getType()))
                 .build();
     }
 }

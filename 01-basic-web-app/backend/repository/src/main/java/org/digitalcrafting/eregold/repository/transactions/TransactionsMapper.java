@@ -3,6 +3,8 @@ package org.digitalcrafting.eregold.repository.transactions;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface TransactionsMapper {
 
@@ -10,4 +12,6 @@ public interface TransactionsMapper {
     Long getNextId();
 
     void insert(TransactionEntity entity);
+
+    List<TransactionEntity> getByAccountNumber(String accountNumber);
 }

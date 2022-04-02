@@ -21,7 +21,7 @@ class AccountsConverterTest {
         List<AccountEntity> entityList = null;
 
         // When
-        List<AccountModel> modelList = AccountsConverter.convert(entityList);
+        List<AccountModel> modelList = AccountsConverter.toModelList(entityList);
 
         // Then
         assertNull(modelList);
@@ -33,7 +33,7 @@ class AccountsConverterTest {
         List<AccountEntity> entityList = Collections.emptyList();
 
         // When
-        List<AccountModel> modelList = AccountsConverter.convert(entityList);
+        List<AccountModel> modelList = AccountsConverter.toModelList(entityList);
 
         // Then
         assertNull(modelList);
@@ -46,7 +46,7 @@ class AccountsConverterTest {
         entityList.add(null);
 
         // When
-        List<AccountModel> modelList = AccountsConverter.convert(entityList);
+        List<AccountModel> modelList = AccountsConverter.toModelList(entityList);
 
         // Then
         assertNotNull(modelList);
@@ -67,7 +67,7 @@ class AccountsConverterTest {
         );
 
         // When
-        List<AccountModel> modelList = AccountsConverter.convert(entityList);
+        List<AccountModel> modelList = AccountsConverter.toModelList(entityList);
 
         // Then
         assertNotNull(modelList);

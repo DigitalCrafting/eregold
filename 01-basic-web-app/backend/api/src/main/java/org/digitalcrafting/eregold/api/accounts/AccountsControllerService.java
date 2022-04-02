@@ -4,9 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.digitalcrafting.eregold.authentication.EregoldSessionContext;
 import org.digitalcrafting.eregold.domain.accounts.AccountDetailsModel;
 import org.digitalcrafting.eregold.domain.accounts.AccountModel;
+import org.digitalcrafting.eregold.domain.transactions.TransactionModel;
+import org.digitalcrafting.eregold.domain.transactions.TransactionsConverter;
 import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
 import org.digitalcrafting.eregold.repository.accounts.AccountsEntityManager;
+import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
+import org.digitalcrafting.eregold.repository.transactions.TransactionsEntityManager;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -16,12 +22,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountsControllerService {
 
+    private final TransactionsEntityManager transactionsEntityManager;
     private final AccountsEntityManager accountsEntityManager;
     private final EregoldSessionContext sessionContext;
 
     public List<AccountModel> getAccounts() {
         List<AccountEntity> entityList = accountsEntityManager.getAccountsForCustomer(sessionContext.getCustomerId());
-        return AccountsConverter.convert(entityList);
+        return AccountsConverter.toModelList(entityList);
     }
 
     public void createAccount(CreateAccountRequest request) {
@@ -46,6 +53,17 @@ public class AccountsControllerService {
     }
 
     public AccountDetailsModel getAccountDetails(String accountNumber) {
-        return null;
+        AccountEntity entity = accountsEntityManager.getByAccountNumber(accountNumber);
+
+        if (entity == null) {
+            throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
+        }
+
+        AccountDetailsModel detailsModel = AccountsConverter.toDetailsModel(entity);
+        List<TransactionEntity> transactionEntityList = transactionsEntityManager.getByAccountNumber(accountNumber);
+        List<TransactionModel> transactionModelList = TransactionsConverter.toModelList(transactionEntityList);
+        detailsModel.setTransactionsList(transactionModelList);
+
+        return detailsModel;
     }
 }
