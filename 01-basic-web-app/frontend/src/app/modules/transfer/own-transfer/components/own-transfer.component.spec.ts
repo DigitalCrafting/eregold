@@ -5,10 +5,11 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {EregoldUserContext} from "../../../../context/eregold-user-context";
-import {AccountModel, AccountTypeEnum, CurrencyEnum} from "../../../../models/account.models";
+import {AccountModel} from "../../../../models/account.models";
 import {By} from "@angular/platform-browser";
 import {TransferRequest, TransferService} from "../../../../services/transfer.service";
 import {Observable, of} from "rxjs";
+import {AccountTypeEnum, CurrencyEnum} from "../../../../models/enums";
 
 describe('OwnTransferComponent', () => {
     let component: OwnTransferComponent;

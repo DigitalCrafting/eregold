@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Date;
 
 @Data
@@ -17,8 +19,15 @@ public class TransactionModel {
     private String accountNumber;
     private String foreignAccountNumber;
     private String description;
-    private String type;
-    private String currency;
+    private TransactionTypeEnum type;
+    private CurrencyEnum currency;
     private BigDecimal amount;
     private Date date;
+
+    public static class DateDescendingComparator implements Comparator<TransactionModel> {
+        @Override
+        public int compare(TransactionModel o1, TransactionModel o2) {
+            return o2.getDate().compareTo(o1.getDate());
+        }
+    }
 }

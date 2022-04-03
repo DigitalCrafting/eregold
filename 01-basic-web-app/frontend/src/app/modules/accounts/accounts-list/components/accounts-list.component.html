@@ -4,7 +4,6 @@
         <th scope="col">Account name</th>
         <th scope="col">Account number</th>
         <th scope="col">Current balance</th>
-        <th scope="col">Currency</th>
         <th scope="col">Type</th>
         <th scope="col"></th>
     </tr>
@@ -15,8 +14,7 @@
             <tr>
                 <td>{{account?.accountName}}</td>
                 <td>{{account?.accountNumber}}</td>
-                <td>{{account?.currentBalance}}</td>
-                <td>{{account?.currency}}</td>
+                <td>{{account?.currentBalance | currency:'G'}}</td>
                 <td>{{account?.type}}</td>
                 <td>
                     <button type="button" class="btn btn-outline-secondary"

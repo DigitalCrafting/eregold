@@ -1,5 +1,6 @@
 package org.digitalcrafting.eregold.domain.transactions;
 
+import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
 import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
 
 import java.util.List;
@@ -33,8 +34,8 @@ public final class TransactionsConverter {
                 .accountNumber(entity.getAccountNumber())
                 .foreignAccountNumber(entity.getForeignAccountNumber())
                 .description(entity.getDescription())
-                .type(entity.getType())
-                .currency(entity.getCurrency())
+                .type(TransactionTypeEnum.valueOf(entity.getType()))
+                .currency(CurrencyEnum.valueOf(entity.getCurrency()))
                 .amount(entity.getAmount())
                 .date(entity.getDate())
                 .build();

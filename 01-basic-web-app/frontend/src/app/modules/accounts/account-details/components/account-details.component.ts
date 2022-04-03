@@ -1,4 +1,6 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
+import {AccountsService} from "../../../../services/accounts.service";
+import {AccountDetailsModel} from "../../../../models/account.models";
 
 @Component({
     selector: 'account-details',
@@ -10,16 +12,19 @@ export class AccountDetailsComponent implements OnInit {
     backToDetailsEventEmitter: EventEmitter<any> = new EventEmitter<any>();
     makeOwnTransferEventEmitter: EventEmitter<any> = new EventEmitter<any>();
 
+    accountDetails: AccountDetailsModel;
+
     private accountNumber: string;
 
-    constructor() {
+    constructor(private _accountsService: AccountsService) {
     }
 
     setContext(accountNumber: string) {
         this.accountNumber = accountNumber;
     }
 
-    ngOnInit(): void {
+    async ngOnInit() {
+        this.accountDetails = await this._accountsService.getAccountDetails(this.accountNumber);
     }
 
     onGoBackClicked() {

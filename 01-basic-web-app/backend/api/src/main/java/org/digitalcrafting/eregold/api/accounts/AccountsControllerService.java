@@ -16,6 +16,7 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -62,6 +63,7 @@ public class AccountsControllerService {
         AccountDetailsModel detailsModel = AccountsConverter.toDetailsModel(entity);
         List<TransactionEntity> transactionEntityList = transactionsEntityManager.getByAccountNumber(accountNumber);
         List<TransactionModel> transactionModelList = TransactionsConverter.toModelList(transactionEntityList);
+        transactionModelList.sort(new TransactionModel.DateDescendingComparator());
         detailsModel.setTransactionsList(transactionModelList);
 
         return detailsModel;

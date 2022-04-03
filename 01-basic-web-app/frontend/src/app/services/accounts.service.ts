@@ -22,6 +22,10 @@ export class AccountsService {
         return this._httpClient.get(this.baseUrl, this.httpOptions).toPromise();
     }
 
+    public getAccountDetails(accountNumber: string): Promise<any> {
+        return this._httpClient.get(`${this.baseUrl}/${accountNumber}`, this.httpOptions).toPromise();
+    }
+
     public createAccount(request: CreateAccountRequest) {
         return this._httpClient.post(this.baseUrl, request, this.httpOptions).pipe();
     }

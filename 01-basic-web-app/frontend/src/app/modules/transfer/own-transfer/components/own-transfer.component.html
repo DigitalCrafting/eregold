@@ -1,7 +1,7 @@
 <form [formGroup]="formGroup">
     <div class="container overflow-hidden">
         <div class="row gy-2">
-            <div class="col-6">
+            <div class="col-7">
                 <div class="container">
                     <div class="row">
                         <div class="form-group">
@@ -15,6 +15,7 @@
                                     <option [value]="account.accountNumber">
                                         {{ account.accountName }}
                                         {{ account.accountNumber}}
+                                        {{ account.currentBalance | currency:'G' }}
                                     </option>
                                 </ng-container>
                             </select>
@@ -32,6 +33,7 @@
                                     <option [value]="account.accountNumber">
                                         {{ account.accountName }}
                                         {{ account.accountNumber}}
+                                        {{ account.currentBalance | currency:'G' }}
                                     </option>
                                 </ng-container>
                             </select>
@@ -39,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-5">
                 <div class="container">
                     <div class="row">
                         <div class="col-8">

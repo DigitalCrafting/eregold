@@ -1,3 +1,5 @@
+import {AccountTypeEnum, CurrencyEnum} from "./enums";
+import {TransactionModel} from "./transaction.models";
 
 export interface AccountModel {
     accountNumber: string;
@@ -7,18 +9,16 @@ export interface AccountModel {
     type: AccountTypeEnum;
 }
 
-export type AccountTypeEnum = 'DEBIT' | 'SAVING';
-export const AccountTypeEnum = {
-    DEBIT: 'DEBIT' as AccountTypeEnum,
-    SAVING: 'SAVING' as AccountTypeEnum
-};
-
-export type CurrencyEnum = 'GLD';
-export const CurrencyEnum = {
-    GLD: 'GLD' as CurrencyEnum
-};
-
 export interface CreateAccountRequest {
     accountType: AccountTypeEnum;
     currency: CurrencyEnum;
+}
+
+export interface AccountDetailsModel {
+    accountNumber: string;
+    accountName: string;
+    currentBalance: number;
+    currency: CurrencyEnum;
+    type: AccountTypeEnum;
+    transactionsList: Array<TransactionModel>;
 }

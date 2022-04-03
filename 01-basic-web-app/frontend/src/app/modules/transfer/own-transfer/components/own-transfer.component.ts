@@ -1,8 +1,9 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {EregoldUserContext} from "../../../../context/eregold-user-context";
-import {AccountModel, CurrencyEnum} from "../../../../models/account.models";
+import {AccountModel} from "../../../../models/account.models";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TransferService} from "../../../../services/transfer.service";
+import {CurrencyEnum} from "../../../../models/enums";
 
 @Component({
     selector: 'own-transfer',

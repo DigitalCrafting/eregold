@@ -1,9 +1,10 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AccountsListComponent} from './accounts-list.component';
 import {By} from "@angular/platform-browser";
-import {AccountModel, AccountTypeEnum, CurrencyEnum} from "../../../../models/account.models";
+import {AccountModel} from "../../../../models/account.models";
 import {EregoldUserContext} from "../../../../context/eregold-user-context";
+import {AccountTypeEnum, CurrencyEnum} from "../../../../models/enums";
 
 describe('AccountsListComponent', () => {
     let component: AccountsListComponent;
