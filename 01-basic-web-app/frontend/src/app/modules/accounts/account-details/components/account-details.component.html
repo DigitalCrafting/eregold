@@ -33,11 +33,19 @@
     </div>
     <div class="row gy-4 margin-bottom-2em">
         <div class="col-3">
-            <button type="button" class="btn btn-secondary" (click)="onGoBackClicked()">Back to list</button>
+            <button id="backButton"
+                    type="button"
+                    class="btn btn-secondary"
+                    (click)="onGoBackClicked()"
+            >Back to list</button>
         </div>
         <div class="col-6"></div>
         <div class="col-3">
-            <button type="button" class="btn btn-primary float-right" (click)="onMakeOwnTransferClicked()">Own transfer</button>
+            <button id="ownTransferButton"
+                    type="button"
+                    class="btn btn-primary float-right"
+                    (click)="onMakeOwnTransferClicked()"
+            >Own transfer</button>
         </div>
     </div>
     <div class="row gy-4">

@@ -108,7 +108,7 @@ describe('OwnTransferComponent', () => {
         });
 
         it('should call transfer api on "transfer" click', async () => {
-            const spy = spyOn(transferService, 'transfer');
+            const spy = spyOn(transferService, 'transfer').and.returnValue(of(true));
 
             const transferButton = fixture.debugElement.query(By.css('#transferButton'));
             transferButton.nativeElement.click();

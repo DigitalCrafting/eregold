@@ -4,6 +4,7 @@ import {LoginComponent} from './login.component';
 import {LoginService} from "../../../services/login.service";
 import {Router} from "@angular/router";
 import {By} from "@angular/platform-browser";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -18,6 +19,10 @@ describe('LoginComponent', () => {
             providers: [
                 {provide: LoginService, useValue: loginService},
                 {provide: Router, useValue: {}},
+            ],
+            imports: [
+                ReactiveFormsModule,
+                FormsModule
             ]
         })
             .compileComponents();

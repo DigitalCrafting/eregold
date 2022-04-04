@@ -2,7 +2,8 @@ import {fakeAsync, TestBed} from "@angular/core/testing";
 import {HttpClientModule} from "@angular/common/http";
 import {EregoldUserContext} from "./eregold-user-context";
 import {AccountsService} from "../services/accounts.service";
-import {AccountModel, AccountTypeEnum, CurrencyEnum} from "../models/account.models";
+import {AccountModel} from "../models/account.models";
+import {AccountTypeEnum, CurrencyEnum} from "../models/enums";
 
 describe('EregoldUserContext', () => {
     let context: EregoldUserContext;
