@@ -1,17 +1,13 @@
-package org.digitalcrafting.eregold.api.accounts;
+package org.digitalcrafting.eregold.domain.accounts;
 
-import org.digitalcrafting.eregold.domain.accounts.AccountModel;
-import org.digitalcrafting.eregold.domain.accounts.AccountTypeEnum;
-import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
 import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class AccountsConverterTest {
 
@@ -24,7 +20,7 @@ class AccountsConverterTest {
         List<AccountModel> modelList = AccountsConverter.toModelList(entityList);
 
         // Then
-        assertNull(modelList);
+        Assertions.assertNull(modelList);
     }
 
     @Test
@@ -36,7 +32,7 @@ class AccountsConverterTest {
         List<AccountModel> modelList = AccountsConverter.toModelList(entityList);
 
         // Then
-        assertNull(modelList);
+        Assertions.assertNull(modelList);
     }
 
     @Test
@@ -49,8 +45,8 @@ class AccountsConverterTest {
         List<AccountModel> modelList = AccountsConverter.toModelList(entityList);
 
         // Then
-        assertNotNull(modelList);
-        assertTrue(modelList.isEmpty());
+        Assertions.assertNotNull(modelList);
+        Assertions.assertTrue(modelList.isEmpty());
     }
 
     @Test
@@ -70,12 +66,12 @@ class AccountsConverterTest {
         List<AccountModel> modelList = AccountsConverter.toModelList(entityList);
 
         // Then
-        assertNotNull(modelList);
-        assertEquals(1, modelList.size());
-        assertEquals(AccountTypeEnum.DEBIT, modelList.get(0).getType());
-        assertEquals(CurrencyEnum.GLD, modelList.get(0).getCurrency());
-        assertEquals(BigDecimal.ZERO, modelList.get(0).getCurrentBalance());
-        assertEquals("12ERGD123456", modelList.get(0).getAccountNumber());
-        assertEquals("Test account", modelList.get(0).getAccountName());
+        Assertions.assertNotNull(modelList);
+        Assertions.assertEquals(1, modelList.size());
+        Assertions.assertEquals(AccountTypeEnum.DEBIT, modelList.get(0).getType());
+        Assertions.assertEquals(CurrencyEnum.GLD, modelList.get(0).getCurrency());
+        Assertions.assertEquals(BigDecimal.ZERO, modelList.get(0).getCurrentBalance());
+        Assertions.assertEquals("12ERGD123456", modelList.get(0).getAccountNumber());
+        Assertions.assertEquals("Test account", modelList.get(0).getAccountName());
     }
 }

@@ -1,4 +1,4 @@
-package org.digitalcrafting.eregold.api.transfers;
+package org.digitalcrafting.eregold.domain.transfers;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransferRequest {
+public class TransferModel {
     private String srcAccount;
     private String dstAccount;
     private String description;

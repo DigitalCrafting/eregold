@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.digitalcrafting.eregold.authentication.EregoldSessionContext;
 import org.digitalcrafting.eregold.domain.accounts.AccountDetailsModel;
 import org.digitalcrafting.eregold.domain.accounts.AccountModel;
+import org.digitalcrafting.eregold.domain.accounts.AccountsConverter;
 import org.digitalcrafting.eregold.domain.transactions.TransactionModel;
 import org.digitalcrafting.eregold.domain.transactions.TransactionsConverter;
 import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
@@ -16,7 +17,6 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.Comparator;
 import java.util.List;
 
 @Service

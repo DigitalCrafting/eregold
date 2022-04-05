@@ -17,12 +17,12 @@ export class TransferService {
     constructor(private _httpClient: HttpClient) {
     }
 
-    public transfer(request: TransferRequest) {
+    public transfer(request: TransferModel) {
         return this._httpClient.post(this.baseUrl, request, this.httpOptions).pipe();
     }
 }
 
-export interface TransferRequest {
+export interface TransferModel {
     srcAccount?: string;
     dstAccount?: string;
     description?: string;

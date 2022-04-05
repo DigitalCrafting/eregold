@@ -7,7 +7,7 @@ import {CommonModule} from "@angular/common";
 import {EregoldUserContext} from "../../../../context/eregold-user-context";
 import {AccountModel} from "../../../../models/account.models";
 import {By} from "@angular/platform-browser";
-import {TransferRequest, TransferService} from "../../../../services/transfer.service";
+import {TransferModel, TransferService} from "../../../../services/transfer.service";
 import {Observable, of} from "rxjs";
 import {AccountTypeEnum, CurrencyEnum} from "../../../../models/enums";
 
@@ -42,7 +42,7 @@ describe('OwnTransferComponent', () => {
         } as EregoldUserContext;
 
         transferService = {
-            transfer(request: TransferRequest): Observable<any> {
+            transfer(request: TransferModel): Observable<any> {
                 return of(true);
             }
         } as TransferService;

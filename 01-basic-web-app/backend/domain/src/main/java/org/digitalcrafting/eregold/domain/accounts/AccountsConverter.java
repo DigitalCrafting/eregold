@@ -1,9 +1,5 @@
-package org.digitalcrafting.eregold.api.accounts;
+package org.digitalcrafting.eregold.domain.accounts;
 
-import org.digitalcrafting.eregold.domain.accounts.AccountDetailsModel;
-import org.digitalcrafting.eregold.domain.accounts.AccountModel;
-import org.digitalcrafting.eregold.domain.accounts.AccountTypeEnum;
-import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
 import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
 
 import java.util.List;

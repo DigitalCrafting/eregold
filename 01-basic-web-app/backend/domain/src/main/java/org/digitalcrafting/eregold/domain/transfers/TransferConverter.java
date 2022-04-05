@@ -1,4 +1,4 @@
-package org.digitalcrafting.eregold.api.transfers;
+package org.digitalcrafting.eregold.domain.transfers;
 
 import org.digitalcrafting.eregold.domain.transactions.TransactionTypeEnum;
 import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
@@ -6,7 +6,7 @@ import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
 import java.util.Date;
 
 public final class TransferConverter {
-    public static TransactionEntity convertToSrcTransaction(TransferRequest transfer, Date date) {
+    public static TransactionEntity toSrcTransactionEntity(TransferModel transfer, Date date) {
         TransactionEntity entity = new TransactionEntity();
 
         entity.setAccountNumber(transfer.getSrcAccount());
@@ -20,7 +20,7 @@ public final class TransferConverter {
         return entity;
     }
 
-    public static TransactionEntity convertToDstTransaction(TransferRequest transfer, Date date) {
+    public static TransactionEntity toDstTransactionEntity(TransferModel transfer, Date date) {
         TransactionEntity entity = new TransactionEntity();
 
         entity.setAccountNumber(transfer.getDstAccount());

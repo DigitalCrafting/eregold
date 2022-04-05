@@ -1,6 +1,8 @@
 package org.digitalcrafting.eregold.api.transfers;
 
 import lombok.RequiredArgsConstructor;
+import org.digitalcrafting.eregold.domain.transfers.TransferConverter;
+import org.digitalcrafting.eregold.domain.transfers.TransferModel;
 import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
 import org.digitalcrafting.eregold.repository.accounts.AccountsEntityManager;
 import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
@@ -18,12 +20,12 @@ public class TransfersControllerService {
     private final TransactionsEntityManager transactionsEntityManager;
     private final AccountsEntityManager accountsEntityManager;
 
-    public void transfer(TransferRequest request) {
+    public void transfer(TransferModel request) {
         Date transactionDate = new Date();
-        TransactionEntity srcTransaction = TransferConverter.convertToSrcTransaction(request, transactionDate);
+        TransactionEntity srcTransaction = TransferConverter.toSrcTransactionEntity(request, transactionDate);
 
         if (this.accountsEntityManager.getByAccountNumber(request.getDstAccount()) != null) {
-            TransactionEntity dstTransaction = TransferConverter.convertToDstTransaction(request, transactionDate);
+            TransactionEntity dstTransaction = TransferConverter.toDstTransactionEntity(request, transactionDate);
             this.transactionsEntityManager.insert(List.of(srcTransaction, dstTransaction));
             updateBalance(srcTransaction);
             updateBalance(dstTransaction);
