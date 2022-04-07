@@ -1,6 +1,16 @@
 version: "3.9"
 
 services:
+  eregold-backend:
+    build: ./backend
+    container_name: eregold-backend
+    ports:
+      - 8080:8080
+    volumes:
+      - ./backend:/app
+    networks:
+      - eregold-network
+
   eregold-frontend:
     build: ./frontend
     container_name: eregold-frontend
@@ -22,6 +32,8 @@ services:
       - "2345:5432"
     volumes:
       - ./database/data-dump/volume:/var/lib/postgresql/data/
+    networks:
+      - eregold-network
 
 networks:
   eregold-network:
