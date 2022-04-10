@@ -5,7 +5,7 @@ import org.digitalcrafting.eregold.authentication.EregoldSessionContext;
 import org.digitalcrafting.eregold.repository.customers.CustomerEntity;
 import org.digitalcrafting.eregold.repository.customers.CustomersEntityManager;
 import org.digitalcrafting.eregold.repository.users.UserEntity;
-import org.digitalcrafting.eregold.repository.users.UsersMapper;
+import org.digitalcrafting.eregold.repository.users.UsersEntityManager;
 import org.digitalcrafting.eregold.utils.EregoldJWTUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -17,13 +17,13 @@ import java.nio.charset.Charset;
 @Service
 @RequiredArgsConstructor
 public class LoginControllerService {
-    private final UsersMapper usersMapper;
+    private final UsersEntityManager usersEntityManager;
     private final CustomersEntityManager customersEntityManager;
     private final EregoldJWTUtils jwtUtils;
     private final EregoldSessionContext sessionContext;
 
     public ResponseEntity<LoginResponse> login(LoginRequest request) {
-        UserEntity userEntity = usersMapper.getByUserId(request.getUserId());
+        UserEntity userEntity = usersEntityManager.getByUserId(request.getUserId());
         if (userEntity == null) {
             return ResponseEntity.notFound().build();
         }

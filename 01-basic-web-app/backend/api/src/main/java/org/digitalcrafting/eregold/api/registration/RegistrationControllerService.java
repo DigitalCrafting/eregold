@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.digitalcrafting.eregold.repository.customers.CustomerEntity;
 import org.digitalcrafting.eregold.repository.customers.CustomersEntityManager;
 import org.digitalcrafting.eregold.repository.users.UserEntity;
-import org.digitalcrafting.eregold.repository.users.UsersMapper;
+import org.digitalcrafting.eregold.repository.users.UsersEntityManager;
 import org.digitalcrafting.eregold.utils.EregoldPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,12 +17,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class RegistrationControllerService {
-    private final UsersMapper usersMapper;
+    private final UsersEntityManager usersEntityManager;
     private final CustomersEntityManager customersEntityManager;
 
     @Transactional
     public RegisterResponse register(RegisterRequest request) {
-        if (usersMapper.getByUserId(request.getEmail()) != null) {
+        if (usersEntityManager.getByUserId(request.getEmail()) != null) {
             return new RegisterResponse(RegistrationStatusEnum.ALREADY_EXISTS);
         }
 
@@ -46,7 +46,7 @@ public class RegistrationControllerService {
                 .userId(request.getEmail())
                 .passwordHash(encodedPassword.get())
                 .build();
-        usersMapper.insert(userEntity);
+        usersEntityManager.insert(userEntity);
 
         String customerId = generateCustomerId();
 
