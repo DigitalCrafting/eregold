@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TransferService } from './transfer.service';
+import { TransactionsService } from './transactions.service';
 import {HttpClientModule} from "@angular/common/http";
 
 describe('TransfersService', () => {
-  let service: TransferService;
+  let service: TransactionsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -12,7 +12,7 @@ describe('TransfersService', () => {
           HttpClientModule
       ]
     });
-    service = TestBed.inject(TransferService);
+    service = TestBed.inject(TransactionsService);
   });
 
   it('should be created', () => {

@@ -6,7 +6,7 @@ import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
 import java.util.Date;
 
 public final class TransferConverter {
-    public static TransactionEntity toSrcTransactionEntity(TransferModel transfer, Date date) {
+    public static TransactionEntity toSrcTransactionEntity(TransactionModel transfer, Date date) {
         TransactionEntity entity = new TransactionEntity();
 
         entity.setAccountNumber(transfer.getSrcAccount());
@@ -20,7 +20,7 @@ public final class TransferConverter {
         return entity;
     }
 
-    public static TransactionEntity toDstTransactionEntity(TransferModel transfer, Date date) {
+    public static TransactionEntity toDstTransactionEntity(TransactionModel transfer, Date date) {
         TransactionEntity entity = new TransactionEntity();
 
         entity.setAccountNumber(transfer.getDstAccount());

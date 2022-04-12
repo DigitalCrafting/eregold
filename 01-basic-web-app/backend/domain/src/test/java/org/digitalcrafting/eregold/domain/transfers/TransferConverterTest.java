@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 class TransferConverterTest {
-    private TransferModel mockRequest = TransferModel.builder()
+    private TransactionModel mockRequest = TransactionModel.builder()
             .amount(BigDecimal.TEN)
             .currency(CurrencyEnum.GLD)
             .description("Test transfer")

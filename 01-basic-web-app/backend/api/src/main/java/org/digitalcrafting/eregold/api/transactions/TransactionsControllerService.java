@@ -1,8 +1,8 @@
-package org.digitalcrafting.eregold.api.transfers;
+package org.digitalcrafting.eregold.api.transactions;
 
 import lombok.RequiredArgsConstructor;
 import org.digitalcrafting.eregold.domain.transfers.TransferConverter;
-import org.digitalcrafting.eregold.domain.transfers.TransferModel;
+import org.digitalcrafting.eregold.domain.transfers.TransactionModel;
 import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
 import org.digitalcrafting.eregold.repository.accounts.AccountsEntityManager;
 import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
@@ -15,12 +15,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class TransfersControllerService {
+public class TransactionsControllerService {
 
     private final TransactionsEntityManager transactionsEntityManager;
     private final AccountsEntityManager accountsEntityManager;
 
-    public void transfer(TransferModel request) {
+    public void transfer(TransactionModel request) {
         Date transactionDate = new Date();
         TransactionEntity srcTransaction = TransferConverter.toSrcTransactionEntity(request, transactionDate);
 
@@ -33,6 +33,10 @@ public class TransfersControllerService {
             this.transactionsEntityManager.insert(srcTransaction);
             updateBalance(srcTransaction);
         }
+    }
+
+    public void deposit(TransactionModel request) {
+        // TODO
     }
 
     /* TODO change logic to update balance based on all transactions from day 1, after you create deposit logic

@@ -5,8 +5,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 @Injectable({
     providedIn: 'root'
 })
-export class TransferService {
-    private baseUrl = "http://localhost:8080/v1/transfers";
+export class TransactionsService {
+    private baseUrl = "http://localhost:8080/v1/transactions";
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'
@@ -17,12 +17,16 @@ export class TransferService {
     constructor(private _httpClient: HttpClient) {
     }
 
-    public transfer(request: TransferModel) {
-        return this._httpClient.post(this.baseUrl, request, this.httpOptions).pipe();
+    public transfer(request: TransactionModel) {
+        return this._httpClient.post(this.baseUrl + '/transfer', request, this.httpOptions).pipe();
+    }
+
+    public deposit(request: TransactionModel) {
+        return this._httpClient.post(this.baseUrl + '/deposit', request, this.httpOptions).pipe();
     }
 }
 
-export interface TransferModel {
+export interface TransactionModel {
     srcAccount?: string;
     dstAccount?: string;
     description?: string;

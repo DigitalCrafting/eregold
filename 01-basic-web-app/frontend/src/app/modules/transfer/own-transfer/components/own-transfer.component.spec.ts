@@ -7,7 +7,7 @@ import {CommonModule} from "@angular/common";
 import {EregoldUserContext} from "../../../../context/eregold-user-context";
 import {AccountModel} from "../../../../models/account.models";
 import {By} from "@angular/platform-browser";
-import {TransferModel, TransferService} from "../../../../services/transfer.service";
+import {TransactionModel, TransactionsService} from "../../../../services/transactions.service";
 import {Observable, of} from "rxjs";
 import {AccountTypeEnum, CurrencyEnum} from "../../../../models/enums";
 
@@ -15,7 +15,7 @@ describe('OwnTransferComponent', () => {
     let component: OwnTransferComponent;
     let fixture: ComponentFixture<OwnTransferComponent>;
     let eregoldUserContext: EregoldUserContext;
-    let transferService: TransferService;
+    let transactionsService: TransactionsService;
 
     let mockAccountsList = Promise.resolve([
         {
@@ -41,11 +41,11 @@ describe('OwnTransferComponent', () => {
             }
         } as EregoldUserContext;
 
-        transferService = {
-            transfer(request: TransferModel): Observable<any> {
+        transactionsService = {
+            transfer(request: TransactionModel): Observable<any> {
                 return of(true);
             }
-        } as TransferService;
+        } as TransactionsService;
 
         await TestBed.configureTestingModule({
             imports: [
@@ -57,7 +57,7 @@ describe('OwnTransferComponent', () => {
             declarations: [OwnTransferComponent],
             providers: [
                 {provide: EregoldUserContext, useValue: eregoldUserContext},
-                {provide: TransferService, useValue: transferService}
+                {provide: TransactionsService, useValue: transactionsService}
             ]
         })
             .compileComponents();
@@ -108,7 +108,7 @@ describe('OwnTransferComponent', () => {
         });
 
         it('should call transfer api on "transfer" click', async () => {
-            const spy = spyOn(transferService, 'transfer').and.returnValue(of(true));
+            const spy = spyOn(transactionsService, 'transfer').and.returnValue(of(true));
 
             const transferButton = fixture.debugElement.query(By.css('#transferButton'));
             transferButton.nativeElement.click();

@@ -1,4 +1,4 @@
-package org.digitalcrafting.eregold.api.transfers;
+package org.digitalcrafting.eregold.api.transactions;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class TransfersControllerTest {
+class TransactionsControllerTest {
     @Autowired
-    private TransfersController controller;
+    private TransactionsController controller;
 
     @Test
     public void should_createTransferController() {

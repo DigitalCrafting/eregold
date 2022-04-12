@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {EregoldUserContext} from "../../../../context/eregold-user-context";
 import {AccountModel} from "../../../../models/account.models";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {TransferService} from "../../../../services/transfer.service";
+import {TransactionsService} from "../../../../services/transactions.service";
 import {CurrencyEnum} from "../../../../models/enums";
 
 @Component({
@@ -32,7 +32,7 @@ export class OwnTransferComponent implements OnInit {
     private allAccountsList: Array<AccountModel>;
 
     constructor(private _userContext: EregoldUserContext,
-                private _transfersService: TransferService) {
+                private _transactionsService: TransactionsService) {
     }
 
     setContext(accountNumber: string) {
@@ -56,7 +56,7 @@ export class OwnTransferComponent implements OnInit {
 
     onTransferClicked() {
         if (this.formGroup.valid) {
-            this._transfersService.transfer(this.formGroup.getRawValue()).subscribe(async () => {
+            this._transactionsService.transfer(this.formGroup.getRawValue()).subscribe(async () => {
                 await this._userContext.getAccounts(true);
                 this.backEventEmitter.emit();
             });
