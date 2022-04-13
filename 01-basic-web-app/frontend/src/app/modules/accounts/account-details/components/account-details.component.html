@@ -37,15 +37,25 @@
                     type="button"
                     class="btn btn-secondary"
                     (click)="onGoBackClicked()"
-            >Back to list</button>
+            >Back to list
+            </button>
         </div>
-        <div class="col-6"></div>
+        <div class="col-3"></div>
+        <div class="col-3">
+            <button id="ownDepositButton"
+                    type="button"
+                    class="btn btn-primary float-right"
+                    (click)="onMakeOwnDepositClicked()"
+            >Own deposit
+            </button>
+        </div>
         <div class="col-3">
             <button id="ownTransferButton"
                     type="button"
                     class="btn btn-primary float-right"
                     (click)="onMakeOwnTransferClicked()"
-            >Own transfer</button>
+            >Own transfer
+            </button>
         </div>
     </div>
     <div class="row gy-4">

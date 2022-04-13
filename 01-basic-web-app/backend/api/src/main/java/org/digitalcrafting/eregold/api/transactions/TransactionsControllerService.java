@@ -1,8 +1,8 @@
 package org.digitalcrafting.eregold.api.transactions;
 
 import lombok.RequiredArgsConstructor;
-import org.digitalcrafting.eregold.domain.transfers.TransferConverter;
-import org.digitalcrafting.eregold.domain.transfers.TransactionModel;
+import org.digitalcrafting.eregold.domain.transactions.TransactionModel;
+import org.digitalcrafting.eregold.domain.transactions.TransactionsConverter;
 import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
 import org.digitalcrafting.eregold.repository.accounts.AccountsEntityManager;
 import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
@@ -22,10 +22,10 @@ public class TransactionsControllerService {
 
     public void transfer(TransactionModel request) {
         Date transactionDate = new Date();
-        TransactionEntity srcTransaction = TransferConverter.toSrcTransactionEntity(request, transactionDate);
+        TransactionEntity srcTransaction = TransactionsConverter.toSrcTransferEntity(request, transactionDate);
 
         if (this.accountsEntityManager.getByAccountNumber(request.getDstAccount()) != null) {
-            TransactionEntity dstTransaction = TransferConverter.toDstTransactionEntity(request, transactionDate);
+            TransactionEntity dstTransaction = TransactionsConverter.toDstTransferEntity(request, transactionDate);
             this.transactionsEntityManager.insert(List.of(srcTransaction, dstTransaction));
             updateBalance(srcTransaction);
             updateBalance(dstTransaction);
@@ -36,7 +36,10 @@ public class TransactionsControllerService {
     }
 
     public void deposit(TransactionModel request) {
-        // TODO
+        Date transactionDate = new Date();
+        TransactionEntity depositEntity = TransactionsConverter.toDepositEntity(request, transactionDate);
+        this.transactionsEntityManager.insert(depositEntity);
+        updateBalance(depositEntity);
     }
 
     /* TODO change logic to update balance based on all transactions from day 1, after you create deposit logic

@@ -11,6 +11,7 @@ export class AccountDetailsComponent implements OnInit {
 
     backToDetailsEventEmitter: EventEmitter<any> = new EventEmitter<any>();
     makeOwnTransferEventEmitter: EventEmitter<any> = new EventEmitter<any>();
+    makeOwnDepositEventEmitter: EventEmitter<any> = new EventEmitter<any>();
 
     accountDetails: AccountDetailsModel;
 
@@ -33,5 +34,9 @@ export class AccountDetailsComponent implements OnInit {
 
     onMakeOwnTransferClicked() {
         this.makeOwnTransferEventEmitter.emit();
+    }
+
+    onMakeOwnDepositClicked() {
+        this.makeOwnDepositEventEmitter.emit();
     }
 }

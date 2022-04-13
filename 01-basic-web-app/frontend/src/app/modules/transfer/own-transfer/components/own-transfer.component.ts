@@ -47,6 +47,7 @@ export class OwnTransferComponent implements OnInit {
         this.initFormGroupHandlers();
         if (this.initialAccountNumber) {
             this.formGroup.get('srcAccount').setValue(this.initialAccountNumber);
+            this.formGroup.get('srcAccount').disable();
         }
     }
 

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.digitalcrafting.eregold.domain.transactions.TransactionModel;
+import org.digitalcrafting.eregold.domain.transactions.TransactionHistoryModel;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,5 +19,5 @@ public class AccountDetailsModel {
     private BigDecimal currentBalance;
     private CurrencyEnum currency;
     private AccountTypeEnum type;
-    private List<TransactionModel> transactionsList;
+    private List<TransactionHistoryModel> transactionsList;
 }

@@ -1,7 +1,7 @@
 package org.digitalcrafting.eregold.api.transactions;
 
 import lombok.RequiredArgsConstructor;
-import org.digitalcrafting.eregold.domain.transfers.TransactionModel;
+import org.digitalcrafting.eregold.domain.transactions.TransactionModel;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

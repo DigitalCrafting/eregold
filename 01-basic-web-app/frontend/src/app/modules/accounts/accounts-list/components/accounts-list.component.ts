@@ -11,6 +11,7 @@ export class AccountsListComponent implements OnInit {
 
     createAccountEventEmitter: EventEmitter<any> = new EventEmitter();
     makeOwnTransferEventEmitter: EventEmitter<any> = new EventEmitter();
+    makeOwnDepositEventEmitter: EventEmitter<any> = new EventEmitter();
     showDetailsEventEmitter: EventEmitter<string> = new EventEmitter<string>();
     accountsList: Array<AccountModel>;
 
@@ -31,5 +32,9 @@ export class AccountsListComponent implements OnInit {
 
     onMakeOwnTransferClicked() {
         this.makeOwnTransferEventEmitter.emit();
+    }
+
+    onMakeOwnDepositClicked() {
+        this.makeOwnDepositEventEmitter.emit();
     }
 }

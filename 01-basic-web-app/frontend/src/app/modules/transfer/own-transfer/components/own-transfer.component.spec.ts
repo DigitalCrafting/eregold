@@ -107,7 +107,7 @@ describe('OwnTransferComponent', () => {
             expect(transferButton.nativeElement.disabled).toBeFalsy();
         });
 
-        it('should call transfer api on "transfer" click', async () => {
+        it('should call transaction api on "transfer" click', async () => {
             const spy = spyOn(transactionsService, 'transfer').and.returnValue(of(true));
 
             const transferButton = fixture.debugElement.query(By.css('#transferButton'));

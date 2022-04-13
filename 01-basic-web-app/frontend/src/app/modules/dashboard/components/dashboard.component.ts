@@ -11,12 +11,14 @@ import {
 import {EregoldRoutes} from "../../../utils/routes.enum";
 import {AccountDetailsComponent} from "../../accounts/account-details/components/account-details.component";
 import {OwnTransferComponent} from "../../transfer/own-transfer/components/own-transfer.component";
+import {OwnDepositComponent} from "../../deposit/own-deposit/components/own-deposit.component";
 
 enum DashboardPage {
     ACCOUNTS_LIST = 'ACCOUNTS_LIST',
     ACCOUNT_DETAILS = 'ACCOUNT_DETAILS',
     ACCOUNT_CREATE = 'ACCOUNT_CREATE',
-    OWN_TRANSFER = 'OWN_TRANSFER'
+    OWN_TRANSFER = 'OWN_TRANSFER',
+    OWN_DEPOSIT = 'OWN_TRANSFER'
 }
 
 @Component({
@@ -39,9 +41,13 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
     accountDetailsComponent: AccountDetailsComponent;
     backToListSubscription: Subscription;
     makeOwnTransferSubscription: Subscription;
+    makeOwnDepositSubscription: Subscription;
 
     ownTransferComponent: OwnTransferComponent;
     ownTransferBackSubscription: Subscription;
+
+    ownDepositComponent: OwnDepositComponent;
+    ownDepositBackSubscription: Subscription;
 
     constructor(private _userContext: UserContext,
                 private _router: Router) {
@@ -69,8 +75,11 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
             this.showAccountDetails(accountNumber);
         })
         this.makeOwnTransferSubscription = this.accountsListComponent.makeOwnTransferEventEmitter.subscribe(() => {
-           this.showOwnTransfer(DashboardPage.ACCOUNTS_LIST);
+            this.showOwnTransfer(DashboardPage.ACCOUNTS_LIST);
         });
+        this.makeOwnDepositSubscription = this.accountsListComponent.makeOwnDepositEventEmitter.subscribe(() => {
+            this.showOwnDeposit(DashboardPage.ACCOUNTS_LIST);
+        })
     }
 
     private showAccountCreate() {
@@ -92,12 +101,27 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
         this.makeOwnTransferSubscription = this.accountDetailsComponent.makeOwnTransferEventEmitter.subscribe(() => {
             this.showOwnTransfer(DashboardPage.ACCOUNT_DETAILS, accountNumber);
         });
+        this.makeOwnDepositSubscription = this.accountDetailsComponent.makeOwnDepositEventEmitter.subscribe(() => {
+            this.showOwnDeposit(DashboardPage.ACCOUNT_DETAILS, accountNumber);
+        });
     }
 
     private showOwnTransfer(backTo: DashboardPage, accountNumber?: string) {
         this.cleanUp();
         this.ownTransferComponent = this.componentManager.show(OwnTransferComponent, accountNumber);
         this.ownTransferBackSubscription = this.ownTransferComponent.backEventEmitter.subscribe(() => {
+            if (backTo === DashboardPage.ACCOUNTS_LIST) {
+                this.showAccountsList();
+            } else if (backTo === DashboardPage.ACCOUNT_DETAILS) {
+                this.showAccountDetails(accountNumber);
+            }
+        })
+    }
+
+    private showOwnDeposit(backTo: DashboardPage, accountNumber?: string) {
+        this.cleanUp();
+        this.ownDepositComponent = this.componentManager.show(OwnDepositComponent, accountNumber);
+        this.ownDepositBackSubscription = this.ownDepositComponent.backEventEmitter.subscribe(() => {
             if (backTo === DashboardPage.ACCOUNTS_LIST) {
                 this.showAccountsList();
             } else if (backTo === DashboardPage.ACCOUNT_DETAILS) {
@@ -117,12 +141,17 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
         delete this.backToListSubscription;
         this.makeOwnTransferSubscription?.unsubscribe();
         delete this.makeOwnTransferSubscription;
+        this.makeOwnDepositSubscription?.unsubscribe();
+        delete this.makeOwnDepositSubscription;
         this.ownTransferBackSubscription?.unsubscribe();
         delete this.ownTransferBackSubscription;
+        this.ownDepositBackSubscription?.unsubscribe();
+        delete this.ownDepositBackSubscription;
 
         delete this.accountCreateComponent;
         delete this.accountsListComponent;
         delete this.accountDetailsComponent;
         delete this.ownTransferComponent;
+        delete this.ownDepositComponent;
     }
 }

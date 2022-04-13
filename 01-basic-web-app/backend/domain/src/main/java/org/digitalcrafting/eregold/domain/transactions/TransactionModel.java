@@ -7,27 +7,15 @@ import lombok.NoArgsConstructor;
 import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
-import java.util.Date;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionModel {
-    private Long id;
-    private String accountNumber;
-    private String foreignAccountNumber;
+    private String srcAccount;
+    private String dstAccount;
     private String description;
-    private TransactionTypeEnum type;
-    private CurrencyEnum currency;
     private BigDecimal amount;
-    private Date date;
-
-    public static class DateDescendingComparator implements Comparator<TransactionModel> {
-        @Override
-        public int compare(TransactionModel o1, TransactionModel o2) {
-            return o2.getDate().compareTo(o1.getDate());
-        }
-    }
+    private CurrencyEnum currency;
 }

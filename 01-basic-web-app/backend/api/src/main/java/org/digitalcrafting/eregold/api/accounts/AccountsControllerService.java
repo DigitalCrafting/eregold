@@ -5,7 +5,7 @@ import org.digitalcrafting.eregold.authentication.EregoldSessionContext;
 import org.digitalcrafting.eregold.domain.accounts.AccountDetailsModel;
 import org.digitalcrafting.eregold.domain.accounts.AccountModel;
 import org.digitalcrafting.eregold.domain.accounts.AccountsConverter;
-import org.digitalcrafting.eregold.domain.transactions.TransactionModel;
+import org.digitalcrafting.eregold.domain.transactions.TransactionHistoryModel;
 import org.digitalcrafting.eregold.domain.transactions.TransactionsConverter;
 import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
 import org.digitalcrafting.eregold.repository.accounts.AccountsEntityManager;
@@ -62,9 +62,9 @@ public class AccountsControllerService {
 
         AccountDetailsModel detailsModel = AccountsConverter.toDetailsModel(entity);
         List<TransactionEntity> transactionEntityList = transactionsEntityManager.getByAccountNumber(accountNumber);
-        List<TransactionModel> transactionModelList = TransactionsConverter.toModelList(transactionEntityList);
-        transactionModelList.sort(new TransactionModel.DateDescendingComparator());
-        detailsModel.setTransactionsList(transactionModelList);
+        List<TransactionHistoryModel> transactionHistoryModelList = TransactionsConverter.toModelList(transactionEntityList);
+        transactionHistoryModelList.sort(new TransactionHistoryModel.DateDescendingComparator());
+        detailsModel.setTransactionsList(transactionHistoryModelList);
 
         return detailsModel;
     }
