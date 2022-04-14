@@ -71,7 +71,13 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <!-- Gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
         </dependency>
 
         <!-- Test -->
@@ -87,6 +93,10 @@
         </dependency>
 
     </dependencies>
+    <properties>
+        <jjwt.version>0.9.1</jjwt.version>
+        <gson.version>2.9.0</gson.version>
+    </properties>
 
     <build>
         <finalName>eregold-app</finalName>
