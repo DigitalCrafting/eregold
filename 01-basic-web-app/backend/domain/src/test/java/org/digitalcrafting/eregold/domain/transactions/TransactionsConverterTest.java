@@ -12,6 +12,21 @@ import java.util.Date;
 import java.util.List;
 
 class TransactionsConverterTest {
+    private TransactionModel mockTransferRequest = TransactionModel.builder()
+            .amount(BigDecimal.TEN)
+            .currency(CurrencyEnum.GLD)
+            .description("Test transfer")
+            .srcAccount("12ERGD12345")
+            .dstAccount("12ERGD67890")
+            .build();
+    private TransactionModel mockDepositRequest = TransactionModel.builder()
+            .amount(BigDecimal.TEN)
+            .currency(CurrencyEnum.GLD)
+            .description("Deposit")
+            .dstAccount("12ERGD67890")
+            .build();
+    private Date currentDate = new Date();
+
     @Test
     void should_returnNull_when_calledWithNull() {
         // Given
@@ -85,43 +100,50 @@ class TransactionsConverterTest {
 
     }
 
-    private TransactionModel mockRequest = TransactionModel.builder()
-            .amount(BigDecimal.TEN)
-            .currency(CurrencyEnum.GLD)
-            .description("Test transfer")
-            .srcAccount("12ERGD12345")
-            .dstAccount("12ERGD67890")
-            .build();
-    private Date currentDate = new Date();
-
-
     @Test
-    void should_convertToSrcTransaction() {
+    void should_convertToSrcTransferEntity() {
         // When
-        TransactionEntity srcTransactionEntity = TransactionsConverter.toSrcTransferEntity(mockRequest, currentDate);
+        TransactionEntity srcTransactionEntity = TransactionsConverter.toSrcTransferEntity(mockTransferRequest, currentDate);
 
         // Then
         Assertions.assertNotNull(srcTransactionEntity);
         Assertions.assertEquals(currentDate, srcTransactionEntity.getDate());
         Assertions.assertEquals(BigDecimal.TEN.negate(), srcTransactionEntity.getAmount());
         Assertions.assertEquals(CurrencyEnum.GLD.name(), srcTransactionEntity.getCurrency());
+        Assertions.assertEquals(TransactionTypeEnum.TRANSFER.name(), srcTransactionEntity.getType());
         Assertions.assertEquals("Test transfer", srcTransactionEntity.getDescription());
         Assertions.assertEquals("12ERGD12345", srcTransactionEntity.getAccountNumber());
         Assertions.assertEquals("12ERGD67890", srcTransactionEntity.getForeignAccountNumber());
     }
 
     @Test
-    void should_convertToDstTransaction() {
+    void should_convertToDstTransferEntity() {
         // When
-        TransactionEntity dstTransactionEntity = TransactionsConverter.toDstTransferEntity(mockRequest, currentDate);
+        TransactionEntity dstTransactionEntity = TransactionsConverter.toDstTransferEntity(mockTransferRequest, currentDate);
 
         // Then
         Assertions.assertNotNull(dstTransactionEntity);
         Assertions.assertEquals(currentDate, dstTransactionEntity.getDate());
         Assertions.assertEquals(BigDecimal.TEN, dstTransactionEntity.getAmount());
         Assertions.assertEquals(CurrencyEnum.GLD.name(), dstTransactionEntity.getCurrency());
+        Assertions.assertEquals(TransactionTypeEnum.TRANSFER.name(), dstTransactionEntity.getType());
         Assertions.assertEquals("Test transfer", dstTransactionEntity.getDescription());
         Assertions.assertEquals("12ERGD12345", dstTransactionEntity.getForeignAccountNumber());
         Assertions.assertEquals("12ERGD67890", dstTransactionEntity.getAccountNumber());
+    }
+
+    @Test
+    void should_convertToDepositEntity() {
+        // When
+        TransactionEntity depositEntity = TransactionsConverter.toDepositEntity(mockDepositRequest, currentDate);
+
+        // Then
+        Assertions.assertNotNull(depositEntity);
+        Assertions.assertEquals(currentDate, depositEntity.getDate());
+        Assertions.assertEquals(BigDecimal.TEN, depositEntity.getAmount());
+        Assertions.assertEquals(CurrencyEnum.GLD.name(), depositEntity.getCurrency());
+        Assertions.assertEquals(TransactionTypeEnum.DEPOSIT.name(), depositEntity.getType());
+        Assertions.assertEquals("Deposit", depositEntity.getDescription());
+        Assertions.assertEquals("12ERGD67890", depositEntity.getAccountNumber());
     }
 }
