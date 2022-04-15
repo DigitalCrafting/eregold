@@ -15,11 +15,12 @@ everyone interested in how web application communicates from top to bottom.
 - Java 11
 - Maven
 - Docker
-#### Optional  
+#### Optional
+
 - NodeJS 14.17.5
 - Npm 6.14.14
 
 ### Steps
-1. Run **mvn clean install** in backend directory
+1. Run **mvn clean install -Pprod** in backend directory
 2. Run **docker-compose up** in this directory
 3. Application will be available on **localhost:4200**

@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: default
+    active: local
 
 mybatis:
   configuration:
@@ -24,7 +24,7 @@ spring.datasource:
 spring:
   config:
     activate:
-      on-profile: default
+      on-profile: local
 spring.datasource:
   url: jdbc:postgresql://localhost:2345/eregold_db
   username: eregold_user
