@@ -14,7 +14,9 @@
             <tr>
                 <td>{{transaction?.id}}</td>
                 <td>{{transaction?.foreignAccountNumber}}</td>
-                <td>{{transaction?.amount | currency:'G' }}</td>
+                <td [ngClass]="transaction?.amount < 0 ? 'outgoing-transaction' : 'incoming-transaction'">
+                    {{transaction?.amount | currency:'G' }}
+                </td>
                 <td>{{transaction?.date | date}}</td>
                 <td>{{transaction?.description}}</td>
             </tr>
