@@ -1,11 +1,6 @@
 # eregold - 01 Basic web app
 
-This version of the **Eregold** application is a simple, one jar web application and database, which means:
-
-- frontend will be served from within the final jar when build for prod,
-- backend connects directly to the single database,
-- there is single database that stores everything.
-
+This version of the **Eregold** application is a simple, one jar web application and database.
 This kind of application is not really suitable for banking anymore, but it should serve as a starting point for
 everyone interested in how web application communicates from top to bottom.
 
@@ -24,3 +19,18 @@ everyone interested in how web application communicates from top to bottom.
 1. Run **mvn clean install -Pprod** in backend directory
 2. Run **docker-compose up** in this directory
 3. Application will be available on **localhost:4200**
+
+## Architecture
+
+The architecture is the simplest possible one:
+
+![Diagram](./assets/diagram.png)
+
+- Backend 
+  - is stateful - the user session is stored in application memory,
+  - connects directly into database
+- Frontend
+  - is bundled with the jar, and not run standalone,
+  - connects directly to backend
+- Database
+  - everything is in one database 
