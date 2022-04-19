@@ -18,7 +18,8 @@ everyone interested in how web application communicates from top to bottom.
 ### Steps
 1. Run **mvn clean install -Pprod** in backend directory
 2. Run **docker-compose up** in this directory
-3. Application will be available on **localhost:4200**
+3. Run **mvn flyway:migrate** in database directory
+4. Application will be available on **localhost:4200**
 
 ## Architecture
 
