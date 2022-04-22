@@ -14,19 +14,50 @@ spring:
   config:
     activate:
       on-profile: docker
+  session:
+    store-type: redis
 spring.datasource:
   url: jdbc:postgresql://eregold-db:5432/eregold_db
   username: eregold_user
   password: eregold_pass
   driver-class-name:
+spring.redis:
+    host: eregold-session # Redis server host.
+    password: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81 # Login password of the redis server.
+    port: 6379
 
 ---
 spring:
   config:
     activate:
       on-profile: local
+  session:
+    store-type: redis
 spring.datasource:
   url: jdbc:postgresql://localhost:2345/eregold_db
   username: eregold_user
   password: eregold_pass
   driver-class-name:
+spring.redis:
+  host: localhost # Redis server host.
+  password: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81 # Login password of the redis server.
+  port: 6379
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  session:
+    store-type: none
+
+spring.datasource:
+  url: jdbc:postgresql://localhost:2345/eregold_db
+  username: eregold_user
+  password: eregold_pass
+  driver-class-name:
+
+spring.redis:
+  host: localhost # Redis server host.
+  password: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81 # Login password of the redis server.
+  port: 6379

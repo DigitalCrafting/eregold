@@ -10,6 +10,8 @@ services:
       - ./backend:/app
     networks:
       - eregold-network
+    depends_on:
+      - eregold-session
 
   eregold-frontend:
     build: ./frontend
@@ -30,6 +32,8 @@ services:
     command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes:
       - cache-volume:/data
+    networks:
+      - eregold-network
 
   eregold-db:
     image: postgres:14.0-alpine

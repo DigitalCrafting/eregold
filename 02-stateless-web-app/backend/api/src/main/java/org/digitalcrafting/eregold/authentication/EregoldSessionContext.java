@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Data
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class EregoldSessionContext {
+public class EregoldSessionContext implements Serializable {
     // TODO either change userId to email or the other way around, it makes sense to name them like that, but it's annoying to work with
     private String userId;
     private String customerId;
