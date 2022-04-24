@@ -12,10 +12,10 @@
                             <select id="srcAccountId"
                                     class="form-select"
                                     aria-label="From account"
-                                    formControlName="srcAccount"
+                                    [formControlName]="controlNames.SRC_ACCOUNT"
                             >
                                 <ng-container *ngFor="let account of srcAccountList">
-                                    <option [value]="account.accountNumber">
+                                    <option [ngValue]="account">
                                         {{ account.accountName }}
                                         {{ account.accountNumber}}
                                         {{ account.currentBalance | currency:'G' }}
@@ -30,10 +30,10 @@
                             <select id="dstAccountId"
                                     class="form-select"
                                     aria-label="To account"
-                                    formControlName="dstAccount"
+                                    [formControlName]="controlNames.DST_ACCOUNT"
                             >
                                 <ng-container *ngFor="let account of dstAccountList">
-                                    <option [value]="account.accountNumber">
+                                    <option [ngValue]="account">
                                         {{ account.accountName }}
                                         {{ account.accountNumber}}
                                         {{ account.currentBalance | currency:'G' }}
@@ -51,22 +51,24 @@
                             <div class="form-group">
                                 <label for="amountId">Amount</label>
                                 <input
-                                        [class.is-invalid]="formGroup.get('amount')?.invalid"
-                                        formControlName="amount"
+                                        [class.is-invalid]="formGroup.get(controlNames.AMOUNT)?.invalid"
+                                        [formControlName]="controlNames.AMOUNT"
                                         type="number"
                                         step='0.01'
                                         placeholder='0.00'
                                         class="form-control"
                                         id="amountId">
+                                <div *ngIf="formGroup.get(controlNames.AMOUNT)?.errors?.['amountExceedsBalance']" class="invalid-feedback">
+                                    Provided amount exceeds the available balance.
+                                </div>
                             </div>
-
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="currencyId">Currency</label>
                                 <input
-                                        [class.is-invalid]="formGroup.get('currency')?.invalid"
-                                        formControlName="currency"
+                                        [class.is-invalid]="formGroup.get(controlNames.CURRENCY)?.invalid"
+                                        [formControlName]="controlNames.CURRENCY"
                                         type="text"
                                         class="form-control"
                                         id="currencyId">
@@ -78,8 +80,8 @@
                             <div class="form-group">
                                 <label for="descriptionId">Comment</label>
                                 <input
-                                        [class.is-invalid]="formGroup.get('description')?.invalid"
-                                        formControlName="description"
+                                        [class.is-invalid]="formGroup.get(controlNames.DESCRIPTION)?.invalid"
+                                        [formControlName]="controlNames.DESCRIPTION"
                                         type="text"
                                         class="form-control"
                                         id="descriptionId">

@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AccountsService} from "../../../../services/accounts.service";
 import {AccountTypeEnum, CurrencyEnum} from "../../../../models/enums";
+import {EregoldUserContext} from "../../../../context/eregold-user-context";
 
 @Component({
     selector: 'account-create',
@@ -37,7 +38,9 @@ export class AccountCreateComponent implements OnInit {
         }
     ]
 
-    constructor(private _accountsService: AccountsService) {
+    constructor(
+        private _eregoldUserContext: EregoldUserContext,
+        private _accountsService: AccountsService) {
     }
 
     ngOnInit() {
@@ -56,7 +59,8 @@ export class AccountCreateComponent implements OnInit {
 
     onAddClicked() {
         if (this.formGroup.valid) {
-            this._accountsService.createAccount(this.formGroup.value).subscribe(response => {
+            this._accountsService.createAccount(this.formGroup.value).subscribe(async response => {
+                await this._eregoldUserContext.getAccounts(true);
                 this.accountCreateEventEmitter.emit(AccountCreateAction.SHOW_LIST);
             });
         }
@@ -64,5 +68,5 @@ export class AccountCreateComponent implements OnInit {
 }
 
 export enum AccountCreateAction {
-    SHOW_LIST= 'SHOW_LIST'
+    SHOW_LIST = 'SHOW_LIST'
 }

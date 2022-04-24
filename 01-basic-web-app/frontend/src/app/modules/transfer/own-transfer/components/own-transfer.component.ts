@@ -2,8 +2,10 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {EregoldUserContext} from "../../../../context/eregold-user-context";
 import {AccountModel} from "../../../../models/account.models";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {TransactionsService} from "../../../../services/transactions.service";
+import {TransactionModel, TransactionsService} from "../../../../services/transactions.service";
 import {CurrencyEnum} from "../../../../models/enums";
+import {OwnTransferValidators} from "../validators/own-transfer.validators";
+import {OwnTransferControlNames} from "../utils/own-transfer.utils";
 
 @Component({
     selector: 'own-transfer',
@@ -16,17 +18,18 @@ export class OwnTransferComponent implements OnInit {
 
     srcAccountList: Array<AccountModel>;
     dstAccountList: Array<AccountModel>;
+    controlNames = OwnTransferControlNames;
 
     formGroup: FormGroup = new FormGroup({
-        srcAccount: new FormControl('', Validators.required),
-        dstAccount: new FormControl('', Validators.required),
-        description: new FormControl('', Validators.required),
-        amount: new FormControl(null, Validators.required), // TODO regex to match 2 decimal places
-        currency: new FormControl({
+        [OwnTransferControlNames.SRC_ACCOUNT]: new FormControl('', Validators.required),
+        [OwnTransferControlNames.DST_ACCOUNT]: new FormControl('', Validators.required),
+        [OwnTransferControlNames.DESCRIPTION]: new FormControl('', Validators.required),
+        [OwnTransferControlNames.AMOUNT]: new FormControl(null, Validators.required), // TODO regex to match 2 decimal places
+        [OwnTransferControlNames.CURRENCY]: new FormControl({
             value: CurrencyEnum.GLD,
             disabled: true
         })
-    });
+    }, OwnTransferValidators.amountValidator);
 
     private initialAccountNumber: string;
     private allAccountsList: Array<AccountModel>;
@@ -41,13 +44,14 @@ export class OwnTransferComponent implements OnInit {
 
     async ngOnInit() {
         this.allAccountsList = await this._userContext.getAccounts();
-        this.srcAccountList = this.allAccountsList;
-        this.dstAccountList = this.allAccountsList;
+        this.srcAccountList = [...this.allAccountsList];
+        this.dstAccountList = [...this.allAccountsList];
 
         this.initFormGroupHandlers();
         if (this.initialAccountNumber) {
-            this.formGroup.get('srcAccount').setValue(this.initialAccountNumber);
-            this.formGroup.get('srcAccount').disable();
+            let srcAccount = this.srcAccountList.find(a => a.accountNumber === this.initialAccountNumber);
+            this.formGroup.get(OwnTransferControlNames.SRC_ACCOUNT).setValue(srcAccount);
+            this.formGroup.get(OwnTransferControlNames.SRC_ACCOUNT).disable();
         }
     }
 
@@ -57,7 +61,7 @@ export class OwnTransferComponent implements OnInit {
 
     onTransferClicked() {
         if (this.formGroup.valid) {
-            this._transactionsService.transfer(this.formGroup.getRawValue()).subscribe(async () => {
+            this._transactionsService.transfer(this.createTransferRequest()).subscribe(async () => {
                 await this._userContext.getAccounts(true);
                 this.backEventEmitter.emit();
             });
@@ -65,11 +69,26 @@ export class OwnTransferComponent implements OnInit {
     }
 
     private initFormGroupHandlers() {
-        this.formGroup.get('srcAccount').valueChanges.subscribe(chosenAcc => {
-            this.dstAccountList = this.allAccountsList.filter(account => account.accountNumber !== chosenAcc)
+        this.formGroup.valueChanges.subscribe(val => console.log(val))
+        this.formGroup.get(OwnTransferControlNames.SRC_ACCOUNT).valueChanges.subscribe(chosenAcc => {
+            console.log(chosenAcc)
+            this.dstAccountList = this.allAccountsList.filter(account => account.accountNumber !== chosenAcc.accountNumber)
             if (this.dstAccountList.length > 0) {
-                this.formGroup.get('dstAccount').setValue(this.dstAccountList[0].accountNumber);
+                this.formGroup.get(OwnTransferControlNames.DST_ACCOUNT).setValue(this.dstAccountList[0]);
+            } else {
+                this.formGroup.get(OwnTransferControlNames.DST_ACCOUNT).reset();
             }
         });
+    }
+
+    private createTransferRequest() {
+        const rawValue = this.formGroup.getRawValue();
+        return {
+            srcAccount: rawValue.srcAccount.accountNumber,
+            dstAccount: rawValue.dstAccount.accountNumber,
+            description: rawValue.description,
+            amount: rawValue.amount,
+            currency: rawValue.currency
+        } as TransactionModel;
     }
 }

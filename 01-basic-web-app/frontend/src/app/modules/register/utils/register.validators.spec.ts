@@ -2,15 +2,15 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {EregoldRegisterValidators} from "./register.validators";
 
 describe('Register validators', () => {
-    let passwordFormControl = new FormControl();
-    let passwordCheckFormControl = new FormControl();
-
-    let formGroup: FormGroup = new FormGroup({
-        password: passwordFormControl,
-        passwordCheck: passwordCheckFormControl
-    }, EregoldRegisterValidators.PasswordGroupValidator);
-
     describe('PasswordGroupValidator', () => {
+        let passwordFormControl = new FormControl();
+        let passwordCheckFormControl = new FormControl();
+
+        let formGroup: FormGroup = new FormGroup({
+            password: passwordFormControl,
+            passwordCheck: passwordCheckFormControl
+        }, EregoldRegisterValidators.PasswordGroupValidator);
+
         it('should set form group to invalid when password and passwordCheck does not match', () => {
             // when
             passwordFormControl.setValue('test');
