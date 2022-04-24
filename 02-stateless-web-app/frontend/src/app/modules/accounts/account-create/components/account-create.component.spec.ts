@@ -5,12 +5,14 @@ import {AccountsService} from "../../../../services/accounts.service";
 import {Observable, of} from "rxjs";
 import {By} from "@angular/platform-browser";
 import {CreateAccountRequest} from "../../../../models/account.models";
+import {EregoldUserContext} from "../../../../context/eregold-user-context";
 
 describe('AccountCreateComponent', () => {
     let component: AccountCreateComponent;
     let fixture: ComponentFixture<AccountCreateComponent>;
 
     let accountsService: AccountsService;
+    let userContext: EregoldUserContext;
 
     beforeEach(async () => {
         accountsService = {
@@ -18,10 +20,16 @@ describe('AccountCreateComponent', () => {
                 return of(true);
             }
         } as AccountsService;
+        userContext = {
+            async getAccounts(reload: boolean = false): Promise<any> {
+                return of(true);
+            }
+        } as EregoldUserContext;
         await TestBed.configureTestingModule({
             declarations: [AccountCreateComponent],
             providers: [
-                {provide: AccountsService, useValue: accountsService}
+                {provide: AccountsService, useValue: accountsService},
+                {provide: EregoldUserContext, useValue: userContext}
             ]
         })
             .compileComponents();

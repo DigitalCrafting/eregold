@@ -94,7 +94,13 @@ describe('OwnTransferComponent', () => {
             await component.ngOnInit();
 
             component.formGroup.patchValue({
-                dstAccount: '12ERGD67890',
+                dstAccount: {
+                    accountNumber: '12ERGD67890',
+                    accountName: 'Test name',
+                    currentBalance: 90.0,
+                    currency: CurrencyEnum.GLD,
+                    type: AccountTypeEnum.SAVING
+                } as AccountModel,
                 description: 'Test',
                 amount: 10
             });
