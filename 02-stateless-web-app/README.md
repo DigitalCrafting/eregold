@@ -31,7 +31,7 @@ The architecture is as follows:
 ![Diagram](./assets/diagram.png)
 
 - Backend 
-  - is stateless - the user session is stored Redis (TODO),
+  - is stateless - the user session is stored Redis,
   - connects directly into database
 - Frontend
   - is bundled with the jar, and not run standalone,
