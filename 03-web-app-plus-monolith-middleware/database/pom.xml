@@ -5,6 +5,11 @@
     <artifactId>db-schema</artifactId>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>users</module>
+        <module>core-banking</module>
+    </modules>
+
     <dependencies>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -12,23 +17,4 @@
             <version>42.2.14</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>8.0.1</version>
-                <configuration>
-                    <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:2345/eregold_db</url>
-                    <user>eregold_user</user>
-                    <password>eregold_pass</password>
-                    <locations>
-                        filesystem:./migration
-                    </locations>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

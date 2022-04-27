@@ -1,0 +1,29 @@
+<project>
+    <parent>
+        <groupId>com.digitalcrafting.eregold</groupId>
+        <artifactId>db-schema</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>core-banking-schema</artifactId>
+    <packaging>pom</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>8.0.1</version>
+                <configuration>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://localhost:2346/eregold_core_db</url>
+                    <user>eregold_user</user>
+                    <password>eregold_pass</password>
+                    <locations>
+                        filesystem:./migration
+                    </locations>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
