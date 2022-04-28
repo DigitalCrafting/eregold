@@ -1,20 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>eregold</artifactId>
-        <groupId>org.digitalcrafting.eregold</groupId>
+        <artifactId>arkenstone</artifactId>
+        <groupId>org.digitalcrafting.eregold.arkenstone</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>domain</artifactId>
+    <artifactId>arkenstone-domain</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <!-- Internal -->
         <dependency>
-            <groupId>org.digitalcrafting.eregold</groupId>
-            <artifactId>repository</artifactId>
+            <groupId>org.digitalcrafting.eregold.arkenstone</groupId>
+            <artifactId>arkenstone-repository</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- External -->

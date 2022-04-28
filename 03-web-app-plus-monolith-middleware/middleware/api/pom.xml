@@ -1,20 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>eregold</artifactId>
-        <groupId>org.digitalcrafting.eregold</groupId>
+        <artifactId>arkenstone</artifactId>
+        <groupId>org.digitalcrafting.eregold.arkenstone</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>api</artifactId>
+    <artifactId>arkenstone-api</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <!-- Internal -->
         <dependency>
-            <groupId>org.digitalcrafting.eregold</groupId>
-            <artifactId>domain</artifactId>
+            <groupId>org.digitalcrafting.eregold.arkenstone</groupId>
+            <artifactId>arkenstone-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -38,26 +38,8 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.lettuce</groupId>
-                    <artifactId>lettuce-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -116,7 +98,7 @@
     </properties>
 
     <build>
-        <finalName>eregold-app</finalName>
+        <finalName>arkenstone-app</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -134,34 +116,6 @@
         </profile>
         <profile>
             <id>docker</id>
-        </profile>
-        <profile>
-            <id>prod</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <version>3.2.0</version>
-                        <executions>
-                            <execution>
-                                <id>copy-resources</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${basedir}/target/classes/public/</outputDirectory>
-                                    <resources>
-                                        <resource>
-                                            <directory>${basedir}/../../frontend/dist/eregold-ui/</directory>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
     </profiles>
 </project>
