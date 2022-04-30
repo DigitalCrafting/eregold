@@ -1,6 +1,6 @@
 package org.digitalcrafting.eregold.domain.accounts;
 
-import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
+import org.digitalcrafting.eregold.repository.clients.accounts.AccountDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ class AccountsConverterTest {
     @Test
     void should_returnNull_when_calledWithNull() {
         // Given
-        List<AccountEntity> entityList = null;
+        List<AccountDTO> entityList = null;
 
         // When
         List<AccountModel> modelList = AccountsConverter.toModelList(entityList);
@@ -26,7 +26,7 @@ class AccountsConverterTest {
     @Test
     void should_returnNull_when_calledWithEmptyList() {
         // Given
-        List<AccountEntity> entityList = Collections.emptyList();
+        List<AccountDTO> entityList = Collections.emptyList();
 
         // When
         List<AccountModel> modelList = AccountsConverter.toModelList(entityList);
@@ -38,7 +38,7 @@ class AccountsConverterTest {
     @Test
     void should_returnEmptyList_when_calledWithListOfNull() {
         // Given
-        List<AccountEntity> entityList = new ArrayList<>();
+        List<AccountDTO> entityList = new ArrayList<>();
         entityList.add(null);
 
         // When
@@ -52,8 +52,8 @@ class AccountsConverterTest {
     @Test
     void should_returnModelList_when_calledWithEntityList() {
         // Given
-        List<AccountEntity> entityList = List.of(
-                AccountEntity.builder()
+        List<AccountDTO> entityList = List.of(
+                AccountDTO.builder()
                 .type(AccountTypeEnum.DEBIT.name())
                 .currentBalance(BigDecimal.ZERO)
                 .currency(CurrencyEnum.GLD.name())

@@ -1,6 +1,6 @@
 package org.digitalcrafting.eregold.domain.accounts;
 
-import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
+import org.digitalcrafting.eregold.repository.clients.accounts.AccountDTO;
 
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public final class AccountsConverter {
     private AccountsConverter() {}
 
-    public static List<AccountModel> toModelList(List<AccountEntity> entityList) {
+    public static List<AccountModel> toModelList(List<AccountDTO> entityList) {
         List<AccountModel> accountModelList = null;
 
         if (entityList != null && !entityList.isEmpty()) {
@@ -22,7 +22,7 @@ public final class AccountsConverter {
         return accountModelList;
     }
 
-    public static AccountModel toModel(AccountEntity entity) {
+    public static AccountModel toModel(AccountDTO entity) {
         if (entity == null) {
             return null;
         }
@@ -36,7 +36,7 @@ public final class AccountsConverter {
                 .build();
     }
 
-    public static AccountDetailsModel toDetailsModel(AccountEntity entity) {
+    public static AccountDetailsModel toDetailsModel(AccountDTO entity) {
         if (entity == null) {
             return null;
         }

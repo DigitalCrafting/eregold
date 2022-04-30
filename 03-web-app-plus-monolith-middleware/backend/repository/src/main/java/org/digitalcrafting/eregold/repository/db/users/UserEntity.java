@@ -1,4 +1,4 @@
-package org.digitalcrafting.eregold.repository.users;
+package org.digitalcrafting.eregold.repository.db.users;
 
 import lombok.Builder;
 import lombok.Data;

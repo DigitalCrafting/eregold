@@ -1,7 +1,7 @@
 package org.digitalcrafting.eregold.domain.transactions;
 
 import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
-import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
+import org.digitalcrafting.eregold.repository.clients.transactions.TransactionDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ class TransactionsConverterTest {
     @Test
     void should_returnNull_when_calledWithNull() {
         // Given
-        List<TransactionEntity> entityList = null;
+        List<TransactionDTO> entityList = null;
 
         // When
         List<TransactionHistoryModel> modelList = TransactionsConverter.toModelList(entityList);
@@ -42,7 +42,7 @@ class TransactionsConverterTest {
     @Test
     void should_returnNull_when_calledWithEmptyList() {
         // Given
-        List<TransactionEntity> entityList = Collections.emptyList();
+        List<TransactionDTO> entityList = Collections.emptyList();
 
         // When
         List<TransactionHistoryModel> modelList = TransactionsConverter.toModelList(entityList);
@@ -54,7 +54,7 @@ class TransactionsConverterTest {
     @Test
     void should_returnEmptyList_when_calledWithListOfNull() {
         // Given
-        List<TransactionEntity> entityList = new ArrayList<>();
+        List<TransactionDTO> entityList = new ArrayList<>();
         entityList.add(null);
 
         // When
@@ -69,8 +69,8 @@ class TransactionsConverterTest {
     void should_returnModelList_when_calledWithEntityList() {
         // Given
         Date transactionDate = new Date();
-        List<TransactionEntity> entityList = List.of(
-                TransactionEntity.builder()
+        List<TransactionDTO> entityList = List.of(
+                TransactionDTO.builder()
                         .accountNumber("12ERGD12345")
                         .foreignAccountNumber("12ERGD67890")
                         .currency(CurrencyEnum.GLD.name())
@@ -103,39 +103,39 @@ class TransactionsConverterTest {
     @Test
     void should_convertToSrcTransferEntity() {
         // When
-        TransactionEntity srcTransactionEntity = TransactionsConverter.toSrcTransferEntity(mockTransferRequest, currentDate);
+        TransactionDTO srcTransactionDTO = TransactionsConverter.toSrcTransferDTO(mockTransferRequest, currentDate);
 
         // Then
-        Assertions.assertNotNull(srcTransactionEntity);
-        Assertions.assertEquals(currentDate, srcTransactionEntity.getDate());
-        Assertions.assertEquals(BigDecimal.TEN.negate(), srcTransactionEntity.getAmount());
-        Assertions.assertEquals(CurrencyEnum.GLD.name(), srcTransactionEntity.getCurrency());
-        Assertions.assertEquals(TransactionTypeEnum.TRANSFER.name(), srcTransactionEntity.getType());
-        Assertions.assertEquals("Test transfer", srcTransactionEntity.getDescription());
-        Assertions.assertEquals("12ERGD12345", srcTransactionEntity.getAccountNumber());
-        Assertions.assertEquals("12ERGD67890", srcTransactionEntity.getForeignAccountNumber());
+        Assertions.assertNotNull(srcTransactionDTO);
+        Assertions.assertEquals(currentDate, srcTransactionDTO.getDate());
+        Assertions.assertEquals(BigDecimal.TEN.negate(), srcTransactionDTO.getAmount());
+        Assertions.assertEquals(CurrencyEnum.GLD.name(), srcTransactionDTO.getCurrency());
+        Assertions.assertEquals(TransactionTypeEnum.TRANSFER.name(), srcTransactionDTO.getType());
+        Assertions.assertEquals("Test transfer", srcTransactionDTO.getDescription());
+        Assertions.assertEquals("12ERGD12345", srcTransactionDTO.getAccountNumber());
+        Assertions.assertEquals("12ERGD67890", srcTransactionDTO.getForeignAccountNumber());
     }
 
     @Test
     void should_convertToDstTransferEntity() {
         // When
-        TransactionEntity dstTransactionEntity = TransactionsConverter.toDstTransferEntity(mockTransferRequest, currentDate);
+        TransactionDTO dstTransactionDTO = TransactionsConverter.toDstTransferDTO(mockTransferRequest, currentDate);
 
         // Then
-        Assertions.assertNotNull(dstTransactionEntity);
-        Assertions.assertEquals(currentDate, dstTransactionEntity.getDate());
-        Assertions.assertEquals(BigDecimal.TEN, dstTransactionEntity.getAmount());
-        Assertions.assertEquals(CurrencyEnum.GLD.name(), dstTransactionEntity.getCurrency());
-        Assertions.assertEquals(TransactionTypeEnum.TRANSFER.name(), dstTransactionEntity.getType());
-        Assertions.assertEquals("Test transfer", dstTransactionEntity.getDescription());
-        Assertions.assertEquals("12ERGD12345", dstTransactionEntity.getForeignAccountNumber());
-        Assertions.assertEquals("12ERGD67890", dstTransactionEntity.getAccountNumber());
+        Assertions.assertNotNull(dstTransactionDTO);
+        Assertions.assertEquals(currentDate, dstTransactionDTO.getDate());
+        Assertions.assertEquals(BigDecimal.TEN, dstTransactionDTO.getAmount());
+        Assertions.assertEquals(CurrencyEnum.GLD.name(), dstTransactionDTO.getCurrency());
+        Assertions.assertEquals(TransactionTypeEnum.TRANSFER.name(), dstTransactionDTO.getType());
+        Assertions.assertEquals("Test transfer", dstTransactionDTO.getDescription());
+        Assertions.assertEquals("12ERGD12345", dstTransactionDTO.getForeignAccountNumber());
+        Assertions.assertEquals("12ERGD67890", dstTransactionDTO.getAccountNumber());
     }
 
     @Test
     void should_convertToDepositEntity() {
         // When
-        TransactionEntity depositEntity = TransactionsConverter.toDepositEntity(mockDepositRequest, currentDate);
+        TransactionDTO depositEntity = TransactionsConverter.toDepositDTO(mockDepositRequest, currentDate);
 
         // Then
         Assertions.assertNotNull(depositEntity);

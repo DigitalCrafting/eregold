@@ -1,7 +1,7 @@
 package org.digitalcrafting.eregold.domain.transactions;
 
 import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
-import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
+import org.digitalcrafting.eregold.repository.clients.transactions.TransactionDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -12,7 +12,7 @@ public final class TransactionsConverter {
     private TransactionsConverter() {
     }
 
-    public static List<TransactionHistoryModel> toModelList(List<TransactionEntity> entityList) {
+    public static List<TransactionHistoryModel> toModelList(List<TransactionDTO> entityList) {
         List<TransactionHistoryModel> modelList = null;
 
         if (entityList != null && !entityList.isEmpty()) {
@@ -25,7 +25,7 @@ public final class TransactionsConverter {
         return modelList;
     }
 
-    public static TransactionHistoryModel toModel(TransactionEntity entity) {
+    public static TransactionHistoryModel toModel(TransactionDTO entity) {
         if (entity == null) {
             return null;
         }
@@ -42,8 +42,8 @@ public final class TransactionsConverter {
                 .build();
     }
 
-    public static TransactionEntity toSrcTransferEntity(TransactionModel transfer, Date date) {
-        TransactionEntity entity = new TransactionEntity();
+    public static TransactionDTO toSrcTransferDTO(TransactionModel transfer, Date date) {
+        TransactionDTO entity = new TransactionDTO();
 
         entity.setAccountNumber(transfer.getSrcAccount());
         entity.setForeignAccountNumber(transfer.getDstAccount());
@@ -56,8 +56,8 @@ public final class TransactionsConverter {
         return entity;
     }
 
-    public static TransactionEntity toDstTransferEntity(TransactionModel transfer, Date date) {
-        TransactionEntity entity = new TransactionEntity();
+    public static TransactionDTO toDstTransferDTO(TransactionModel transfer, Date date) {
+        TransactionDTO entity = new TransactionDTO();
 
         entity.setAccountNumber(transfer.getDstAccount());
         entity.setForeignAccountNumber(transfer.getSrcAccount());
@@ -71,8 +71,8 @@ public final class TransactionsConverter {
     }
 
 
-    public static TransactionEntity toDepositEntity(TransactionModel transfer, Date date) {
-        TransactionEntity entity = new TransactionEntity();
+    public static TransactionDTO toDepositDTO(TransactionModel transfer, Date date) {
+        TransactionDTO entity = new TransactionDTO();
 
         entity.setAccountNumber(transfer.getDstAccount());
         entity.setDescription(transfer.getDescription());

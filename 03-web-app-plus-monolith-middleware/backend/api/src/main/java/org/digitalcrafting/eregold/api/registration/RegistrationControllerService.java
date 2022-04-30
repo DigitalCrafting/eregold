@@ -2,10 +2,10 @@ package org.digitalcrafting.eregold.api.registration;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.digitalcrafting.eregold.repository.customers.CustomerEntity;
-import org.digitalcrafting.eregold.repository.customers.CustomersEntityManager;
-import org.digitalcrafting.eregold.repository.users.UserEntity;
-import org.digitalcrafting.eregold.repository.users.UsersEntityManager;
+import org.digitalcrafting.eregold.repository.clients.customers.CustomerDTO;
+import org.digitalcrafting.eregold.repository.clients.customers.CustomersClient;
+import org.digitalcrafting.eregold.repository.db.users.UserEntity;
+import org.digitalcrafting.eregold.repository.db.users.UsersEntityManager;
 import org.digitalcrafting.eregold.utils.EregoldPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RegistrationControllerService {
     private final UsersEntityManager usersEntityManager;
-    private final CustomersEntityManager customersEntityManager;
+    private final CustomersClient customersClient;
 
     @Transactional
     public RegisterResponse register(RegisterRequest request) {
@@ -50,21 +50,21 @@ public class RegistrationControllerService {
 
         String customerId = generateCustomerId();
 
-        CustomerEntity customerEntity = CustomerEntity.builder()
+        CustomerDTO customerDTO = CustomerDTO.builder()
                 .customerId(customerId)
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .build();
 
-        customersEntityManager.insert(customerEntity);
+        customersClient.insert(customerDTO);
         return Optional.of(customerId);
     }
 
     private String generateCustomerId() {
         long dateSeconds = Instant.now().toEpochMilli();
         String customerId = String.valueOf(dateSeconds).substring(0, 8);
-        while (customersEntityManager.getByCustomerId(customerId) != null) {
+        while (customersClient.getByCustomerId(customerId) != null) {
             dateSeconds = Instant.now().toEpochMilli();
             customerId = String.valueOf(dateSeconds).substring(0, 8);
         }

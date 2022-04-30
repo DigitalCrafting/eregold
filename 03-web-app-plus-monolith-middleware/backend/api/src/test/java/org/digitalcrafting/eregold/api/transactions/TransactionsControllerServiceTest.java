@@ -4,10 +4,10 @@ import org.digitalcrafting.eregold.domain.accounts.CurrencyEnum;
 import org.digitalcrafting.eregold.domain.transactions.TransactionModel;
 import org.digitalcrafting.eregold.domain.transactions.TransactionTypeEnum;
 import org.digitalcrafting.eregold.domain.transactions.TransactionsConverter;
-import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
-import org.digitalcrafting.eregold.repository.accounts.AccountsEntityManager;
-import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
-import org.digitalcrafting.eregold.repository.transactions.TransactionsEntityManager;
+import org.digitalcrafting.eregold.repository.clients.accounts.AccountDTO;
+import org.digitalcrafting.eregold.repository.clients.accounts.AccountsClient;
+import org.digitalcrafting.eregold.repository.clients.transactions.TransactionDTO;
+import org.digitalcrafting.eregold.repository.clients.transactions.TransactionsClient;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -39,10 +39,10 @@ class TransactionsControllerServiceTest {
     private TransactionsControllerService service;
 
     @MockBean
-    private TransactionsEntityManager transactionsEntityManager;
+    private TransactionsClient transactionsClient;
 
     @MockBean
-    private AccountsEntityManager accountsEntityManager;
+    private AccountsClient accountsClient;
 
     private TransactionModel mockTransferRequest = TransactionModel.builder()
             .amount(BigDecimal.TEN)
@@ -51,27 +51,27 @@ class TransactionsControllerServiceTest {
             .srcAccount("12ERGD12345")
             .dstAccount("12ERGD67890")
             .build();
-    private TransactionEntity mockSrcTransferEntity = TransactionEntity.builder()
+    private TransactionDTO mockSrcTransferEntity = TransactionDTO.builder()
             .amount(BigDecimal.TEN.negate())
             .currency(CurrencyEnum.GLD.name())
             .type(TransactionTypeEnum.TRANSFER.name())
             .description("Test transfer")
             .accountNumber("12ERGD12345")
             .build();
-    private TransactionEntity mockDstTransferEntity = TransactionEntity.builder()
+    private TransactionDTO mockDstTransferEntity = TransactionDTO.builder()
             .amount(BigDecimal.TEN)
             .currency(CurrencyEnum.GLD.name())
             .type(TransactionTypeEnum.TRANSFER.name())
             .description("Test transfer")
             .accountNumber("12ERGD67890")
             .build();
-    private AccountEntity mockSrcAccountEntity = AccountEntity.builder()
+    private AccountDTO mockSrcAccountDTO = AccountDTO.builder()
             .accountName("Src account")
             .accountNumber("12ERGD12345")
             .currentBalance(new BigDecimal("1000"))
             .currency(CurrencyEnum.GLD.name())
             .build();
-    private AccountEntity mockDstAccountEntity = AccountEntity.builder()
+    private AccountDTO mockDstAccountDTO = AccountDTO.builder()
             .accountName("Dst account")
             .accountNumber("12ERGD67890")
             .currentBalance(new BigDecimal("1000"))
@@ -84,7 +84,7 @@ class TransactionsControllerServiceTest {
             .description("Deposit")
             .dstAccount("12ERGD67890")
             .build();
-    private TransactionEntity mockDepositEntity = TransactionEntity.builder()
+    private TransactionDTO mockDepositEntity = TransactionDTO.builder()
             .amount(BigDecimal.TEN)
             .currency(CurrencyEnum.GLD.name())
             .type(TransactionTypeEnum.DEPOSIT.name())
@@ -107,45 +107,45 @@ class TransactionsControllerServiceTest {
 
     @Test
     public void should_createOneTransaction_andUpdateBalance() {
-        when(accountsEntityManager.getByAccountNumber("12ERGD12345")).thenReturn(mockSrcAccountEntity);
-        when(accountsEntityManager.getByAccountNumber("12ERGD67890")).thenReturn(null);
+        when(accountsClient.getByAccountNumber("12ERGD12345")).thenReturn(mockSrcAccountDTO);
+        when(accountsClient.getByAccountNumber("12ERGD67890")).thenReturn(null);
         try (MockedStatic<TransactionsConverter> converter = Mockito.mockStatic(TransactionsConverter.class)) {
-            converter.when(() -> TransactionsConverter.toSrcTransferEntity(any(), any())).thenReturn(mockSrcTransferEntity);
-            converter.when(() -> TransactionsConverter.toDstTransferEntity(any(), any())).thenReturn(mockDstTransferEntity);
+            converter.when(() -> TransactionsConverter.toSrcTransferDTO(any(), any())).thenReturn(mockSrcTransferEntity);
+            converter.when(() -> TransactionsConverter.toDstTransferDTO(any(), any())).thenReturn(mockDstTransferEntity);
         }
 
         service.transfer(mockTransferRequest);
 
-        verify(transactionsEntityManager, times(1)).insert((TransactionEntity) any());
-        verify(accountsEntityManager, times(1)).updateAccountBalance(any(), any());
+        verify(transactionsClient, times(1)).insert((TransactionDTO) any());
+        verify(accountsClient, times(1)).updateAccountBalance(any(), any());
     }
 
     @Test
     public void should_createTwoTransactions_andUpdateBalance() {
-        when(accountsEntityManager.getByAccountNumber("12ERGD12345")).thenReturn(mockSrcAccountEntity);
-        when(accountsEntityManager.getByAccountNumber("12ERGD67890")).thenReturn(mockDstAccountEntity);
+        when(accountsClient.getByAccountNumber("12ERGD12345")).thenReturn(mockSrcAccountDTO);
+        when(accountsClient.getByAccountNumber("12ERGD67890")).thenReturn(mockDstAccountDTO);
         try (MockedStatic<TransactionsConverter> converter = Mockito.mockStatic(TransactionsConverter.class)) {
-            converter.when(() -> TransactionsConverter.toSrcTransferEntity(any(), any())).thenReturn(mockSrcTransferEntity);
-            converter.when(() -> TransactionsConverter.toDstTransferEntity(any(), any())).thenReturn(mockDstTransferEntity);
+            converter.when(() -> TransactionsConverter.toSrcTransferDTO(any(), any())).thenReturn(mockSrcTransferEntity);
+            converter.when(() -> TransactionsConverter.toDstTransferDTO(any(), any())).thenReturn(mockDstTransferEntity);
         }
 
         service.transfer(mockTransferRequest);
 
-        verify(transactionsEntityManager, times(1)).insert((List<TransactionEntity>) any());
-        verify(accountsEntityManager, times(2)).updateAccountBalance(any(), any());
+        verify(transactionsClient, times(1)).insert((List<TransactionDTO>) any());
+        verify(accountsClient, times(2)).updateAccountBalance(any(), any());
     }
 
     @Test
     public void should_createDepositTransaction_andUpdateBalance() {
-        when(accountsEntityManager.getByAccountNumber("12ERGD12345")).thenReturn(mockSrcAccountEntity);
-        when(accountsEntityManager.getByAccountNumber("12ERGD67890")).thenReturn(mockDstAccountEntity);
+        when(accountsClient.getByAccountNumber("12ERGD12345")).thenReturn(mockSrcAccountDTO);
+        when(accountsClient.getByAccountNumber("12ERGD67890")).thenReturn(mockDstAccountDTO);
         try (MockedStatic<TransactionsConverter> converter = Mockito.mockStatic(TransactionsConverter.class)) {
-            converter.when(() -> TransactionsConverter.toDepositEntity(any(), any())).thenReturn(mockDepositEntity);
+            converter.when(() -> TransactionsConverter.toDepositDTO(any(), any())).thenReturn(mockDepositEntity);
         }
 
         service.deposit(mockDepositRequest);
 
-        verify(transactionsEntityManager, times(1)).insert((TransactionEntity) any());
-        verify(accountsEntityManager, times(1)).updateAccountBalance(any(), any());
+        verify(transactionsClient, times(1)).insert((TransactionDTO) any());
+        verify(accountsClient, times(1)).updateAccountBalance(any(), any());
     }
 }

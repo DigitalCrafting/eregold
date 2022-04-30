@@ -3,10 +3,10 @@ package org.digitalcrafting.eregold.api.transactions;
 import lombok.RequiredArgsConstructor;
 import org.digitalcrafting.eregold.domain.transactions.TransactionModel;
 import org.digitalcrafting.eregold.domain.transactions.TransactionsConverter;
-import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
-import org.digitalcrafting.eregold.repository.accounts.AccountsEntityManager;
-import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
-import org.digitalcrafting.eregold.repository.transactions.TransactionsEntityManager;
+import org.digitalcrafting.eregold.repository.clients.accounts.AccountDTO;
+import org.digitalcrafting.eregold.repository.clients.accounts.AccountsClient;
+import org.digitalcrafting.eregold.repository.clients.transactions.TransactionDTO;
+import org.digitalcrafting.eregold.repository.clients.transactions.TransactionsClient;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,29 +17,29 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionsControllerService {
 
-    private final TransactionsEntityManager transactionsEntityManager;
-    private final AccountsEntityManager accountsEntityManager;
+    private final TransactionsClient transactionsClient;
+    private final AccountsClient accountsClient;
 
     public void transfer(TransactionModel request) {
         Date transactionDate = new Date();
-        TransactionEntity srcTransaction = TransactionsConverter.toSrcTransferEntity(request, transactionDate);
+        TransactionDTO srcTransaction = TransactionsConverter.toSrcTransferDTO(request, transactionDate);
 
-        if (this.accountsEntityManager.getByAccountNumber(request.getDstAccount()) != null) {
-            TransactionEntity dstTransaction = TransactionsConverter.toDstTransferEntity(request, transactionDate);
-            this.transactionsEntityManager.insert(List.of(srcTransaction, dstTransaction));
+        if (this.accountsClient.getByAccountNumber(request.getDstAccount()) != null) {
+            TransactionDTO dstTransaction = TransactionsConverter.toDstTransferDTO(request, transactionDate);
+            this.transactionsClient.insert(List.of(srcTransaction, dstTransaction));
             updateBalance(srcTransaction);
             updateBalance(dstTransaction);
         } else {
-            this.transactionsEntityManager.insert(srcTransaction);
+            this.transactionsClient.insert(srcTransaction);
             updateBalance(srcTransaction);
         }
     }
 
     public void deposit(TransactionModel request) {
         Date transactionDate = new Date();
-        TransactionEntity depositEntity = TransactionsConverter.toDepositEntity(request, transactionDate);
-        this.transactionsEntityManager.insert(depositEntity);
-        updateBalance(depositEntity);
+        TransactionDTO depositDTO = TransactionsConverter.toDepositDTO(request, transactionDate);
+        this.transactionsClient.insert(depositDTO);
+        updateBalance(depositDTO);
     }
 
     /* TODO change logic to update balance based on all transactions from day 1, after you create deposit logic
@@ -51,9 +51,9 @@ public class TransactionsControllerService {
     *
     * Baseline is just a balance calculated by summing up amounts of transactions sorted by date, up to a certain date.
     * */
-    private void updateBalance(TransactionEntity entity) {
-        AccountEntity account = accountsEntityManager.getByAccountNumber(entity.getAccountNumber());
-        BigDecimal newBalance = account.getCurrentBalance().add(entity.getAmount());
-        accountsEntityManager.updateAccountBalance(account.getAccountNumber(), newBalance);
+    private void updateBalance(TransactionDTO dto) {
+        AccountDTO account = accountsClient.getByAccountNumber(dto.getAccountNumber());
+        BigDecimal newBalance = account.getCurrentBalance().add(dto.getAmount());
+        accountsClient.updateAccountBalance(account.getAccountNumber(), newBalance);
     }
 }

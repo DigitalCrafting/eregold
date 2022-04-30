@@ -1,4 +1,4 @@
-package org.digitalcrafting.eregold.repository.transactions;
+package org.digitalcrafting.eregold.arkenstone.transactions;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

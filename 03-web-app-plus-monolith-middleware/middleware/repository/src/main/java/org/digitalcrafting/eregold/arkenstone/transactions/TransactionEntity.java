@@ -1,4 +1,4 @@
-package org.digitalcrafting.eregold.repository.transactions;
+package org.digitalcrafting.eregold.arkenstone.transactions;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

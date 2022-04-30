@@ -7,10 +7,10 @@ import org.digitalcrafting.eregold.domain.accounts.AccountModel;
 import org.digitalcrafting.eregold.domain.accounts.AccountsConverter;
 import org.digitalcrafting.eregold.domain.transactions.TransactionHistoryModel;
 import org.digitalcrafting.eregold.domain.transactions.TransactionsConverter;
-import org.digitalcrafting.eregold.repository.accounts.AccountEntity;
-import org.digitalcrafting.eregold.repository.accounts.AccountsEntityManager;
-import org.digitalcrafting.eregold.repository.transactions.TransactionEntity;
-import org.digitalcrafting.eregold.repository.transactions.TransactionsEntityManager;
+import org.digitalcrafting.eregold.repository.clients.accounts.AccountDTO;
+import org.digitalcrafting.eregold.repository.clients.accounts.AccountsClient;
+import org.digitalcrafting.eregold.repository.clients.transactions.TransactionDTO;
+import org.digitalcrafting.eregold.repository.clients.transactions.TransactionsClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
@@ -23,24 +23,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountsControllerService {
 
-    private final TransactionsEntityManager transactionsEntityManager;
-    private final AccountsEntityManager accountsEntityManager;
+    private final TransactionsClient transactionsClient;
+    private final AccountsClient accountsClient;
     private final EregoldSessionContext sessionContext;
 
     public List<AccountModel> getAccounts() {
-        List<AccountEntity> entityList = accountsEntityManager.getAccountsForCustomer(sessionContext.getCustomerId());
+        List<AccountDTO> entityList = accountsClient.getAccountsForCustomer(sessionContext.getCustomerId());
         return AccountsConverter.toModelList(entityList);
     }
 
     public void createAccount(CreateAccountRequest request) {
-        AccountEntity accountEntity = AccountEntity.builder()
+        AccountDTO accountDTO = AccountDTO.builder()
                 .accountNumber(generateAccountNumber())
                 .accountName(request.getAccountName())
                 .type(request.getAccountType().name())
                 .currency(request.getCurrency().name())
                 .currentBalance(BigDecimal.ZERO)
                 .build();
-        accountsEntityManager.createAccount(accountEntity, sessionContext.getCustomerId());
+        accountsClient.createAccount(accountDTO, sessionContext.getCustomerId());
     }
 
     private String generateAccountNumber() {
@@ -49,20 +49,20 @@ public class AccountsControllerService {
             number = new StringBuilder("12ERGD");
             // toEpochMilli should return number of length 13 at the time of writing this code, so we want to limit ourselves to 12
             number.append(String.valueOf(Instant.now().toEpochMilli()).substring(0, 12));
-        } while (accountsEntityManager.getByAccountNumber(number.toString()) != null);
+        } while (accountsClient.getByAccountNumber(number.toString()) != null);
         return number.toString();
     }
 
     public AccountDetailsModel getAccountDetails(String accountNumber) {
-        AccountEntity entity = accountsEntityManager.getByAccountNumber(accountNumber);
+        AccountDTO entity = accountsClient.getByAccountNumber(accountNumber);
 
         if (entity == null) {
             throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
         }
 
         AccountDetailsModel detailsModel = AccountsConverter.toDetailsModel(entity);
-        List<TransactionEntity> transactionEntityList = transactionsEntityManager.getByAccountNumber(accountNumber);
-        List<TransactionHistoryModel> transactionHistoryModelList = TransactionsConverter.toModelList(transactionEntityList);
+        List<TransactionDTO> transactionDTOList = transactionsClient.getByAccountNumber(accountNumber);
+        List<TransactionHistoryModel> transactionHistoryModelList = TransactionsConverter.toModelList(transactionDTOList);
         transactionHistoryModelList.sort(new TransactionHistoryModel.DateDescendingComparator());
         detailsModel.setTransactionsList(transactionHistoryModelList);
 

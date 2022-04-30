@@ -1,4 +1,4 @@
-package org.digitalcrafting.eregold.repository.transactions;
+package org.digitalcrafting.eregold.arkenstone.transactions;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

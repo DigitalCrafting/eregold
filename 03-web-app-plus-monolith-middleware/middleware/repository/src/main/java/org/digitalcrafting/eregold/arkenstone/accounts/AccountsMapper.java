@@ -1,4 +1,4 @@
-package org.digitalcrafting.eregold.repository.accounts;
+package org.digitalcrafting.eregold.arkenstone.accounts;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
