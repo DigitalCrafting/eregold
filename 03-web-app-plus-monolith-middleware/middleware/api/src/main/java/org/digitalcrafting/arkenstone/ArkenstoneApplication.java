@@ -1,4 +1,4 @@
-package org.digitalcrafting.eregold.arkenstone;
+package org.digitalcrafting.arkenstone;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

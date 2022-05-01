@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <version>0.0.1-SNAPSHOT</version>
-    <groupId>org.digitalcrafting.eregold.arkenstone</groupId>
+    <groupId>org.digitalcrafting.arkenstone</groupId>
     <artifactId>arkenstone</artifactId>
     <packaging>pom</packaging>
 

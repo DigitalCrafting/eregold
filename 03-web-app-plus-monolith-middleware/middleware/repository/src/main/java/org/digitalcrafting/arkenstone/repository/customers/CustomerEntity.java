@@ -1,4 +1,4 @@
-package org.digitalcrafting.eregold.arkenstone.customers;
+package org.digitalcrafting.arkenstone.repository.customers;
 
 import lombok.Builder;
 import lombok.Data;
