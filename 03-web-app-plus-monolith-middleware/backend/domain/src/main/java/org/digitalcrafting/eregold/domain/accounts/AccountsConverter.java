@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 public final class AccountsConverter {
     private AccountsConverter() {}
 
-    public static List<AccountModel> toModelList(List<AccountDTO> entityList) {
+    public static List<AccountModel> toModelList(List<AccountDTO> dtoList) {
         List<AccountModel> accountModelList = null;
 
-        if (entityList != null && !entityList.isEmpty()) {
-            accountModelList = entityList.stream()
+        if (dtoList != null && !dtoList.isEmpty()) {
+            accountModelList = dtoList.stream()
                     .map(AccountsConverter::toModel)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
@@ -22,31 +22,31 @@ public final class AccountsConverter {
         return accountModelList;
     }
 
-    public static AccountModel toModel(AccountDTO entity) {
-        if (entity == null) {
+    public static AccountModel toModel(AccountDTO dto) {
+        if (dto == null) {
             return null;
         }
 
         return AccountModel.builder()
-                .accountNumber(entity.getAccountNumber())
-                .accountName(entity.getAccountName())
-                .currency(CurrencyEnum.valueOf(entity.getCurrency()))
-                .type(AccountTypeEnum.valueOf(entity.getType()))
-                .currentBalance(entity.getCurrentBalance())
+                .accountNumber(dto.getAccountNumber())
+                .accountName(dto.getAccountName())
+                .currency(CurrencyEnum.valueOf(dto.getCurrency()))
+                .type(AccountTypeEnum.valueOf(dto.getType()))
+                .currentBalance(dto.getCurrentBalance())
                 .build();
     }
 
-    public static AccountDetailsModel toDetailsModel(AccountDTO entity) {
-        if (entity == null) {
+    public static AccountDetailsModel toDetailsModel(AccountDTO dto) {
+        if (dto == null) {
             return null;
         }
 
         return AccountDetailsModel.builder()
-                .accountNumber(entity.getAccountNumber())
-                .accountName(entity.getAccountName())
-                .currentBalance(entity.getCurrentBalance())
-                .currency(CurrencyEnum.valueOf(entity.getCurrency()))
-                .type(AccountTypeEnum.valueOf(entity.getType()))
+                .accountNumber(dto.getAccountNumber())
+                .accountName(dto.getAccountName())
+                .currentBalance(dto.getCurrentBalance())
+                .currency(CurrencyEnum.valueOf(dto.getCurrency()))
+                .type(AccountTypeEnum.valueOf(dto.getType()))
                 .build();
     }
 }
