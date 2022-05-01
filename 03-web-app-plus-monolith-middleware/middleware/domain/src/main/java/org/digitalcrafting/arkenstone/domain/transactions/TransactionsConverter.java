@@ -13,12 +13,12 @@ public final class TransactionsConverter {
     private TransactionsConverter() {
     }
 
-    public static List<TransactionHistoryModel> toModelList(List<TransactionEntity> entityList) {
-        List<TransactionHistoryModel> modelList = null;
+    public static List<TransactionHistoryDTO> toDTOList(List<TransactionEntity> entityList) {
+        List<TransactionHistoryDTO> modelList = null;
 
         if (entityList != null && !entityList.isEmpty()) {
             modelList = entityList.stream()
-                    .map(TransactionsConverter::toModel)
+                    .map(TransactionsConverter::toDTO)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         }
@@ -26,12 +26,12 @@ public final class TransactionsConverter {
         return modelList;
     }
 
-    public static TransactionHistoryModel toModel(TransactionEntity entity) {
+    public static TransactionHistoryDTO toDTO(TransactionEntity entity) {
         if (entity == null) {
             return null;
         }
 
-        return TransactionHistoryModel.builder()
+        return TransactionHistoryDTO.builder()
                 .id(entity.getId())
                 .accountNumber(entity.getAccountNumber())
                 .foreignAccountNumber(entity.getForeignAccountNumber())
@@ -43,7 +43,7 @@ public final class TransactionsConverter {
                 .build();
     }
 
-    public static TransactionEntity toSrcTransferDTO(TransactionModel transfer, Date date) {
+    public static TransactionEntity toSrcTransferEntity(TransactionDTO transfer, Date date) {
         TransactionEntity entity = new TransactionEntity();
 
         entity.setAccountNumber(transfer.getSrcAccount());
@@ -57,7 +57,7 @@ public final class TransactionsConverter {
         return entity;
     }
 
-    public static TransactionEntity toDstTransferDTO(TransactionModel transfer, Date date) {
+    public static TransactionEntity toDstTransferEntity(TransactionDTO transfer, Date date) {
         TransactionEntity entity = new TransactionEntity();
 
         entity.setAccountNumber(transfer.getDstAccount());
@@ -72,7 +72,7 @@ public final class TransactionsConverter {
     }
 
 
-    public static TransactionEntity toDepositDTO(TransactionModel transfer, Date date) {
+    public static TransactionEntity toDepositEntity(TransactionDTO transfer, Date date) {
         TransactionEntity entity = new TransactionEntity();
 
         entity.setAccountNumber(transfer.getDstAccount());

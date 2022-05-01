@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactionModel {
+public class TransactionDTO {
     private String srcAccount;
     private String dstAccount;
     private String description;

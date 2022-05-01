@@ -9,25 +9,25 @@ import java.util.stream.Collectors;
 public final class AccountsConverter {
     private AccountsConverter() {}
 
-    public static List<AccountModel> toModelList(List<AccountEntity> entityList) {
-        List<AccountModel> accountModelList = null;
+    public static List<AccountDTO> toDTOList(List<AccountEntity> entityList) {
+        List<AccountDTO> accountDTOList = null;
 
         if (entityList != null && !entityList.isEmpty()) {
-            accountModelList = entityList.stream()
-                    .map(AccountsConverter::toModel)
+            accountDTOList = entityList.stream()
+                    .map(AccountsConverter::toDTO)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         }
 
-        return accountModelList;
+        return accountDTOList;
     }
 
-    public static AccountModel toModel(AccountEntity entity) {
+    public static AccountDTO toDTO(AccountEntity entity) {
         if (entity == null) {
             return null;
         }
 
-        return AccountModel.builder()
+        return AccountDTO.builder()
                 .accountNumber(entity.getAccountNumber())
                 .accountName(entity.getAccountName())
                 .currency(CurrencyEnum.valueOf(entity.getCurrency()))
@@ -36,12 +36,12 @@ public final class AccountsConverter {
                 .build();
     }
 
-    public static AccountDetailsModel toDetailsModel(AccountEntity entity) {
+    public static AccountDetailsDTO toDetailsDTO(AccountEntity entity) {
         if (entity == null) {
             return null;
         }
 
-        return AccountDetailsModel.builder()
+        return AccountDetailsDTO.builder()
                 .accountNumber(entity.getAccountNumber())
                 .accountName(entity.getAccountName())
                 .currentBalance(entity.getCurrentBalance())

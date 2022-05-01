@@ -14,7 +14,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactionHistoryModel {
+public class TransactionHistoryDTO {
     private Long id;
     private String accountNumber;
     private String foreignAccountNumber;
@@ -24,9 +24,9 @@ public class TransactionHistoryModel {
     private BigDecimal amount;
     private Date date;
 
-    public static class DateDescendingComparator implements Comparator<TransactionHistoryModel> {
+    public static class DateDescendingComparator implements Comparator<TransactionHistoryDTO> {
         @Override
-        public int compare(TransactionHistoryModel o1, TransactionHistoryModel o2) {
+        public int compare(TransactionHistoryDTO o1, TransactionHistoryDTO o2) {
             return o2.getDate().compareTo(o1.getDate());
         }
     }
