@@ -2,6 +2,7 @@ package org.digitalcrafting.arkenstone.domain.accounts;
 
 import org.digitalcrafting.arkenstone.repository.accounts.AccountEntity;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -47,6 +48,20 @@ public final class AccountsConverter {
                 .currentBalance(entity.getCurrentBalance())
                 .currency(CurrencyEnum.valueOf(entity.getCurrency()))
                 .type(AccountTypeEnum.valueOf(entity.getType()))
+                .build();
+    }
+
+    public static AccountEntity toEntity(AccountDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        return AccountEntity.builder()
+                .accountNumber(dto.getAccountNumber())
+                .accountName(dto.getAccountName())
+                .type(dto.getType().name())
+                .currency(dto.getCurrency().name())
+                .currentBalance(BigDecimal.ZERO)
                 .build();
     }
 }
