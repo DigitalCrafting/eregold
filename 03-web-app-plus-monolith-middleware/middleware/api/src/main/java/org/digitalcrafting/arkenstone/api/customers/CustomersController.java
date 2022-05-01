@@ -11,13 +11,8 @@ public class CustomersController {
     private final CustomersControllerService service;
 
     @GetMapping
-    public CustomerDTO getById(@RequestParam String customerId) {
-        return service.getById(customerId);
-    }
-
-    @GetMapping
-    public CustomerDTO getByEmail(@RequestParam String email) {
-        return service.getByEmail(email);
+    public CustomerDTO getCustomer(@RequestParam String customerId, @RequestParam String email) {
+        return service.getCustomer(customerId, email);
     }
 
     @PostMapping

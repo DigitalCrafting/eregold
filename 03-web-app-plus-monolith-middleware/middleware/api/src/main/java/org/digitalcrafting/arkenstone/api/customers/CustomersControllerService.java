@@ -12,13 +12,16 @@ import org.springframework.stereotype.Service;
 public class CustomersControllerService {
     private final CustomersEntityManager entityManager;
 
-    public CustomerDTO getById(String customerId) {
-        CustomerEntity entity = entityManager.getByEmail(customerId);
-        return CustomersConverter.toDTO(entity);
-    }
+    public CustomerDTO getCustomer(String customerId, String email) {
+        CustomerEntity entity = null;
 
-    public CustomerDTO getByEmail(String email) {
-        CustomerEntity entity = entityManager.getByEmail(email);
+        if (customerId != null) {
+            entity = entityManager.getByCustomerId(customerId);
+
+        } else if (email != null) {
+            entity = entityManager.getByEmail(email);
+        }
+
         return CustomersConverter.toDTO(entity);
     }
 
