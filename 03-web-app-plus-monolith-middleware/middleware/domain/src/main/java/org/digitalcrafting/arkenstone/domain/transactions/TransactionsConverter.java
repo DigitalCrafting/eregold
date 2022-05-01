@@ -4,7 +4,6 @@ package org.digitalcrafting.arkenstone.domain.transactions;
 import org.digitalcrafting.arkenstone.domain.accounts.CurrencyEnum;
 import org.digitalcrafting.arkenstone.repository.transactions.TransactionEntity;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -13,8 +12,8 @@ public final class TransactionsConverter {
     private TransactionsConverter() {
     }
 
-    public static List<TransactionHistoryDTO> toDTOList(List<TransactionEntity> entityList) {
-        List<TransactionHistoryDTO> modelList = null;
+    public static List<TransactionDTO> toDTOList(List<TransactionEntity> entityList) {
+        List<TransactionDTO> modelList = null;
 
         if (entityList != null && !entityList.isEmpty()) {
             modelList = entityList.stream()
@@ -26,12 +25,12 @@ public final class TransactionsConverter {
         return modelList;
     }
 
-    public static TransactionHistoryDTO toDTO(TransactionEntity entity) {
+    public static TransactionDTO toDTO(TransactionEntity entity) {
         if (entity == null) {
             return null;
         }
 
-        return TransactionHistoryDTO.builder()
+        return TransactionDTO.builder()
                 .id(entity.getId())
                 .accountNumber(entity.getAccountNumber())
                 .foreignAccountNumber(entity.getForeignAccountNumber())
@@ -43,45 +42,32 @@ public final class TransactionsConverter {
                 .build();
     }
 
-    public static TransactionEntity toSrcTransferEntity(TransactionDTO transfer, Date date) {
-        TransactionEntity entity = new TransactionEntity();
+    public static List<TransactionEntity> toEntityList(List<TransactionDTO> dtoList) {
+        List<TransactionEntity> entityList = null;
 
-        entity.setAccountNumber(transfer.getSrcAccount());
-        entity.setForeignAccountNumber(transfer.getDstAccount());
-        entity.setDescription(transfer.getDescription());
-        entity.setType(TransactionTypeEnum.TRANSFER.name());
-        entity.setCurrency(transfer.getCurrency().name());
-        entity.setAmount(transfer.getAmount().negate());
-        entity.setDate(date);
+        if (dtoList != null && !dtoList.isEmpty()) {
+            entityList = dtoList.stream()
+                    .map(TransactionsConverter::toEntity)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+        }
 
-        return entity;
+        return entityList;
     }
+    public static TransactionEntity toEntity(TransactionDTO dto) {
+        if (dto == null) {
+            return null;
+        }
 
-    public static TransactionEntity toDstTransferEntity(TransactionDTO transfer, Date date) {
-        TransactionEntity entity = new TransactionEntity();
-
-        entity.setAccountNumber(transfer.getDstAccount());
-        entity.setForeignAccountNumber(transfer.getSrcAccount());
-        entity.setDescription(transfer.getDescription());
-        entity.setType(TransactionTypeEnum.TRANSFER.name());
-        entity.setCurrency(transfer.getCurrency().name());
-        entity.setAmount(transfer.getAmount());
-        entity.setDate(date);
-
-        return entity;
-    }
-
-
-    public static TransactionEntity toDepositEntity(TransactionDTO transfer, Date date) {
-        TransactionEntity entity = new TransactionEntity();
-
-        entity.setAccountNumber(transfer.getDstAccount());
-        entity.setDescription(transfer.getDescription());
-        entity.setType(TransactionTypeEnum.DEPOSIT.name());
-        entity.setCurrency(transfer.getCurrency().name());
-        entity.setAmount(transfer.getAmount());
-        entity.setDate(date);
-
-        return entity;
+        return TransactionEntity.builder()
+                .id(dto.getId())
+                .accountNumber(dto.getAccountNumber())
+                .foreignAccountNumber(dto.getForeignAccountNumber())
+                .description(dto.getDescription())
+                .type(dto.getType().name())
+                .currency(dto.getCurrency().name())
+                .amount(dto.getAmount())
+                .date(dto.getDate())
+                .build();
     }
 }

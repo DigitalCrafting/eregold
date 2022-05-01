@@ -7,15 +7,19 @@ import lombok.NoArgsConstructor;
 import org.digitalcrafting.arkenstone.domain.accounts.CurrencyEnum;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionDTO {
-    private String srcAccount;
-    private String dstAccount;
+    private Long id;
+    private String accountNumber;
+    private String foreignAccountNumber;
     private String description;
-    private BigDecimal amount;
+    private TransactionTypeEnum type;
     private CurrencyEnum currency;
+    private BigDecimal amount;
+    private Date date;
 }

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.digitalcrafting.arkenstone.domain.transactions.TransactionHistoryDTO;
+import org.digitalcrafting.arkenstone.domain.transactions.TransactionDTO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,5 +19,5 @@ public class AccountDetailsDTO {
     private BigDecimal currentBalance;
     private CurrencyEnum currency;
     private AccountTypeEnum type;
-    private List<TransactionHistoryDTO> transactionsList;
+    private List<TransactionDTO> transactionsList;
 }
