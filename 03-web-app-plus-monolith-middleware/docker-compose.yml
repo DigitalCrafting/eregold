@@ -13,6 +13,16 @@ services:
 #    depends_on:
 #      - eregold-session
 #
+#  arkenstone:
+#    build: ./middleware
+#    container_name: arkenstone
+#    ports:
+#      - 8081:8081
+#    volumes:
+#      - ./middleware:/app
+#    networks:
+#      - eregold-network
+#
 #  eregold-frontend:
 #    build: ./frontend
 #    container_name: eregold-frontend
