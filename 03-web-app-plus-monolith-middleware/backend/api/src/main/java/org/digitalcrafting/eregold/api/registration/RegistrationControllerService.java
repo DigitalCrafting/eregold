@@ -57,14 +57,14 @@ public class RegistrationControllerService {
                 .email(request.getEmail())
                 .build();
 
-        customersClient.insert(customerDTO);
+        customersClient.createCustomer(customerDTO);
         return Optional.of(customerId);
     }
 
     private String generateCustomerId() {
         long dateSeconds = Instant.now().toEpochMilli();
         String customerId = String.valueOf(dateSeconds).substring(0, 8);
-        while (customersClient.getByCustomerId(customerId) != null) {
+        while (customersClient.getCustomer(customerId, null) != null) {
             dateSeconds = Instant.now().toEpochMilli();
             customerId = String.valueOf(dateSeconds).substring(0, 8);
         }

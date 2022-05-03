@@ -1,18 +1,25 @@
 package org.digitalcrafting.eregold.repository.clients.accounts;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-/* TODO Implement Feign client */
-@FeignClient
+@FeignClient(value = "AccountsClient", url = "${arkenstone.url}/v1/accounts")
 public interface AccountsClient {
-    AccountDTO getByAccountNumber(String accountNumber);
+    @GetMapping("/{accountNumber}")
+    AccountDTO getByAccountNumber(@PathVariable String accountNumber);
 
-    List<AccountDTO> getAccountsForCustomer(String customerId);
+    @GetMapping("/list/{customerId}")
+    List<AccountDTO> getAccountsForCustomer(@PathVariable String customerId);
 
-    void createAccount(AccountDTO entity, String customerId);
+    @PostMapping("/{customerId}")
+    void createAccount(@RequestBody AccountDTO entity, @PathVariable String customerId);
 
-    void updateAccountBalance(String accountNumber, BigDecimal balance);
+    @PostMapping("/{accountNumber}/update")
+    void updateAccountBalance(@PathVariable String accountNumber, @RequestBody BigDecimal balance);
 }

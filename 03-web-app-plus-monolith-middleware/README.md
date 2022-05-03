@@ -21,6 +21,7 @@ This kind of application, with a bit more security, is what can be found in the 
 
 ### Steps (TODO script)
 1. Run **mvn clean install -Pprod** in backend directory
+1. Run **mvn clean install** in middleware directory
 2. Run **docker-compose up** in this directory
 3. Run **mvn flyway:migrate** in database directory
 4. Application will be available on **localhost:4200**

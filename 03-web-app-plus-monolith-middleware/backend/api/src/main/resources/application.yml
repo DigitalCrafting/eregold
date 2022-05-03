@@ -26,6 +26,9 @@ spring.redis:
     password: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81 # Login password of the redis server.
     port: 6379
 
+arkenstone:
+  url: http://arkenstone:8081
+
 ---
 spring:
   config:
@@ -42,7 +45,8 @@ spring.redis:
   host: localhost # Redis server host.
   password: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81 # Login password of the redis server.
   port: 6379
-
+arkenstone:
+  url: http://localhost:8081
 ---
 spring:
   config:
@@ -61,3 +65,6 @@ spring.redis:
   host: localhost # Redis server host.
   password: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81 # Login password of the redis server.
   port: 6379
+
+arkenstone:
+  url: http://localhost:8081

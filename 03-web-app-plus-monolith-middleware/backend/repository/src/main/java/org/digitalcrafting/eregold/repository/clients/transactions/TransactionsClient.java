@@ -1,15 +1,21 @@
 package org.digitalcrafting.eregold.repository.clients.transactions;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-/* TODO Implement Feign client */
-@FeignClient
+@FeignClient(value = "TransactionsClient", url = "${arkenstone.url}/v1/transactions")
 public interface TransactionsClient {
-    void insert(List<TransactionDTO> transactions);
+    @GetMapping("/{accountNumber}")
+    List<TransactionDTO> getByAccountNumber(@PathVariable String accountNumber);
 
-    void insert(TransactionDTO entity);
+    @PostMapping
+    void create(@RequestBody TransactionDTO entity);
 
-    List<TransactionDTO> getByAccountNumber(String accountNumber);
+    @PostMapping("/multiple")
+    void createMultiple(@RequestBody List<TransactionDTO> transactions);
 }

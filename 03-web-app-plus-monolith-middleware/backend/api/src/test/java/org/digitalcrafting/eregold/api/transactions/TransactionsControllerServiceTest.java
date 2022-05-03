@@ -116,7 +116,7 @@ class TransactionsControllerServiceTest {
 
         service.transfer(mockTransferRequest);
 
-        verify(transactionsClient, times(1)).insert((TransactionDTO) any());
+        verify(transactionsClient, times(1)).create((TransactionDTO) any());
         verify(accountsClient, times(1)).updateAccountBalance(any(), any());
     }
 
@@ -131,7 +131,7 @@ class TransactionsControllerServiceTest {
 
         service.transfer(mockTransferRequest);
 
-        verify(transactionsClient, times(1)).insert((List<TransactionDTO>) any());
+        verify(transactionsClient, times(1)).createMultiple((List<TransactionDTO>) any());
         verify(accountsClient, times(2)).updateAccountBalance(any(), any());
     }
 
@@ -145,7 +145,7 @@ class TransactionsControllerServiceTest {
 
         service.deposit(mockDepositRequest);
 
-        verify(transactionsClient, times(1)).insert((TransactionDTO) any());
+        verify(transactionsClient, times(1)).create((TransactionDTO) any());
         verify(accountsClient, times(1)).updateAccountBalance(any(), any());
     }
 }

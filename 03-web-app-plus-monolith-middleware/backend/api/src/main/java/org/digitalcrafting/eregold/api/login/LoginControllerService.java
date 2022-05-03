@@ -34,7 +34,7 @@ public class LoginControllerService {
             sessionContext.setToken(token);
             sessionContext.setUserId(request.getUserId());
 
-            CustomerDTO customerDTO = customersClient.getByEmail(request.getUserId());
+            CustomerDTO customerDTO = customersClient.getCustomer(null, request.getUserId());
             sessionContext.setCustomerId(customerDTO.getCustomerId());
             return ResponseEntity.ok(new LoginResponse(token));
         }

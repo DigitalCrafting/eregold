@@ -28,7 +28,7 @@ public class AccountsController {
         service.createAccount(accountDTO, customerId);
     }
 
-    @PatchMapping("/{accountNumber}")
+    @PostMapping("/{accountNumber}/update")
     public void updateAccountBalance(@PathVariable String accountNumber, @RequestBody BigDecimal balance) {
         service.updateAccountBalance(accountNumber, balance);
     }

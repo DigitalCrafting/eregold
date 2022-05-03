@@ -26,11 +26,11 @@ public class TransactionsControllerService {
 
         if (this.accountsClient.getByAccountNumber(request.getDstAccount()) != null) {
             TransactionDTO dstTransaction = TransactionsConverter.toDstTransferDTO(request, transactionDate);
-            this.transactionsClient.insert(List.of(srcTransaction, dstTransaction));
+            this.transactionsClient.createMultiple(List.of(srcTransaction, dstTransaction));
             updateBalance(srcTransaction);
             updateBalance(dstTransaction);
         } else {
-            this.transactionsClient.insert(srcTransaction);
+            this.transactionsClient.create(srcTransaction);
             updateBalance(srcTransaction);
         }
     }
@@ -38,7 +38,7 @@ public class TransactionsControllerService {
     public void deposit(TransactionModel request) {
         Date transactionDate = new Date();
         TransactionDTO depositDTO = TransactionsConverter.toDepositDTO(request, transactionDate);
-        this.transactionsClient.insert(depositDTO);
+        this.transactionsClient.create(depositDTO);
         updateBalance(depositDTO);
     }
 

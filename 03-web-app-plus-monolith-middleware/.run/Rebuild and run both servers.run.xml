@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Rebuild and run both servers" type="CompoundRunConfigurationType">
+    <toRun name="Arkenstone Rebuild and run" type="MavenRunConfiguration" />
+    <toRun name="Eregold Rebuild and run" type="MavenRunConfiguration" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -11,7 +11,7 @@ public class CustomersController {
     private final CustomersControllerService service;
 
     @GetMapping
-    public CustomerDTO getCustomer(@RequestParam String customerId, @RequestParam String email) {
+    public CustomerDTO getCustomer(@RequestParam(required = false) String customerId, @RequestParam(required = false) String email) {
         return service.getCustomer(customerId, email);
     }
 
