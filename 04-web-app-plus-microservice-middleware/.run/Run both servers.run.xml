@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run both servers" type="CompoundRunConfigurationType">
+    <toRun name="Arkenstone Run" type="MavenRunConfiguration" />
+    <toRun name="Eregold Run" type="MavenRunConfiguration" />
+    <method v="2" />
+  </configuration>
+</component>
