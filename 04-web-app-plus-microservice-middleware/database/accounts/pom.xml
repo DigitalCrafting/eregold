@@ -5,7 +5,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>core-banking-schema</artifactId>
+    <artifactId>arkenstone-accounts-schema</artifactId>
     <packaging>pom</packaging>
 
     <build>
@@ -16,9 +16,9 @@
                 <version>8.0.1</version>
                 <configuration>
                     <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:2346/eregold_core_db</url>
-                    <user>eregold_user</user>
-                    <password>eregold_pass</password>
+                    <url>jdbc:postgresql://localhost:2346/arkenstone_accounts_db</url>
+                    <user>arkenstone_user</user>
+                    <password>arkenstone_pass</password>
                     <locations>
                         filesystem:./migration
                     </locations>

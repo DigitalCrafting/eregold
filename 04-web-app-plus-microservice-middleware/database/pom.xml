@@ -7,7 +7,9 @@
 
     <modules>
         <module>users</module>
-        <module>core-banking</module>
+        <module>accounts</module>
+        <module>customers</module>
+        <module>transactions</module>
     </modules>
 
     <dependencies>
