@@ -27,7 +27,7 @@ and only going to microservices when and where you need them. For example: extra
 1. Run **mvn clean install -Pprod** in backend directory
 1. Run **mvn clean install** in middleware directory
 2. Run **docker-compose up** in this directory
-3. Run **mvn flyway:migrate** in database directory
+3. Run **mvn flyway:migrate** in each (accounts, customers, transactions, users) database directory
 4. Application will be available on **localhost:4200**
 
 ## Architecture
