@@ -10,13 +10,14 @@
     <modelVersion>4.0.0</modelVersion>
     <version>0.0.1-SNAPSHOT</version>
     <groupId>org.digitalcrafting.arkenstone</groupId>
-    <artifactId>arkenstone-old</artifactId>
+    <artifactId>arkenstone</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>repository</module>
-        <module>domain</module>
-        <module>api</module>
+        <module>accounts</module>
+        <module>api-gateway</module>
+        <module>customers</module>
+        <module>transactions</module>
     </modules>
 
     <properties>
