@@ -1,4 +1,4 @@
-# eregold - 03 Stateless web app plus monolith middleware [WIP]
+# eregold - 04-web-app-plus-microservice-middleware [WIP]
 
 This version of the **Eregold** application is the most complicated one. The difference from 
 [Version 03](https://github.com/DigitalCrafting/eregold/tree/master/03-web-app-plus-monolith-middleware) is that middleware is no longer a monolithic application,
