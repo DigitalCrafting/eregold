@@ -10,3 +10,12 @@ CREATE TABLE accounts
 
 ALTER TABLE accounts
     ADD CONSTRAINT accounts_pk PRIMARY KEY (account_number);
+
+CREATE TABLE customer_accounts
+(
+    customer_id    VARCHAR(10) NOT NULL,
+    account_number VARCHAR(40) NOT NULL
+);
+
+ALTER TABLE customer_accounts
+    ADD CONSTRAINT cust_acc_pk PRIMARY KEY (customer_id, account_number);
