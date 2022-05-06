@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: local
+  session:
+    store-type: none
+server:
+  port: 8081
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
