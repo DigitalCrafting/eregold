@@ -27,7 +27,7 @@ spring.redis:
     port: 6379
 
 arkenstone:
-  url: http://arkenstone:8081
+  url: http://arkenstone-api-gateway:8081
 
 ---
 spring:

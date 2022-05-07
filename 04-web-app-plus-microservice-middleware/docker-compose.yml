@@ -1,49 +1,40 @@
 version: "3.9"
 
 services:
-#  eregold-backend:
-#    build: ./backend
-#    container_name: eregold-backend
-#    ports:
-#      - 8080:8080
-#    volumes:
-#      - ./backend:/app
-#    networks:
-#      - eregold-network
-#    depends_on:
-#      - eregold-session
-#
-#  arkenstone:
-#    build: ./middleware
-#    container_name: arkenstone
-#    ports:
-#      - 8081:8081
-#    volumes:
-#      - ./middleware:/app
-#    networks:
-#      - eregold-network
-#
-#  eregold-frontend:
-#    build: ./frontend
-#    container_name: eregold-frontend
-#    ports:
-#      - 4200:4200
-#    volumes:
-#      - ./frontend:/app
-#    networks:
-#      - eregold-network
-#
-#  eregold-session:
-#    image: redis:6.2-alpine
-#    container_name: eregold-session
-#    restart: always
-#    ports:
-#      - "6379:6379"
-#    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
-#    volumes:
-#      - cache-volume:/data
-#    networks:
-#      - eregold-network
+  eregold-frontend:
+    build: ./frontend
+    container_name: eregold-frontend
+    ports:
+      - 4200:4200
+    volumes:
+      - ./frontend:/app
+    networks:
+      - eregold-network
+
+  eregold-backend:
+    build: ./backend
+    container_name: eregold-backend
+    ports:
+      - 8080:8080
+    volumes:
+      - ./backend:/app
+    networks:
+      - eregold-network
+    depends_on:
+      - eregold-session
+      - eregold-users-db
+
+  eregold-session:
+    image: redis:6.2-alpine
+    container_name: eregold-session
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes:
+      - cache-volume:/data
+    networks:
+      - eregold-network
 
   eregold-users-db:
     image: postgres:14.0-alpine
@@ -59,6 +50,28 @@ services:
     networks:
       - eregold-network
 
+  arkenstone-api-gateway:
+    build: ./arkenstone/api-gateway
+    container_name: arkenstone-api-gateway
+    ports:
+      - 8081:8081
+    volumes:
+      - ./arkenstone/api-gateway:/app
+    networks:
+      - eregold-network
+
+  arkenstone-accounts-service:
+    build: ./arkenstone/accounts
+    container_name: arkenstone-accounts-service
+    ports:
+      - 8096:8096
+    volumes:
+      - ./arkenstone/accounts:/app
+    networks:
+      - eregold-network
+    depends_on:
+      - arkenstone-accounts-db
+
   arkenstone-accounts-db:
     image: postgres:14.0-alpine
     container_name: arkenstone-accounts-db
@@ -73,6 +86,19 @@ services:
     networks:
       - eregold-network
 
+
+  arkenstone-customers-service:
+    build: ./arkenstone/customers
+    container_name: arkenstone-customers-service
+    ports:
+      - 8097:8097
+    volumes:
+      - ./arkenstone/customers:/app
+    networks:
+      - eregold-network
+    depends_on:
+      - arkenstone-customers-db
+
   arkenstone-customers-db:
     image: postgres:14.0-alpine
     container_name: arkenstone-customers-db
@@ -86,6 +112,18 @@ services:
       - ./database/customers/data-dump/volume:/var/lib/postgresql/data/
     networks:
       - eregold-network
+
+  arkenstone-transactions-service:
+    build: ./arkenstone/transactions
+    container_name: arkenstone-transactions-service
+    ports:
+      - 8098:8098
+    volumes:
+      - ./arkenstone/transactions:/app
+    networks:
+      - eregold-network
+    depends_on:
+      - arkenstone-transactions-db
 
   arkenstone-transactions-db:
     image: postgres:14.0-alpine
