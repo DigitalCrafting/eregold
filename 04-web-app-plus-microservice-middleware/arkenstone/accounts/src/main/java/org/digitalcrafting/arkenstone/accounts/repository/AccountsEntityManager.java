@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
-// TODO maybe move EntityManager to domain
 @Service
 @RequiredArgsConstructor
 public class AccountsEntityManager {

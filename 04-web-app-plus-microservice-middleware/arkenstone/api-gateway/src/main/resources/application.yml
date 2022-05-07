@@ -3,6 +3,8 @@ spring:
     active: local
   session:
     store-type: none
+  main:
+    web-application-type: reactive
 server:
   port: 8081
 
@@ -12,14 +14,57 @@ spring:
     activate:
       on-profile: docker
 
+arkenstone:
+  services:
+    -
+     url: http://arkenstone-accounts-service:8096
+     path: "/v1/accounts"
+     id: "arkenstoneAccountsService"
+    -
+     url: http://arkenstone-customers-service:8097
+     path: "/v1/customers"
+     id: "arkenstoneCustomersService"
+    -
+     url: http://arkenstone-transactions-service:8098
+     path: "/v1/transactions"
+     id: "arkenstoneTransactionsService"
 ---
 spring:
   config:
     activate:
       on-profile: local
 
+arkenstone:
+  services:
+    -
+     url: http://localhost:8096
+     path: "/v1/accounts"
+     id: "arkenstoneAccountsService"
+    -
+     url: http://localhost:8097
+     path: "/v1/customers"
+     id: "arkenstoneCustomersService"
+    -
+     url: http://localhost:8098
+     path: "/v1/transactions"
+     id: "arkenstoneTransactionsService"
 ---
 spring:
   config:
     activate:
       on-profile: test
+
+arkenstone:
+  services:
+    -
+     url: http://localhost:8096
+     path: "/v1/accounts"
+     id: "arkenstoneAccountsService"
+    -
+     url: http://localhost:8097
+     path: "/v1/customers"
+     id: "arkenstoneCustomersService"
+    -
+     url: http://localhost:8098
+     path: "/v1/transactions"
+     id: "arkenstoneTransactionsService"
