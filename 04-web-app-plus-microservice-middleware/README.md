@@ -23,12 +23,19 @@ and only going to microservices when and where you need them. For example: extra
 - NodeJS 14.17.5
 - Npm 6.14.14
 
-### Steps (TODO script)
+### Steps
+#### Linux
+1. Run **build.sh** script
+2. Run **docker-compose up**
+4. Run **migrate_db.sh** script
+5. Application will be available on **localhost:4200**
+
+#### Windows
 1. Run **mvn clean install -Pprod** in backend directory
-1. Run **mvn clean install** in in each (accounts, api-gateway, customers, transactions) microservice directory
-2. Run **docker-compose up** in this directory
-3. Run **mvn flyway:migrate** in each (accounts, customers, transactions, users) database directory
-4. Application will be available on **localhost:4200**
+2. Run **mvn clean install** in in each (accounts, api-gateway, customers, transactions) microservice directory
+3. Run **docker-compose up** in this directory
+4. Run **mvn flyway:migrate** in each (accounts, customers, transactions, users) database directory
+5. Application will be available on **localhost:4200**
 
 ## Architecture
 
