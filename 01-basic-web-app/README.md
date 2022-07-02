@@ -7,19 +7,16 @@ everyone interested in how web application communicates from top to bottom.
 ---
 ## How to run
 ### Requirements
-- Java 11
-- Maven
 - Docker
 #### Optional
-
+- Java 11
+- Maven 3.6
 - NodeJS 14.17.5
 - Npm 6.14.14
 
 ### Steps
-1. Run **mvn clean install -Pprod** in backend directory
-2. Run **docker-compose up** in this directory
-3. Run **mvn flyway:migrate** in database directory
-4. Application will be available on **localhost:4200**
+1. Run **docker-compose -f docker-compose-complete.yml up** in this directory
+2. Application will be available on **localhost:4200**
 
 ## Architecture
 
