@@ -2,7 +2,9 @@ version: "3.7"
 
 services:
   eregold-backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-complete
     container_name: eregold-backend
     ports:
       - 8080:8080
@@ -48,6 +50,23 @@ services:
       - ./database/data-dump/volume:/var/lib/postgresql/data/
     networks:
       - eregold-network
+
+  eregold-db-migration:
+    build:
+      context: ./database/schema
+      dockerfile: Dockerfile-complete
+      network: host
+    container_name: eregold-db-migration
+    volumes:
+      - ./database/schema:/temp
+    entrypoint: ["mvn", "flyway:migrate"]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:2345" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    network_mode: "host"
 
 networks:
   eregold-network:
