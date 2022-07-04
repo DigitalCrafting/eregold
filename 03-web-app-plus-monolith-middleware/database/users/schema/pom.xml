@@ -1,12 +1,17 @@
 <project>
-    <parent>
-        <groupId>com.digitalcrafting.eregold</groupId>
-        <artifactId>db-schema</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>core-banking-schema</artifactId>
+    <groupId>com.digitalcrafting.eregold</groupId>
+    <artifactId>users-schema</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.14</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -16,7 +21,7 @@
                 <version>8.0.1</version>
                 <configuration>
                     <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:2346/eregold_core_db</url>
+                    <url>jdbc:postgresql://localhost:2345/eregold_users_db</url>
                     <user>eregold_user</user>
                     <password>eregold_pass</password>
                     <locations>

@@ -2,9 +2,7 @@ version: "3.7"
 
 services:
   eregold-backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile-complete
+    build: ./backend
     container_name: eregold-backend
     ports:
       - 8080:8080
@@ -16,9 +14,7 @@ services:
       - eregold-session
 
   arkenstone:
-    build:
-      context: ./middleware
-      dockerfile: Dockerfile-complete
+    build: ./middleware
     container_name: arkenstone
     ports:
       - 8081:8081
@@ -63,6 +59,23 @@ services:
     networks:
       - eregold-network
 
+  eregold-users-db-migration:
+    build:
+      context: ./database/users/schema
+      dockerfile: Dockerfile-complete
+      network: host
+    container_name: eregold-users-db-migration
+    volumes:
+      - ./database/schema:/temp
+    entrypoint: [ "mvn", "flyway:migrate" ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:2345" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    network_mode: "host"
+
   eregold-core-banking-db:
     image: postgres:14.0-alpine
     container_name: eregold-core-banking-db
@@ -76,6 +89,23 @@ services:
       - ./database/core-banking/data-dump/volume:/var/lib/postgresql/data/
     networks:
       - eregold-network
+
+  eregold-core-banking-db-migration:
+    build:
+      context: ./database/core-banking/schema
+      dockerfile: Dockerfile-complete
+      network: host
+    container_name: eregold-core-banking-db-migration
+    volumes:
+      - ./database/schema:/temp
+    entrypoint: [ "mvn", "flyway:migrate" ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:2346" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    network_mode: "host"
 
 networks:
   eregold-network:
