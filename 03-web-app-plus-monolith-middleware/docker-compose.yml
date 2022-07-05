@@ -59,7 +59,7 @@ services:
     ports:
       - "2345:5432"
     volumes:
-      - ./database/users/data-dump/volume:/var/lib/postgresql/data/
+      - ./database/data-dump/users/volume:/var/lib/postgresql/data/
     networks:
       - eregold-network
 
@@ -73,7 +73,7 @@ services:
     ports:
       - "2346:5432"
     volumes:
-      - ./database/core-banking/data-dump/volume:/var/lib/postgresql/data/
+      - ./database/data-dump/core-banking/volume:/var/lib/postgresql/data/
     networks:
       - eregold-network
 
