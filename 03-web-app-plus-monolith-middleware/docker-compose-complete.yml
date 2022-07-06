@@ -59,23 +59,6 @@ services:
     networks:
       - eregold-network
 
-  eregold-users-db-migration:
-    build:
-      context: ./database/schema/users
-      dockerfile: Dockerfile-complete
-      network: host
-    container_name: eregold-users-db-migration
-    volumes:
-      - ./database/schema/users:/temp
-    entrypoint: [ "mvn", "flyway:migrate" ]
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:2345" ]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    network_mode: "host"
-
   eregold-core-banking-db:
     image: postgres:14.0-alpine
     container_name: eregold-core-banking-db
@@ -90,17 +73,15 @@ services:
     networks:
       - eregold-network
 
-  eregold-core-banking-db-migration:
+  eregold-db-migration:
     build:
-      context: ./database/schema/core-banking
+      context: ./database/schema
       dockerfile: Dockerfile-complete
       network: host
-    container_name: eregold-core-banking-db-migration
-    volumes:
-      - ./database/schema/core-banking:/temp
-    entrypoint: [ "mvn", "flyway:migrate" ]
+    container_name: eregold-db-migration
+    command: [ "mvn", "-pl", "users,core-banking", "flyway:migrate" ]
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:2346" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:2345", "&&", "curl", "-f", "http://localhost:2346" ]
       interval: 1m30s
       timeout: 10s
       retries: 3

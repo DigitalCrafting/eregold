@@ -3,5 +3,7 @@ FROM maven:3.8.6-jdk-11
 WORKDIR /temp
 
 COPY pom.xml pom.xml
+COPY users/pom.xml users/pom.xml
+COPY core-banking/pom.xml core-banking/pom.xml
 
 RUN mvn clean install
