@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./database/accounts/migrate_db.sh
-./database/customers/migrate_db.sh
-./database/transactions/migrate_db.sh
-./database/users/migrate_db.sh
+./database/schema/accounts/migrate_db.sh
+./database/schema/customers/migrate_db.sh
+./database/schema/transactions/migrate_db.sh
+./database/schema/users/migrate_db.sh

@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.7"
 
 services:
   eregold-frontend:
@@ -46,7 +46,7 @@ services:
     ports:
       - "2345:5432"
     volumes:
-      - ./database/users/data-dump/volume:/var/lib/postgresql/data/
+      - ./database/data-dump/users/volume:/var/lib/postgresql/data/
     networks:
       - eregold-network
 
@@ -82,7 +82,7 @@ services:
     ports:
       - "2346:5432"
     volumes:
-      - ./database/accounts/data-dump/volume:/var/lib/postgresql/data/
+      - ./database/data-dump/accounts/volume:/var/lib/postgresql/data/
     networks:
       - eregold-network
 
@@ -109,7 +109,7 @@ services:
     ports:
       - "2347:5432"
     volumes:
-      - ./database/customers/data-dump/volume:/var/lib/postgresql/data/
+      - ./database/data-dump/customers/volume:/var/lib/postgresql/data/
     networks:
       - eregold-network
 
@@ -135,7 +135,7 @@ services:
     ports:
       - "2348:5432"
     volumes:
-      - ./database/transactions/data-dump/volume:/var/lib/postgresql/data/
+      - ./database/data-dump/transactions/volume:/var/lib/postgresql/data/
     networks:
       - eregold-network
 
