@@ -11,27 +11,17 @@ This kind of application, with a bit more security, is what can be found in the 
 ---
 ## How to run
 ### Requirements
-- Java 11
-- Maven
 - Docker
 #### Optional
-
+- Java 11
+- Maven
 - NodeJS 14.17.5
 - Npm 6.14.14
 
 ### Steps
-#### Linux
-1. Run **build.sh** script
-2. Run **docker-compose up**
-4. Run **migrate_db.sh** script
-5. Application will be available on **localhost:4200**
-
-#### Windows
-1. Run **mvn clean install -Pprod** in backend directory
-2. Run **mvn clean install** in middleware directory
-3. Run **docker-compose up** in this directory
-4. Run **mvn flyway:migrate** in database directory
-5. Application will be available on **localhost:4200**
+1. Run **docker-compose -f docker-compose-complete.yml up** in this directory
+2. Application will be available on **localhost:4200**
+3. You can create your own user with fake data, for simplicity there is no validation except for *repeat password* matching
 
 ## Architecture
 
