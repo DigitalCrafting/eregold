@@ -12,7 +12,8 @@ Goal of this project is to create different versions of the same application, **
 - register
 - login
 - request a new account
-- make a transfer
+- make a transfer between own accounts
+- make a deposit
 
 ## Tech stack
 
