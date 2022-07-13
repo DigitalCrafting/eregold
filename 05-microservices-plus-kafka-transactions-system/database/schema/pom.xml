@@ -1,0 +1,22 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <version>0.0.1-SNAPSHOT</version>
+    <groupId>com.digitalcrafting.eregold</groupId>
+    <artifactId>db-schema</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>users</module>
+        <module>accounts</module>
+        <module>customers</module>
+        <module>transactions</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.14</version>
+        </dependency>
+    </dependencies>
+</project>

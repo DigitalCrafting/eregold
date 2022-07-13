@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Clean Build both servers" type="CompoundRunConfigurationType">
+    <toRun name="Arkenstone Clean Install" type="MavenRunConfiguration" />
+    <toRun name="Eregold Clean Install" type="MavenRunConfiguration" />
+    <method v="2" />
+  </configuration>
+</component>
