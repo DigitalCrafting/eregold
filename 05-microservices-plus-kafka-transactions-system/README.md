@@ -2,6 +2,39 @@
 
 This version of the **Eregold** application is the most complicated one. The difference from 
 [Version 04](https://github.com/DigitalCrafting/eregold/tree/master/04-web-app-plus-microservice-middleware) is that the transactions system will be expanded to use Kafka pub-sub model, to properly check if the transaction can be done and that the account balance is correctly updated.
+The udpated transaction flow will be as in the below diagram:
+
+![TransactionFlow](./assets/transaction_flow.png)
+
+This flow will be much closer to what it can look like, it's not perfect, but it's enough for our simple banking application and the main goal of this is to show an usecase for Kafka.
+
+So the flow is as follows:
+1. User fills the data for new transfer and clicks "Transfer",
+2. Request is made to Backend,
+3. Backend forwards *NewTransactionRequest* to **Transaction Service**
+   1. Backend will receive **TransactionId** in response,
+   2. And will periodically check if the transactions state changed to *ACCEPTED* or *REJECTED*,
+   3. Then it will return to frontend
+4. Transaction service will
+   1. Create **TransactionId**,
+   2. Create new transaction with status *PENDING*,
+   3. Make a call to **Accounts Service** to update *availableBalance* of the account,
+   4. Push the new transaction to Kafka Broker,
+   5. Return **TransactionId** to Backend.
+5. Transaction Verification Service will
+   1. Get the new transaction to verify,
+   2. If the transaction is a deposit, it will be accepted immediately,
+   3. Perform simple verification if the user has enough money in the account and will check the whole account history for that,
+   4. On success will change the status of transaction to *ACCEPTED*, add destination transaction and update the balances,
+   5. On reject it will update status to *REJECTED* and restore *availableBalance* to before the transaction. 
+
+
+Obviously, waiting for the transaction to be processed before going back to user might take too long in a real world but it's good enough for our example, when running on localhost.
+
+In a real world scenario, I would probably return to frontend right after the *availableBalance* is updated and pending transaction is in database, and show it as pending. Then I would use the **transactionId** to check the status in the background, and when it's done, I would update the frontend, as long as user is in the application.
+
+I might even implement it one day :)
+
 
 ---
 ## How to run
@@ -27,7 +60,7 @@ This version of the **Eregold** application is the most complicated one. The dif
 4. Run **mvn flyway:migrate** in each (accounts, customers, transactions, users) database directory
 5. Application will be available on **localhost:4200**
 
-## Architecture TODO update with Kafka
+## Architecture
 
 The architecture is as follows:
 
@@ -55,6 +88,8 @@ The architecture is as follows:
   - Transactions
     - Transactions Service
       - microservice handling transactions related operations
+    - Transaction Verification Service
+      - microservice handling transaction verification, and balance update
     - Transactions DB
       - contains transactions related tables
   - Customers
@@ -62,3 +97,5 @@ The architecture is as follows:
       - microservice handling customers related operations
     - Customers DB
       - contains customers related tables
+  - Kafka Broker
+    - queue system
