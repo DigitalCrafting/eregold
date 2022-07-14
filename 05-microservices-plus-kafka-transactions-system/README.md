@@ -1,4 +1,4 @@
-# eregold - 05-microservices-plus-kafka-transactions-system
+# eregold - 05-microservices-plus-kafka-transactions-system - WIP
 
 This version of the **Eregold** application is the most complicated one. The difference from 
 [Version 04](https://github.com/DigitalCrafting/eregold/tree/master/04-web-app-plus-microservice-middleware) is that the transactions system will be expanded to use Kafka pub-sub model, to properly check if the transaction can be done and that the account balance is correctly updated.
