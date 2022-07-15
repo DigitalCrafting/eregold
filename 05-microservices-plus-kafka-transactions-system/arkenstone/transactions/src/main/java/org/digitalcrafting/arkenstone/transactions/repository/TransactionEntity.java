@@ -18,6 +18,7 @@ public class TransactionEntity {
     private String foreignAccountNumber;
     private String description;
     private String type;
+    private String status;
     private String currency;
     private BigDecimal amount;
     private Date date;

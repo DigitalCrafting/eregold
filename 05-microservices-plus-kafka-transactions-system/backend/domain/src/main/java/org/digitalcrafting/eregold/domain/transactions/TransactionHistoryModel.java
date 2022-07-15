@@ -20,6 +20,7 @@ public class TransactionHistoryModel {
     private String foreignAccountNumber;
     private String description;
     private TransactionTypeEnum type;
+    private TransactionStatusEnum status;
     private CurrencyEnum currency;
     private BigDecimal amount;
     private Date date;

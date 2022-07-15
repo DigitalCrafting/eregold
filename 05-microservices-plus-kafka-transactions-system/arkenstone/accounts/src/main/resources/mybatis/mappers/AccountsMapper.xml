@@ -14,15 +14,15 @@
     </select>
 
     <select id="getAccountsForCustomer" resultMap="AccountEntityMap" parameterType="java.lang.String">
-        SELECT acc.account_number, acc.account_name, acc.current_balance, acc.currency, acc.type
+        SELECT acc.account_number, acc.account_name, acc.current_balance, acc.available_balance, acc.currency, acc.type
         FROM accounts AS acc
                  JOIN customer_accounts AS ca ON acc.account_number = ca.account_number
         WHERE ca.customer_id = #{customerId}
     </select>
 
     <insert id="insertAccount" parameterType="org.digitalcrafting.arkenstone.accounts.repository.AccountEntity">
-        INSERT INTO accounts (account_number, account_name, current_balance, currency, type)
-        VALUES (#{accountNumber}, #{accountName}, #{currentBalance}, #{currency}, #{type})
+        INSERT INTO accounts (account_number, account_name, current_balance, available_balance, currency, type)
+        VALUES (#{accountNumber}, #{accountName}, #{currentBalance}, #{availableBalance}, #{currency}, #{type})
     </insert>
 
     <insert id="insertCustomerAccount"
@@ -33,7 +33,7 @@
 
     <update id="updateAccountBalance">
         UPDATE accounts
-        SET current_balance = #{balance}
+        SET current_balance = #{balance}, available_balance = #{balance}
         WHERE account_number = #{accountNumber}
     </update>
 </mapper>

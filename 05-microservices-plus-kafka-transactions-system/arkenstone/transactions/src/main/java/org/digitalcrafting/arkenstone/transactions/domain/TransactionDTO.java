@@ -19,6 +19,7 @@ public class TransactionDTO {
     private String description;
     private TransactionTypeEnum type;
     private CurrencyEnum currency;
+    private TransactionStatusEnum status;
     private BigDecimal amount;
     private Date date;
 }

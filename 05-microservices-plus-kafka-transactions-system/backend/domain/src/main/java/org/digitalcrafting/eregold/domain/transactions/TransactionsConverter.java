@@ -37,6 +37,7 @@ public final class TransactionsConverter {
                 .description(entity.getDescription())
                 .type(TransactionTypeEnum.valueOf(entity.getType()))
                 .currency(CurrencyEnum.valueOf(entity.getCurrency()))
+                .status(TransactionStatusEnum.valueOf(entity.getStatus()))
                 .amount(entity.getAmount())
                 .date(entity.getDate())
                 .build();

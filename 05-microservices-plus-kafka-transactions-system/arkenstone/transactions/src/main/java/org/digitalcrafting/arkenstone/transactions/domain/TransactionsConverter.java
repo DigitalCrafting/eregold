@@ -35,6 +35,7 @@ public final class TransactionsConverter {
                 .description(entity.getDescription())
                 .type(TransactionTypeEnum.valueOf(entity.getType()))
                 .currency(CurrencyEnum.valueOf(entity.getCurrency()))
+                .status(TransactionStatusEnum.valueOf(entity.getStatus()))
                 .amount(entity.getAmount())
                 .date(entity.getDate())
                 .build();
@@ -64,6 +65,7 @@ public final class TransactionsConverter {
                 .description(dto.getDescription())
                 .type(dto.getType().name())
                 .currency(dto.getCurrency().name())
+                .status(dto.getStatus() != null ? dto.getStatus().name() : TransactionStatusEnum.PENDING.name())
                 .amount(dto.getAmount())
                 .date(dto.getDate())
                 .build();

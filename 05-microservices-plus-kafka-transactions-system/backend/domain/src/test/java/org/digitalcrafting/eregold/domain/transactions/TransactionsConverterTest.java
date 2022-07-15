@@ -78,6 +78,7 @@ class TransactionsConverterTest {
                         .date(transactionDate)
                         .id(1l)
                         .type(TransactionTypeEnum.TRANSFER.name())
+                        .status(TransactionStatusEnum.PENDING.name())
                         .description("Test")
                         .build()
         );
@@ -95,6 +96,7 @@ class TransactionsConverterTest {
         Assertions.assertEquals("Test", modelList.get(0).getDescription());
         Assertions.assertEquals(TransactionTypeEnum.TRANSFER, modelList.get(0).getType());
         Assertions.assertEquals(CurrencyEnum.GLD, modelList.get(0).getCurrency());
+        Assertions.assertEquals(TransactionStatusEnum.PENDING, modelList.get(0).getStatus());
         Assertions.assertEquals(BigDecimal.TEN, modelList.get(0).getAmount());
         Assertions.assertEquals(transactionDate, modelList.get(0).getDate());
 

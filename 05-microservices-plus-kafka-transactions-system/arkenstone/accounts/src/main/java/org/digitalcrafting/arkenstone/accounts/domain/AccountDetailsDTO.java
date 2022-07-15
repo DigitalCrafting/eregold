@@ -15,6 +15,7 @@ public class AccountDetailsDTO {
     private String accountNumber;
     private String accountName;
     private BigDecimal currentBalance;
+    private BigDecimal availableBalance;
     private CurrencyEnum currency;
     private AccountTypeEnum type;
 }

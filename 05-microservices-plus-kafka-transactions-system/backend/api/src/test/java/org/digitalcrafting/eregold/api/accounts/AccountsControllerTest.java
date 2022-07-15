@@ -48,6 +48,7 @@ class AccountsControllerTest {
                 AccountModel.builder()
                         .type(AccountTypeEnum.DEBIT)
                         .currentBalance(BigDecimal.ZERO)
+                        .availableBalance(BigDecimal.ZERO)
                         .currency(CurrencyEnum.GLD)
                         .accountNumber("12ERGD123456")
                         .accountName("Test account")
@@ -61,6 +62,7 @@ class AccountsControllerTest {
                         "[{\"accountNumber\":\"12ERGD123456\"," +
                                 "\"accountName\":\"Test account\"," +
                                 "\"currentBalance\":0," +
+                                "\"availableBalance\":0," +
                                 "\"currency\":\"GLD\"," +
                                 "\"type\":\"DEBIT\"}]"
                 )));

@@ -16,7 +16,8 @@
                                   currency,
                                   date,
                                   description,
-                                  type)
+                                  type,
+                                  status)
         VALUES (#{id},
                 #{accountNumber},
                 #{foreignAccountNumber},
@@ -24,7 +25,8 @@
                 #{currency},
                 #{date},
                 #{description},
-                #{type})
+                #{type},
+                #{status})
     </insert>
 
     <select id="getByAccountNumber" parameterType="java.lang.String" resultMap="TransactionEntityMap">

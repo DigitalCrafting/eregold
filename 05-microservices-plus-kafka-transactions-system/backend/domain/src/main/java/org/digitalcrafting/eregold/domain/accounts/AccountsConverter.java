@@ -33,6 +33,7 @@ public final class AccountsConverter {
                 .currency(CurrencyEnum.valueOf(dto.getCurrency()))
                 .type(AccountTypeEnum.valueOf(dto.getType()))
                 .currentBalance(dto.getCurrentBalance())
+                .availableBalance(dto.getAvailableBalance())
                 .build();
     }
 
@@ -45,6 +46,7 @@ public final class AccountsConverter {
                 .accountNumber(dto.getAccountNumber())
                 .accountName(dto.getAccountName())
                 .currentBalance(dto.getCurrentBalance())
+                .availableBalance(dto.getAvailableBalance())
                 .currency(CurrencyEnum.valueOf(dto.getCurrency()))
                 .type(AccountTypeEnum.valueOf(dto.getType()))
                 .build();

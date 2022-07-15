@@ -19,6 +19,7 @@ public class TransactionDTO {
     private String description;
     private String type;
     private String currency;
+    private String status;
     private BigDecimal amount;
     private Date date;
 }

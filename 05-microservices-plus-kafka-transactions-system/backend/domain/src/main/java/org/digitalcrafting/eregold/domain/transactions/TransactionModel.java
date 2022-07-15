@@ -18,4 +18,5 @@ public class TransactionModel {
     private String description;
     private BigDecimal amount;
     private CurrencyEnum currency;
+    private TransactionStatusEnum status;
 }
