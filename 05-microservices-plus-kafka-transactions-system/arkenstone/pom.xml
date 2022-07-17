@@ -118,6 +118,11 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- Open Feign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
         <!-- Apache libs -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

@@ -1,4 +1,4 @@
-package org.digitalcrafting.eregold.aop;
+package org.digitalcrafting.arkenstone.accounts;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
