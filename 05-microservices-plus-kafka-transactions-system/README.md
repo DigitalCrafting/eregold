@@ -6,7 +6,7 @@ The udpated transaction flow will be as in the below diagram:
 
 ![TransactionFlow](./assets/transaction_flow.png)
 
-This flow will be much closer to what it can look like, it's not perfect, but it's enough for our simple banking application and the main goal of this is to show an usecase for Kafka.
+This flow will be much closer to what it can look like in the real world. It's not perfect, but it's enough for our simple banking application and the main goal of this is to show the usecase for Kafka.
 
 So the flow is as follows:
 1. User fills the data for new transfer and clicks "Transfer",
