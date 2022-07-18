@@ -18,12 +18,12 @@ public class TransactionsController {
     }
 
     @PostMapping("/multiple")
-    public void createMultiple(@RequestBody List<TransactionDTO> transactions) {
-        service.createMultiple(transactions);
+    public void makeMultiple(@RequestBody List<TransactionDTO> transactions) {
+        service.makeMultiple(transactions);
     }
 
     @PostMapping
-    public void create(@RequestBody TransactionDTO transactionDto) {
-        service.create(transactionDto);
+    public void make(@RequestBody TransactionDTO transactionDto) {
+        service.make(transactionDto);
     }
 }

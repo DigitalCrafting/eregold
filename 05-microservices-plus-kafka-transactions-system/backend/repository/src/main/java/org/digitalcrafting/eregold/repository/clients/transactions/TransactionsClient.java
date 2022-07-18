@@ -14,8 +14,8 @@ public interface TransactionsClient {
     List<TransactionDTO> getByAccountNumber(@PathVariable String accountNumber);
 
     @PostMapping
-    void create(@RequestBody TransactionDTO entity);
+    void make(@RequestBody TransactionDTO dto);
 
     @PostMapping("/multiple")
-    void createMultiple(@RequestBody List<TransactionDTO> transactions);
+    void makeMultiple(@RequestBody List<TransactionDTO> transactions);
 }

@@ -1,6 +1,6 @@
 package org.digitalcrafting.arkenstone.transactions.domain;
 
-import org.digitalcrafting.arkenstone.transactions.repository.TransactionEntity;
+import org.digitalcrafting.arkenstone.transactions.repository.db.TransactionEntity;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,19 +41,7 @@ public final class TransactionsConverter {
                 .build();
     }
 
-    public static List<TransactionEntity> toEntityList(List<TransactionDTO> dtoList) {
-        List<TransactionEntity> entityList = null;
-
-        if (dtoList != null && !dtoList.isEmpty()) {
-            entityList = dtoList.stream()
-                    .map(TransactionsConverter::toEntity)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
-        }
-
-        return entityList;
-    }
-    public static TransactionEntity toEntity(TransactionDTO dto) {
+    public static TransactionEntity toDepositEntity(TransactionDTO dto) {
         if (dto == null) {
             return null;
         }
@@ -62,6 +50,42 @@ public final class TransactionsConverter {
                 .id(dto.getId())
                 .accountNumber(dto.getAccountNumber())
                 .foreignAccountNumber(dto.getForeignAccountNumber())
+                .description(dto.getDescription())
+                .type(dto.getType().name())
+                .currency(dto.getCurrency().name())
+                .status(TransactionStatusEnum.ACCEPTED.name())
+                .amount(dto.getAmount())
+                .date(dto.getDate())
+                .build();
+    }
+
+    public static TransactionEntity toTransferEntity(TransactionDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        return TransactionEntity.builder()
+                .id(dto.getId())
+                .accountNumber(dto.getAccountNumber())
+                .foreignAccountNumber(dto.getForeignAccountNumber())
+                .description(dto.getDescription())
+                .type(dto.getType().name())
+                .currency(dto.getCurrency().name())
+                .status(dto.getStatus() != null ? dto.getStatus().name() : TransactionStatusEnum.PENDING.name())
+                .amount(TransactionTypeEnum.TRANSFER.equals(dto.getType()) ? dto.getAmount().negate() : dto.getAmount())
+                .date(dto.getDate())
+                .build();
+    }
+
+    public static TransactionEntity toDstTransactionEntity(TransactionDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        return TransactionEntity.builder()
+                .id(dto.getId())
+                .accountNumber(dto.getForeignAccountNumber())
+                .foreignAccountNumber(dto.getAccountNumber())
                 .description(dto.getDescription())
                 .type(dto.getType().name())
                 .currency(dto.getCurrency().name())

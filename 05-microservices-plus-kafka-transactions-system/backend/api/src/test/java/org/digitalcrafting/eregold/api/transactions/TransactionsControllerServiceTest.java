@@ -23,7 +23,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -106,46 +105,23 @@ class TransactionsControllerServiceTest {
     }
 
     @Test
-    public void should_createOneTransaction_andUpdateBalance() {
+    public void should_makeTransferTransaction() {
         when(accountsClient.getByAccountNumber("12ERGD12345")).thenReturn(mockSrcAccountDTO);
-        when(accountsClient.getByAccountNumber("12ERGD67890")).thenReturn(null);
         try (MockedStatic<TransactionsConverter> converter = Mockito.mockStatic(TransactionsConverter.class)) {
-            converter.when(() -> TransactionsConverter.toSrcTransferDTO(any(), any())).thenReturn(mockSrcTransferEntity);
-            converter.when(() -> TransactionsConverter.toDstTransferDTO(any(), any())).thenReturn(mockDstTransferEntity);
+            converter.when(() -> TransactionsConverter.toTransferDTO(any(), any())).thenReturn(mockSrcTransferEntity);
         }
-
         service.transfer(mockTransferRequest);
-
-        verify(transactionsClient, times(1)).create((TransactionDTO) any());
-        verify(accountsClient, times(1)).updateAccountBalance(any(), any());
+        verify(transactionsClient, times(1)).make((TransactionDTO) any());
     }
 
     @Test
-    public void should_createTwoTransactions_andUpdateBalance() {
-        when(accountsClient.getByAccountNumber("12ERGD12345")).thenReturn(mockSrcAccountDTO);
-        when(accountsClient.getByAccountNumber("12ERGD67890")).thenReturn(mockDstAccountDTO);
-        try (MockedStatic<TransactionsConverter> converter = Mockito.mockStatic(TransactionsConverter.class)) {
-            converter.when(() -> TransactionsConverter.toSrcTransferDTO(any(), any())).thenReturn(mockSrcTransferEntity);
-            converter.when(() -> TransactionsConverter.toDstTransferDTO(any(), any())).thenReturn(mockDstTransferEntity);
-        }
-
-        service.transfer(mockTransferRequest);
-
-        verify(transactionsClient, times(1)).createMultiple((List<TransactionDTO>) any());
-        verify(accountsClient, times(2)).updateAccountBalance(any(), any());
-    }
-
-    @Test
-    public void should_createDepositTransaction_andUpdateBalance() {
+    public void should_makeDepositTransaction() {
         when(accountsClient.getByAccountNumber("12ERGD12345")).thenReturn(mockSrcAccountDTO);
         when(accountsClient.getByAccountNumber("12ERGD67890")).thenReturn(mockDstAccountDTO);
         try (MockedStatic<TransactionsConverter> converter = Mockito.mockStatic(TransactionsConverter.class)) {
             converter.when(() -> TransactionsConverter.toDepositDTO(any(), any())).thenReturn(mockDepositEntity);
         }
-
         service.deposit(mockDepositRequest);
-
-        verify(transactionsClient, times(1)).create((TransactionDTO) any());
-        verify(accountsClient, times(1)).updateAccountBalance(any(), any());
+        verify(transactionsClient, times(1)).make((TransactionDTO) any());
     }
 }

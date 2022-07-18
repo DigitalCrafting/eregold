@@ -24,6 +24,9 @@ spring.datasource:
   password: arkenstone_pass
   driver-class-name:
 
+arkenstone:
+  gateway:
+    url: http://arkenstone-api-gateway:8081
 ---
 spring:
   config:
@@ -36,6 +39,9 @@ spring.datasource:
   password: arkenstone_pass
   driver-class-name:
 
+arkenstone:
+  gateway:
+    url: http://localhost:8081
 ---
 spring:
   config:
@@ -47,3 +53,7 @@ spring.datasource:
   username: arkenstone_user
   password: arkenstone_pass
   driver-class-name:
+
+arkenstone:
+  gateway:
+    url: http://localhost:8081

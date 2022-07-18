@@ -21,5 +21,5 @@ public interface AccountsClient {
     void createAccount(@RequestBody AccountDTO entity, @PathVariable String customerId);
 
     @PostMapping("/{accountNumber}/update")
-    void updateAccountBalance(@PathVariable String accountNumber, @RequestBody BigDecimal balance);
+    void updateAccountBalance(@PathVariable String accountNumber, @RequestBody BigDecimal amount);
 }

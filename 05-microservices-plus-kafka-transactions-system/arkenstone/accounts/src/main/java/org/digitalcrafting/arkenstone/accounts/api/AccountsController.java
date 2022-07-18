@@ -29,7 +29,7 @@ public class AccountsController {
     }
 
     @PostMapping("/{accountNumber}/update")
-    public void updateAccountBalance(@PathVariable String accountNumber, @RequestBody BigDecimal balance) {
-        service.updateAccountBalance(accountNumber, balance);
+    public void updateAccountBalance(@PathVariable String accountNumber, @RequestBody BigDecimal amount) {
+        service.updateAccountBalance(accountNumber, amount);
     }
 }

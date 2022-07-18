@@ -103,14 +103,14 @@ class TransactionsConverterTest {
     }
 
     @Test
-    void should_convertToSrcTransferEntity() {
+    void should_convertToTransferDTO() {
         // When
-        TransactionDTO srcTransactionDTO = TransactionsConverter.toSrcTransferDTO(mockTransferRequest, currentDate);
+        TransactionDTO srcTransactionDTO = TransactionsConverter.toTransferDTO(mockTransferRequest, currentDate);
 
         // Then
         Assertions.assertNotNull(srcTransactionDTO);
         Assertions.assertEquals(currentDate, srcTransactionDTO.getDate());
-        Assertions.assertEquals(BigDecimal.TEN.negate(), srcTransactionDTO.getAmount());
+        Assertions.assertEquals(BigDecimal.TEN, srcTransactionDTO.getAmount());
         Assertions.assertEquals(CurrencyEnum.GLD.name(), srcTransactionDTO.getCurrency());
         Assertions.assertEquals(TransactionTypeEnum.TRANSFER.name(), srcTransactionDTO.getType());
         Assertions.assertEquals("Test transfer", srcTransactionDTO.getDescription());
@@ -119,23 +119,7 @@ class TransactionsConverterTest {
     }
 
     @Test
-    void should_convertToDstTransferEntity() {
-        // When
-        TransactionDTO dstTransactionDTO = TransactionsConverter.toDstTransferDTO(mockTransferRequest, currentDate);
-
-        // Then
-        Assertions.assertNotNull(dstTransactionDTO);
-        Assertions.assertEquals(currentDate, dstTransactionDTO.getDate());
-        Assertions.assertEquals(BigDecimal.TEN, dstTransactionDTO.getAmount());
-        Assertions.assertEquals(CurrencyEnum.GLD.name(), dstTransactionDTO.getCurrency());
-        Assertions.assertEquals(TransactionTypeEnum.TRANSFER.name(), dstTransactionDTO.getType());
-        Assertions.assertEquals("Test transfer", dstTransactionDTO.getDescription());
-        Assertions.assertEquals("12ERGD12345", dstTransactionDTO.getForeignAccountNumber());
-        Assertions.assertEquals("12ERGD67890", dstTransactionDTO.getAccountNumber());
-    }
-
-    @Test
-    void should_convertToDepositEntity() {
+    void should_convertToDepositDTO() {
         // When
         TransactionDTO depositEntity = TransactionsConverter.toDepositDTO(mockDepositRequest, currentDate);
 

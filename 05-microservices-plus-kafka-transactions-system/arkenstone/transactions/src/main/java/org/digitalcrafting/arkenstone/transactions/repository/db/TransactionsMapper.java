@@ -1,4 +1,4 @@
-package org.digitalcrafting.arkenstone.transactions.repository;
+package org.digitalcrafting.arkenstone.transactions.repository.db;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

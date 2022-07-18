@@ -1,4 +1,4 @@
-package org.digitalcrafting.arkenstone.transactions.repository;
+package org.digitalcrafting.arkenstone.transactions.repository.db;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

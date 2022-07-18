@@ -5,7 +5,9 @@ import org.digitalcrafting.arkenstone.accounts.domain.AccountDTO;
 import org.digitalcrafting.arkenstone.accounts.domain.AccountsConverter;
 import org.digitalcrafting.arkenstone.accounts.repository.AccountEntity;
 import org.digitalcrafting.arkenstone.accounts.repository.AccountsEntityManager;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,7 +33,14 @@ public class AccountsControllerService {
         entityManager.createAccount(entity, customerId);
     }
 
-    public void updateAccountBalance(String accountNumber, BigDecimal balance) {
-        entityManager.updateAccountBalance(accountNumber, balance);
+    /* TODO this should actually just update availableBalance, when the Kafka transaction system is implemented */
+    public void updateAccountBalance(String accountNumber, BigDecimal amount) {
+        AccountEntity entity = entityManager.getByAccountNumber(accountNumber);
+        if (entity != null) {
+            BigDecimal oldBalance = entity.getCurrentBalance();
+            entityManager.updateAccountBalance(accountNumber, oldBalance.add(amount));
+        } else {
+            throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "Account doesn't exist");
+        }
     }
 }

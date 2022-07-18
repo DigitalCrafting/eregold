@@ -43,25 +43,11 @@ public final class TransactionsConverter {
                 .build();
     }
 
-    public static TransactionDTO toSrcTransferDTO(TransactionModel transfer, Date date) {
+    public static TransactionDTO toTransferDTO(TransactionModel transfer, Date date) {
         TransactionDTO entity = new TransactionDTO();
 
         entity.setAccountNumber(transfer.getSrcAccount());
         entity.setForeignAccountNumber(transfer.getDstAccount());
-        entity.setDescription(transfer.getDescription());
-        entity.setType(TransactionTypeEnum.TRANSFER.name());
-        entity.setCurrency(transfer.getCurrency().name());
-        entity.setAmount(transfer.getAmount().negate());
-        entity.setDate(date);
-
-        return entity;
-    }
-
-    public static TransactionDTO toDstTransferDTO(TransactionModel transfer, Date date) {
-        TransactionDTO entity = new TransactionDTO();
-
-        entity.setAccountNumber(transfer.getDstAccount());
-        entity.setForeignAccountNumber(transfer.getSrcAccount());
         entity.setDescription(transfer.getDescription());
         entity.setType(TransactionTypeEnum.TRANSFER.name());
         entity.setCurrency(transfer.getCurrency().name());
@@ -70,7 +56,6 @@ public final class TransactionsConverter {
 
         return entity;
     }
-
 
     public static TransactionDTO toDepositDTO(TransactionModel transfer, Date date) {
         TransactionDTO entity = new TransactionDTO();

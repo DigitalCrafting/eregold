@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.digitalcrafting.arkenstone.transactions.repository.TransactionsMapper">
+<mapper namespace="org.digitalcrafting.arkenstone.transactions.repository.db.TransactionsMapper">
     <resultMap id="TransactionEntityMap"
-               type="org.digitalcrafting.arkenstone.transactions.repository.TransactionEntity">
+               type="org.digitalcrafting.arkenstone.transactions.repository.db.TransactionEntity">
         <!-- Mybatis config will map this automatically-->
     </resultMap>
 
-    <insert id="insert" parameterType="org.digitalcrafting.arkenstone.transactions.repository.TransactionEntity">
+    <insert id="insert" parameterType="org.digitalcrafting.arkenstone.transactions.repository.db.TransactionEntity">
         INSERT INTO transactions (id,
                                   account_number,
                                   foreign_account_number,
