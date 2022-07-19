@@ -18,13 +18,19 @@ spring:
   config:
     activate:
       on-profile: docker
-spring.datasource:
-  url: jdbc:postgresql://arkenstone-transactions-db:5432/arkenstone_transactions_db
-  username: arkenstone_user
-  password: arkenstone_pass
-  driver-class-name:
-
 arkenstone:
+  datasource:
+    transactions:
+      url: jdbc:postgresql://arkenstone-transactions-db:5432/arkenstone_transactions_db
+      username: arkenstone_user
+      password: arkenstone_pass
+      driver-class-name:
+    accounts:
+      url: jdbc:postgresql://arkenstone-accounts-db:5432/arkenstone_accounts_db
+      username: arkenstone_user
+      password: arkenstone_pass
+      driver-class-name:
+
   gateway:
     url: http://arkenstone-api-gateway:8081
 ---
@@ -33,13 +39,19 @@ spring:
     activate:
       on-profile: local
 
-spring.datasource:
-  url: jdbc:postgresql://localhost:2348/arkenstone_transactions_db
-  username: arkenstone_user
-  password: arkenstone_pass
-  driver-class-name:
-
 arkenstone:
+  datasource:
+    transactions:
+      url: jdbc:postgresql://localhost:2348/arkenstone_transactions_db
+      username: arkenstone_user
+      password: arkenstone_pass
+      driver-class-name:
+    accounts:
+      url: jdbc:postgresql://localhost:2346/arkenstone_accounts_db
+      username: arkenstone_user
+      password: arkenstone_pass
+      driver-class-name:
+
   gateway:
     url: http://localhost:8081
 ---
@@ -48,12 +60,18 @@ spring:
     activate:
       on-profile: test
 
-spring.datasource:
-  url: jdbc:postgresql://localhost:2348/arkenstone_transactions_db
-  username: arkenstone_user
-  password: arkenstone_pass
-  driver-class-name:
-
 arkenstone:
+  datasource:
+    transactions:
+      url: jdbc:postgresql://localhost:2348/arkenstone_transactions_db
+      username: arkenstone_user
+      password: arkenstone_pass
+      driver-class-name:
+    accounts:
+      url: jdbc:postgresql://localhost:2346/arkenstone_accounts_db
+      username: arkenstone_user
+      password: arkenstone_pass
+      driver-class-name:
+
   gateway:
     url: http://localhost:8081
