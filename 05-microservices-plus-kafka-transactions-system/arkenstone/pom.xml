@@ -18,6 +18,7 @@
         <module>api-gateway</module>
         <module>customers</module>
         <module>transactions</module>
+        <module>transaction-verification</module>
     </modules>
 
     <properties>

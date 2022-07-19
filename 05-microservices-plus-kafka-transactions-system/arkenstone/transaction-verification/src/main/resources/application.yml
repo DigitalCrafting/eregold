@@ -1,0 +1,59 @@
+spring:
+  profiles:
+    active: local
+  session:
+    store-type: none
+server:
+  port: 8099
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: NULL
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+  mapper-locations: classpath*:/mybatis/mappers/*Mapper.xml
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+spring.datasource:
+  url: jdbc:postgresql://arkenstone-transactions-db:5432/arkenstone_transactions_db
+  username: arkenstone_user
+  password: arkenstone_pass
+  driver-class-name:
+
+arkenstone:
+  gateway:
+    url: http://arkenstone-api-gateway:8081
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+spring.datasource:
+  url: jdbc:postgresql://localhost:2348/arkenstone_transactions_db
+  username: arkenstone_user
+  password: arkenstone_pass
+  driver-class-name:
+
+arkenstone:
+  gateway:
+    url: http://localhost:8081
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+spring.datasource:
+  url: jdbc:postgresql://localhost:2348/arkenstone_transactions_db
+  username: arkenstone_user
+  password: arkenstone_pass
+  driver-class-name:
+
+arkenstone:
+  gateway:
+    url: http://localhost:8081

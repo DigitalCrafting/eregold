@@ -7,3 +7,4 @@ cd $(dirname $0)
 ./api-gateway/build.sh
 ./customers/build.sh
 ./transactions/build.sh
+./transaction-verification/build.sh
