@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
@@ -38,7 +37,6 @@ public class TransactionsDataSourceConfig {
     private String driverClass;
 
     @Bean(name = "transactionsDataSource")
-    @Primary
     public DataSource transactionsDataSource() throws PropertyVetoException {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         dataSource.setDriverClass(driverClass);
@@ -49,13 +47,11 @@ public class TransactionsDataSourceConfig {
     }
 
     @Bean(name = "transactionsTransactionManager")
-    @Primary
     public DataSourceTransactionManager transactionsTransactionManager() throws PropertyVetoException {
         return new DataSourceTransactionManager(transactionsDataSource());
     }
 
     @Bean(name = "transactionsSqlSessionFactory")
-    @Primary
     public SqlSessionFactory transactionsSqlSessionFactory(@Qualifier("transactionsDataSource") DataSource transactionsDataSource)
             throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
