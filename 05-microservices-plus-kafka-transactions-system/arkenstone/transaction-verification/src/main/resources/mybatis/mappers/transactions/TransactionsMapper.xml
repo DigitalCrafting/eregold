@@ -29,6 +29,10 @@
                 #{status})
     </insert>
 
+    <select id="getByPrimaryKey" parameterType="map" resultMap="TransactionEntityMap">
+        SELECT * FROM transactions WHERE id = #{id} AND account_number = #{accountNumber}
+    </select>
+
     <select id="getByAccountNumber" parameterType="java.lang.String" resultMap="TransactionEntityMap">
         SELECT * FROM transactions WHERE account_number = #{accountNumber}
     </select>

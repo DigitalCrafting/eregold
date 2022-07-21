@@ -22,10 +22,6 @@ public class TransactionsControllerService {
         return TransactionsConverter.toDTOList(entityList);
     }
 
-    public void makeMultiple(List<TransactionDTO> transactions) {
-        transactions.forEach(this::make);
-    }
-
     public void make(TransactionDTO transactionDTO) {
         if (TransactionTypeEnum.DEPOSIT.equals(transactionDTO.getType())) {
             makeDeposit(transactionDTO);
@@ -44,10 +40,12 @@ public class TransactionsControllerService {
         TransactionEntity entity = TransactionsConverter.toTransferEntity(transactionDTO);
         if (this.accountsClient.getByAccountNumber(transactionDTO.getForeignAccountNumber()) != null) {
             TransactionEntity dstEntity = TransactionsConverter.toDstTransactionEntity(transactionDTO);
-            entityManager.insert(dstEntity);
+            entityManager.insert(List.of(entity, dstEntity));
             accountsClient.updateAccountBalance(dstEntity.getAccountNumber(), dstEntity.getAmount());
+            accountsClient.updateAccountBalance(entity.getAccountNumber(), entity.getAmount());
+        } else {
+            entityManager.insert(entity);
+            accountsClient.updateAccountBalance(entity.getAccountNumber(), entity.getAmount());
         }
-        entityManager.insert(entity);
-        accountsClient.updateAccountBalance(entity.getAccountNumber(), entity.getAmount());
     }
 }

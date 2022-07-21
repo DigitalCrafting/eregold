@@ -17,11 +17,6 @@ public class TransactionsController {
         return service.getByAccountNumber(accountNumber);
     }
 
-    @PostMapping("/multiple")
-    public void makeMultiple(@RequestBody List<TransactionDTO> transactions) {
-        service.makeMultiple(transactions);
-    }
-
     @PostMapping
     public void make(@RequestBody TransactionDTO transactionDto) {
         service.make(transactionDto);

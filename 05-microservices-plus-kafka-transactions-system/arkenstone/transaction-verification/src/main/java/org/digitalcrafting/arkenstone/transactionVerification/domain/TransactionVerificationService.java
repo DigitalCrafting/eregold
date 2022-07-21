@@ -22,4 +22,16 @@ public class TransactionVerificationService {
     public List<TransactionEntity> getTransaction() {
         return transactionsMapper.getByAccountNumber("12ERGD165796912095");
     }
+
+    public void verifyTransaction(Long transactionId, String accountNumber) {
+        TransactionEntity transactionToVerify = transactionsMapper.getByPrimaryKey(transactionId, accountNumber);
+        /* TODO steps
+        *  get account history
+        *  exclude transaction to verify
+        *  sum all transactions
+        *  check if sum equals currentBalance of the account
+        *  check if sum - amountFromTransactionToVerify equals availableBalance
+        *  if so, change status, update currentBalance, and create dst transaction with status ACCEPTED
+        * */
+    }
 }

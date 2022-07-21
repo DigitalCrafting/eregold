@@ -15,7 +15,4 @@ public interface TransactionsClient {
 
     @PostMapping
     void make(@RequestBody TransactionDTO dto);
-
-    @PostMapping("/multiple")
-    void makeMultiple(@RequestBody List<TransactionDTO> transactions);
 }
