@@ -90,6 +90,7 @@ The architecture is as follows:
       - microservice handling transactions related operations
     - Transaction Verification Service
       - microservice handling transaction verification, and balance update
+      - **Important!** This service connects directly to 2 databases simply because I wanted to have an example on how to connect to multiple databases from one service
     - Transactions DB
       - contains transactions related tables
   - Customers

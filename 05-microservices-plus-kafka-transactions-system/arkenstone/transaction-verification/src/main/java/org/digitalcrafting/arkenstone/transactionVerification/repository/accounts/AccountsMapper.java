@@ -9,7 +9,5 @@ import java.math.BigDecimal;
 public interface AccountsMapper {
     AccountEntity getByAccountNumber(String accountNumber);
 
-    void insertAccount(AccountEntity entity);
-
-    void updateAccountBalance(@Param("accountNumber") String accountNumber, @Param("balance") BigDecimal balance);
+    void updateAccountBalance(AccountEntity entity);
 }

@@ -13,14 +13,9 @@
         WHERE account_number = #{accountNumber}
     </select>
 
-    <insert id="insertAccount" parameterType="org.digitalcrafting.arkenstone.transactionVerification.repository.accounts.AccountEntity">
-        INSERT INTO accounts (account_number, account_name, current_balance, available_balance, currency, type)
-        VALUES (#{accountNumber}, #{accountName}, #{currentBalance}, #{availableBalance}, #{currency}, #{type})
-    </insert>
-
-    <update id="updateAccountBalance">
+    <update id="updateAccountBalance" parameterType="org.digitalcrafting.arkenstone.transactionVerification.repository.accounts.AccountEntity">
         UPDATE accounts
-        SET current_balance = #{balance}, available_balance = #{balance}
+        SET current_balance = #{currentBalance}, available_balance = #{availableBalance}
         WHERE account_number = #{accountNumber}
     </update>
 </mapper>

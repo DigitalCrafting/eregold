@@ -36,4 +36,11 @@
     <select id="getByAccountNumber" parameterType="java.lang.String" resultMap="TransactionEntityMap">
         SELECT * FROM transactions WHERE account_number = #{accountNumber}
     </select>
+
+    <update id="updateTransactionStatus" parameterType="map">
+        UPDATE transactions
+        SET status = #{status}
+        WHERE account_number = #{accountNumber} AND id=#{id}
+    </update>
+
 </mapper>

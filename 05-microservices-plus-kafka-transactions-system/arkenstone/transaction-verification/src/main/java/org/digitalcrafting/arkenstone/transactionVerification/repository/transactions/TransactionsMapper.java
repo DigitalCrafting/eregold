@@ -14,6 +14,8 @@ public interface TransactionsMapper {
 
     void insert(TransactionEntity entity);
 
+    void updateTransactionStatus(@Param("id") Long id, @Param("accountNumber") String accountNumber, @Param("status") String status);
+
     TransactionEntity getByPrimaryKey(@Param("id") Long id, @Param("accountNumber") String accountNumber);
 
     List<TransactionEntity> getByAccountNumber(String accountNumber);
