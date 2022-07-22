@@ -6,7 +6,6 @@ import org.digitalcrafting.arkenstone.transactionVerification.repository.account
 import org.digitalcrafting.arkenstone.transactionVerification.repository.transactions.TransactionEntity;
 import org.digitalcrafting.arkenstone.transactionVerification.repository.transactions.TransactionsMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -26,9 +25,14 @@ public class TransactionVerificationService {
      *  6. if so, change status, update currentBalance, and create dst transaction with status ACCEPTED
      *  7. if not, change status to REJECTED, set availableBalance to currentBalance
      * */
-    @Transactional
+    // TODO With @Transactional annotation, the tests require connection to DB, refactor code to use EntityManager or verify if tests can be run as is
     public void verifyTransaction(Long transactionId, String accountNumber) {
         TransactionEntity transactionToVerify = transactionsMapper.getByPrimaryKey(transactionId, accountNumber);
+
+        if (!TransactionStatusEnum.PENDING.name().equals(transactionToVerify.getStatus())) {
+            return;
+        }
+
         AccountEntity accountToVerify = accountsMapper.getByAccountNumber(accountNumber);
         BigDecimal historicallyCalculatedBalance = getHistoryAndCalculateBalance(transactionId, accountNumber);
 

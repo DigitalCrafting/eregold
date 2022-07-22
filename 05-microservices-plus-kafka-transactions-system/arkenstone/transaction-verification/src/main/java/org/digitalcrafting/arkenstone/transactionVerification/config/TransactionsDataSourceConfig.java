@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
@@ -15,6 +16,7 @@ import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 
 @Configuration
+@Profile({"local", "docker"})
 //Scan mapper interface and container management
 @MapperScan(basePackages = TransactionsDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "transactionsSqlSessionFactory")
 public class TransactionsDataSourceConfig {

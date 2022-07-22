@@ -59,19 +59,13 @@ spring:
   config:
     activate:
       on-profile: test
+  datasource:
+    type: org.springframework.jdbc.datasource.SimpleDriverDataSource
+    url: jdbc:postgresql://localhost:2345/mock
+    username: mock
+    password: mock
+    driver-class-name:
 
 arkenstone:
-  datasource:
-    transactions:
-      url: jdbc:postgresql://localhost:2348/arkenstone_transactions_db
-      username: arkenstone_user
-      password: arkenstone_pass
-      driver-class-name:
-    accounts:
-      url: jdbc:postgresql://localhost:2346/arkenstone_accounts_db
-      username: arkenstone_user
-      password: arkenstone_pass
-      driver-class-name:
-
   gateway:
     url: http://localhost:8081
