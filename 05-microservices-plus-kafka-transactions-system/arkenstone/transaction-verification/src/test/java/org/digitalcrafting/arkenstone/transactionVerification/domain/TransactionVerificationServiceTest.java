@@ -56,7 +56,7 @@ class TransactionVerificationServiceTest {
         service.verifyTransaction(99L, "12ERGD12345");
 
         // then
-        verify(transactionsMapper, times(1)).updateTransactionStatus(any(), any(), any());
+        verify(transactionsMapper, times(1)).updateTransactionStatus(any(), any(), eq(TransactionStatusEnum.ACCEPTED.name()));
         verify(transactionsMapper, times(1)).insert(any());
         verify(accountsMapper, times(2)).updateAccountBalance(any());
     }
@@ -72,7 +72,7 @@ class TransactionVerificationServiceTest {
         service.verifyTransaction(99L, "12ERGD12345");
 
         // then
-        verify(transactionsMapper, times(1)).updateTransactionStatus(any(), any(), any());
+        verify(transactionsMapper, times(1)).updateTransactionStatus(any(), any(), eq(TransactionStatusEnum.ACCEPTED.name()));
         verify(accountsMapper, times(1)).updateAccountBalance(any());
     }
 
@@ -92,29 +92,65 @@ class TransactionVerificationServiceTest {
 
     @Test
     public void should_rejectTransfer_when_historicallyCalculatedBalance_isZero() {
+        // given
         when(transactionsMapper.getByPrimaryKey(99L, "12ERGD12345")).thenReturn(testDataInstance.MOCK_CORRECT_OWN_TRANSACTION);
+        when(transactionsMapper.getByAccountNumber("12ERGD12345")).thenReturn(testDataInstance.MOCK_HISTORY_BALANCE_ZERO);
         when(accountsMapper.getByAccountNumber("12ERGD12345")).thenReturn(testDataInstance.MOCK_SOURCE_ACCOUNT);
-        // TODO
+
+        // when
+        service.verifyTransaction(99L, "12ERGD12345");
+
+        // then
+        verify(transactionsMapper, times(1)).updateTransactionStatus(any(), any(), eq(TransactionStatusEnum.REJECTED.name()));
+        verify(transactionsMapper, times(0)).insert(any());
+        verify(accountsMapper, times(1)).updateAccountBalance(any());
     }
 
     @Test
     public void should_rejectTransfer_when_historicallyCalculatedBalance_isNot_currentBalance() {
+        // given
         when(transactionsMapper.getByPrimaryKey(99L, "12ERGD12345")).thenReturn(testDataInstance.MOCK_CORRECT_OWN_TRANSACTION);
+        when(transactionsMapper.getByAccountNumber("12ERGD12345")).thenReturn(testDataInstance.MOCK_HISTORY_BALANCE_NOT_CURRENT_BALANCE);
         when(accountsMapper.getByAccountNumber("12ERGD12345")).thenReturn(testDataInstance.MOCK_SOURCE_ACCOUNT);
-        // TODO
+
+        // when
+        service.verifyTransaction(99L, "12ERGD12345");
+
+        // then
+        verify(transactionsMapper, times(1)).updateTransactionStatus(any(), any(), eq(TransactionStatusEnum.REJECTED.name()));
+        verify(transactionsMapper, times(0)).insert(any());
+        verify(accountsMapper, times(1)).updateAccountBalance(any());
     }
 
     @Test
     public void should_rejectTransfer_when_historicallyCalculatedBalanceAfterTransaction_isLessThan_Zero() {
-        when(transactionsMapper.getByPrimaryKey(99L, "12ERGD12345")).thenReturn(testDataInstance.MOCK_CORRECT_OWN_TRANSACTION);
+        // given
+        when(transactionsMapper.getByPrimaryKey(99L, "12ERGD12345")).thenReturn(testDataInstance.MOCK_TRANSACTION_11000);
+        when(transactionsMapper.getByAccountNumber("12ERGD12345")).thenReturn(testDataInstance.MOCK_HISTORY_CORRECT_BALANCE);
         when(accountsMapper.getByAccountNumber("12ERGD12345")).thenReturn(testDataInstance.MOCK_SOURCE_ACCOUNT);
-        // TODO
+
+        // when
+        service.verifyTransaction(99L, "12ERGD12345");
+
+        // then
+        verify(transactionsMapper, times(1)).updateTransactionStatus(any(), any(), eq(TransactionStatusEnum.REJECTED.name()));
+        verify(transactionsMapper, times(0)).insert(any());
+        verify(accountsMapper, times(1)).updateAccountBalance(any());
     }
 
     @Test
     public void should_rejectTransfer_when_historicallyCalculatedBalanceAfterTransaction_isNot_AvailableBalance() {
-        when(transactionsMapper.getByPrimaryKey(99L, "12ERGD12345")).thenReturn(testDataInstance.MOCK_CORRECT_OWN_TRANSACTION);
+        // given
+        when(transactionsMapper.getByPrimaryKey(99L, "12ERGD12345")).thenReturn(testDataInstance.MOCK_TRANSACTION_2000);
+        when(transactionsMapper.getByAccountNumber("12ERGD12345")).thenReturn(testDataInstance.MOCK_HISTORY_CORRECT_BALANCE);
         when(accountsMapper.getByAccountNumber("12ERGD12345")).thenReturn(testDataInstance.MOCK_SOURCE_ACCOUNT);
-        // TODO
+
+        // when
+        service.verifyTransaction(99L, "12ERGD12345");
+
+        // then
+        verify(transactionsMapper, times(1)).updateTransactionStatus(any(), any(), eq(TransactionStatusEnum.REJECTED.name()));
+        verify(transactionsMapper, times(0)).insert(any());
+        verify(accountsMapper, times(1)).updateAccountBalance(any());
     }
 }
