@@ -6,6 +6,7 @@ import org.digitalcrafting.arkenstone.transactionVerification.repository.account
 import org.digitalcrafting.arkenstone.transactionVerification.repository.transactions.TransactionEntity;
 import org.digitalcrafting.arkenstone.transactionVerification.repository.transactions.TransactionsMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,7 +26,6 @@ public class TransactionVerificationService {
      *  6. if so, change status, update currentBalance, and create dst transaction with status ACCEPTED
      *  7. if not, change status to REJECTED, set availableBalance to currentBalance
      * */
-    // TODO With @Transactional annotation, the tests require connection to DB, refactor code to use EntityManager or verify if tests can be run as is
     public void verifyTransaction(Long transactionId, String accountNumber) {
         TransactionEntity transactionToVerify = transactionsMapper.getByPrimaryKey(transactionId, accountNumber);
 
@@ -52,7 +52,8 @@ public class TransactionVerificationService {
         }
     }
 
-    private void processTransactionForSourceAccount(Long transactionId, String accountNumber, TransactionEntity transactionToVerify, AccountEntity accountToVerify) {
+    @Transactional
+    void processTransactionForSourceAccount(Long transactionId, String accountNumber, TransactionEntity transactionToVerify, AccountEntity accountToVerify) {
         transactionToVerify.setStatus(TransactionStatusEnum.ACCEPTED.name());
         accountToVerify.setCurrentBalance(accountToVerify.getAvailableBalance());
 
@@ -60,7 +61,8 @@ public class TransactionVerificationService {
         accountsMapper.updateAccountBalance(accountToVerify);
     }
 
-    private void processTransactionForInternalDestinationAccount(TransactionEntity transactionToVerify, AccountEntity dstAccount) {
+    @Transactional
+    void processTransactionForInternalDestinationAccount(TransactionEntity transactionToVerify, AccountEntity dstAccount) {
         TransactionEntity dstTransaction = TransactionConverter.createDstTransaction(transactionToVerify);
         dstAccount.setCurrentBalance(dstAccount.getCurrentBalance().add(dstTransaction.getAmount()));
         dstAccount.setAvailableBalance(dstAccount.getAvailableBalance().add(dstTransaction.getAmount()));
@@ -69,7 +71,8 @@ public class TransactionVerificationService {
         accountsMapper.updateAccountBalance(dstAccount);
     }
 
-    private void rejectTransaction(Long transactionId, String accountNumber, AccountEntity accountToVerify) {
+    @Transactional
+    void rejectTransaction(Long transactionId, String accountNumber, AccountEntity accountToVerify) {
         transactionsMapper.updateTransactionStatus(transactionId, accountNumber, TransactionStatusEnum.REJECTED.name());
         accountToVerify.setAvailableBalance(accountToVerify.getCurrentBalance());
         accountsMapper.updateAccountBalance(accountToVerify);
