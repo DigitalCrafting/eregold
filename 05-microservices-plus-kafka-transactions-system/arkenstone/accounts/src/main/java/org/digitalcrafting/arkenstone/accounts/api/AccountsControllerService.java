@@ -34,11 +34,11 @@ public class AccountsControllerService {
     }
 
     /* TODO this should actually just update availableBalance, when the Kafka transaction system is implemented */
-    public void updateAccountBalance(String accountNumber, BigDecimal amount) {
+    public void updateAvailableBalance(String accountNumber, BigDecimal amount) {
         AccountEntity entity = entityManager.getByAccountNumber(accountNumber);
         if (entity != null) {
-            BigDecimal oldBalance = entity.getCurrentBalance();
-            entityManager.updateAccountBalance(accountNumber, oldBalance.add(amount));
+            BigDecimal oldBalance = entity.getAvailableBalance();
+            entityManager.updateAvailableBalance(accountNumber, oldBalance.add(amount));
         } else {
             throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "Account doesn't exist");
         }

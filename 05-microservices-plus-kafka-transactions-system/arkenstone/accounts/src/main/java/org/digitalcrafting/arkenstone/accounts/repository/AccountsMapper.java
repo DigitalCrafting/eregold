@@ -16,5 +16,5 @@ public interface AccountsMapper {
 
     void insertCustomerAccount(String customerId, String accountNumber);
 
-    void updateAccountBalance(@Param("accountNumber") String accountNumber, @Param("balance") BigDecimal balance);
+    void updateAvailableBalance(@Param("accountNumber") String accountNumber, @Param("balance") BigDecimal balance);
 }

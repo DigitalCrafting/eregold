@@ -27,6 +27,8 @@ spring.datasource:
 arkenstone:
   gateway:
     url: http://arkenstone-api-gateway:8081
+  transaction-verification:
+    url: http://arkenstone-transaction-verification-service:8099
 ---
 spring:
   config:
@@ -42,6 +44,8 @@ spring.datasource:
 arkenstone:
   gateway:
     url: http://localhost:8081
+  transaction-verification:
+    url: http://localhost:8099
 ---
 spring:
   config:
@@ -57,3 +61,5 @@ spring.datasource:
 arkenstone:
   gateway:
     url: http://localhost:8081
+  transaction-verification:
+    url: http://localhost:8099

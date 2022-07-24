@@ -1,6 +1,7 @@
 package org.digitalcrafting.arkenstone.transactions.repository.db;
 
 import lombok.RequiredArgsConstructor;
+import org.digitalcrafting.arkenstone.transactions.repository.clients.accounts.AccountsClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,17 +11,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionsEntityManager {
     private final TransactionsMapper mapper;
+    private final AccountsClient client;
 
     @Transactional
-    public void insert(List<TransactionEntity> transactions) {
-        if (transactions != null && !transactions.isEmpty()) {
-            Long transactionId = mapper.getNextId();
-            transactions.forEach(transaction -> {
-                transaction.setId(transactionId);
-                this.mapper.insert(transaction);
-            });
-
-        }
+    public Long insertAndGetId(TransactionEntity entity) {
+        Long id = mapper.getNextId();
+        entity.setId(id);
+        mapper.insert(entity);
+        return id;
     }
 
     @Transactional

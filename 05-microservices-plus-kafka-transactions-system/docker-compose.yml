@@ -86,7 +86,6 @@ services:
     networks:
       - eregold-network
 
-
   arkenstone-customers-service:
     build: ./arkenstone/customers
     container_name: arkenstone-customers-service
@@ -138,6 +137,19 @@ services:
       - ./database/data-dump/transactions/volume:/var/lib/postgresql/data/
     networks:
       - eregold-network
+
+  arkenstone-transaction-verification-service:
+    build: ./arkenstone/transaction-verification
+    container_name: arkenstone-transaction-verification-service
+    ports:
+      - 8099:8099
+    volumes:
+      - ./arkenstone/transaction-verification:/app
+    networks:
+      - eregold-network
+    depends_on:
+      - arkenstone-transactions-db
+      - arkenstone-accounts-db
 
 networks:
   eregold-network:

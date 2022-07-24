@@ -1,4 +1,4 @@
-package org.digitalcrafting.arkenstone.transactions.repository.clients;
+package org.digitalcrafting.arkenstone.transactions.repository.clients.accounts;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +15,8 @@ public interface AccountsClient {
      *  TODO this should only update availableBalance.
      *  Actual balance will be update by TransactionVerificationService, after transaction is accepted.
      */
-    @PostMapping("/{accountNumber}/update")
-    void updateAccountBalance(@PathVariable String accountNumber, @RequestBody BigDecimal amount);
+    @PostMapping("/{accountNumber}/balance/available")
+    void updateAvailableBalance(@PathVariable String accountNumber, @RequestBody BigDecimal amount);
 
     @GetMapping("/{accountNumber}")
     AccountDTO getByAccountNumber(@PathVariable String accountNumber);

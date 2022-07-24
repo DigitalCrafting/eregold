@@ -71,26 +71,8 @@ public final class TransactionsConverter {
                 .description(dto.getDescription())
                 .type(dto.getType().name())
                 .currency(dto.getCurrency().name())
-                .status(dto.getStatus() != null ? dto.getStatus().name() : TransactionStatusEnum.PENDING.name())
-                .amount(TransactionTypeEnum.TRANSFER.equals(dto.getType()) ? dto.getAmount().negate() : dto.getAmount())
-                .date(dto.getDate())
-                .build();
-    }
-
-    public static TransactionEntity toDstTransactionEntity(TransactionDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-
-        return TransactionEntity.builder()
-                .id(dto.getId())
-                .accountNumber(dto.getForeignAccountNumber())
-                .foreignAccountNumber(dto.getAccountNumber())
-                .description(dto.getDescription())
-                .type(dto.getType().name())
-                .currency(dto.getCurrency().name())
-                .status(dto.getStatus() != null ? dto.getStatus().name() : TransactionStatusEnum.PENDING.name())
-                .amount(dto.getAmount())
+                .status(TransactionStatusEnum.PENDING.name())
+                .amount(dto.getAmount().negate())
                 .date(dto.getDate())
                 .build();
     }

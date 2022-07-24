@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @FeignClient(value = "AccountsClient", url = "${arkenstone.url}/v1/accounts")
@@ -19,7 +18,4 @@ public interface AccountsClient {
 
     @PostMapping("/{customerId}")
     void createAccount(@RequestBody AccountDTO entity, @PathVariable String customerId);
-
-    @PostMapping("/{accountNumber}/update")
-    void updateAccountBalance(@PathVariable String accountNumber, @RequestBody BigDecimal amount);
 }

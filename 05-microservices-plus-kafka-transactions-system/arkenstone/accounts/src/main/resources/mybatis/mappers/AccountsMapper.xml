@@ -31,9 +31,9 @@
         VALUES (#{customerId}, #{accountNumber})
     </insert>
 
-    <update id="updateAccountBalance">
+    <update id="updateAvailableBalance">
         UPDATE accounts
-        SET current_balance = #{balance}, available_balance = #{balance}
+        SET available_balance = #{balance}
         WHERE account_number = #{accountNumber}
     </update>
 </mapper>

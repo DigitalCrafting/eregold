@@ -28,8 +28,8 @@ public class AccountsController {
         service.createAccount(accountDTO, customerId);
     }
 
-    @PostMapping("/{accountNumber}/update")
-    public void updateAccountBalance(@PathVariable String accountNumber, @RequestBody BigDecimal amount) {
-        service.updateAccountBalance(accountNumber, amount);
+    @PostMapping("/{accountNumber}/balance/available")
+    public void updateAvailableBalance(@PathVariable String accountNumber, @RequestBody BigDecimal amount) {
+        service.updateAvailableBalance(accountNumber, amount);
     }
 }

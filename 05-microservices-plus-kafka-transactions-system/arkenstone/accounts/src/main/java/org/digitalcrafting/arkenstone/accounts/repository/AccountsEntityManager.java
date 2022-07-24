@@ -26,7 +26,7 @@ public class AccountsEntityManager {
         accountsMapper.insertCustomerAccount(customerId, entity.getAccountNumber());
     }
 
-    public void updateAccountBalance(String accountNumber, BigDecimal balance) {
-        accountsMapper.updateAccountBalance(accountNumber, balance);
+    public void updateAvailableBalance(String accountNumber, BigDecimal balance) {
+        accountsMapper.updateAvailableBalance(accountNumber, balance);
     }
 }

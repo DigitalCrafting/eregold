@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.digitalcrafting.arkenstone.transactions.domain.TransactionDTO;
 import org.digitalcrafting.arkenstone.transactions.domain.TransactionTypeEnum;
 import org.digitalcrafting.arkenstone.transactions.domain.TransactionsConverter;
-import org.digitalcrafting.arkenstone.transactions.repository.clients.AccountsClient;
+import org.digitalcrafting.arkenstone.transactions.repository.clients.accounts.AccountsClient;
+import org.digitalcrafting.arkenstone.transactions.repository.clients.verification.TransactionVerificationClient;
 import org.digitalcrafting.arkenstone.transactions.repository.db.TransactionEntity;
 import org.digitalcrafting.arkenstone.transactions.repository.db.TransactionsEntityManager;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.List;
 public class TransactionsControllerService {
     private final AccountsClient accountsClient;
     private final TransactionsEntityManager entityManager;
+    private final TransactionVerificationClient verificationClient;
 
     public List<TransactionDTO> getByAccountNumber(String accountNumber) {
         List<TransactionEntity> entityList = entityManager.getByAccountNumber(accountNumber);
@@ -33,19 +35,13 @@ public class TransactionsControllerService {
     private void makeDeposit(TransactionDTO transactionDTO) {
         TransactionEntity entity = TransactionsConverter.toDepositEntity(transactionDTO);
         entityManager.insert(entity);
-        accountsClient.updateAccountBalance(entity.getAccountNumber(), entity.getAmount());
+        accountsClient.updateAvailableBalance(entity.getAccountNumber(), entity.getAmount());
     }
 
     private void makeTransfer(TransactionDTO transactionDTO) {
         TransactionEntity entity = TransactionsConverter.toTransferEntity(transactionDTO);
-        if (this.accountsClient.getByAccountNumber(transactionDTO.getForeignAccountNumber()) != null) {
-            TransactionEntity dstEntity = TransactionsConverter.toDstTransactionEntity(transactionDTO);
-            entityManager.insert(List.of(entity, dstEntity));
-            accountsClient.updateAccountBalance(dstEntity.getAccountNumber(), dstEntity.getAmount());
-            accountsClient.updateAccountBalance(entity.getAccountNumber(), entity.getAmount());
-        } else {
-            entityManager.insert(entity);
-            accountsClient.updateAccountBalance(entity.getAccountNumber(), entity.getAmount());
-        }
+        Long id = entityManager.insertAndGetId(entity);
+        accountsClient.updateAvailableBalance(entity.getAccountNumber(), entity.getAmount());
+        verificationClient.verifyTransaction(id, entity.getAccountNumber());
     }
 }

@@ -62,21 +62,4 @@ class TransactionsConverterTest {
         Assertions.assertEquals("12ERGD12345", transferEntity.getAccountNumber());
         Assertions.assertEquals("12ERGD67890", transferEntity.getForeignAccountNumber());
     }
-
-    @Test
-    void should_convertToDstTransferEntity() {
-        // When
-        TransactionEntity dstTransferEntity = TransactionsConverter.toDstTransactionEntity(mockTransferDTO);
-
-        // Then
-        Assertions.assertNotNull(dstTransferEntity);
-        Assertions.assertEquals(currentDate, dstTransferEntity.getDate());
-        Assertions.assertEquals(BigDecimal.TEN, dstTransferEntity.getAmount());
-        Assertions.assertEquals(CurrencyEnum.GLD.name(), dstTransferEntity.getCurrency());
-        Assertions.assertEquals(TransactionTypeEnum.TRANSFER.name(), dstTransferEntity.getType());
-        Assertions.assertEquals(TransactionStatusEnum.PENDING.name(), dstTransferEntity.getStatus());
-        Assertions.assertEquals("Test transfer", dstTransferEntity.getDescription());
-        Assertions.assertEquals("12ERGD12345", dstTransferEntity.getForeignAccountNumber());
-        Assertions.assertEquals("12ERGD67890", dstTransferEntity.getAccountNumber());
-    }
 }
