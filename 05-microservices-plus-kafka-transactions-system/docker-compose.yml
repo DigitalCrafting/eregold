@@ -2,6 +2,32 @@ version: "3.7"
 
 services:
   # -------------------------------------
+  # ---------- KAFKA BROKER -------------
+  # -------------------------------------
+  arkenstone-zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: arkenstone-zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - eregold-network
+
+  arkenstone-kafka-broker:
+    image: wurstmeister/kafka
+    container_name: arkenstone-kafka-broker
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: arkenstone-kafka-broker
+      KAFKA_ZOOKEEPER_CONNECT: arkenstone-zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
+      KAFKA_CREATE_TOPICS: "transaction-verification:1:1"
+    networks:
+      - eregold-network
+    depends_on:
+      - arkenstone-zookeeper
+  
+  # -------------------------------------
   # ----------- EREGOLD UI --------------
   # -------------------------------------
   eregold-frontend:
@@ -129,6 +155,7 @@ services:
       - eregold-network
     depends_on:
       - arkenstone-transactions-db
+      - arkenstone-kafka-broker
 
   arkenstone-transactions-db:
     image: postgres:14.0-alpine
@@ -156,26 +183,7 @@ services:
     depends_on:
       - arkenstone-transactions-db
       - arkenstone-accounts-db
-
-  # -------------------------------------
-  # ---------- KAFKA BROKER -------------
-  # -------------------------------------
-  arkenstone-zookeeper:
-    image: wurstmeister/zookeeper
-    container_name: arkenstone-zookeeper
-    ports:
-      - "2181:2181"
-  arkenstone-kafka-broker:
-    image: wurstmeister/kafka
-    container_name: arkenstone-kafka-broker
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
-      KAFKA_ZOOKEEPER_CONNECT: arkenstone-zookeeper:2181
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
-    depends_on:
-      - zookeeper
+      - arkenstone-kafka-broker
 
 networks:
   eregold-network:

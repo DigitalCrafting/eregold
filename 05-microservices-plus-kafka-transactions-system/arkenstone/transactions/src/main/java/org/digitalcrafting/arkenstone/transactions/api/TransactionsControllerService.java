@@ -1,6 +1,7 @@
 package org.digitalcrafting.arkenstone.transactions.api;
 
 import lombok.RequiredArgsConstructor;
+import org.digitalcrafting.arkenstone.transactions.domain.KafkaTransactionMessage;
 import org.digitalcrafting.arkenstone.transactions.domain.TransactionDTO;
 import org.digitalcrafting.arkenstone.transactions.domain.TransactionTypeEnum;
 import org.digitalcrafting.arkenstone.transactions.domain.TransactionsConverter;
@@ -8,9 +9,11 @@ import org.digitalcrafting.arkenstone.transactions.repository.clients.accounts.A
 import org.digitalcrafting.arkenstone.transactions.repository.clients.verification.TransactionVerificationClient;
 import org.digitalcrafting.arkenstone.transactions.repository.db.TransactionEntity;
 import org.digitalcrafting.arkenstone.transactions.repository.db.TransactionsEntityManager;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +21,7 @@ public class TransactionsControllerService {
     private final AccountsClient accountsClient;
     private final TransactionsEntityManager entityManager;
     private final TransactionVerificationClient verificationClient;
+    private final KafkaTemplate<String, KafkaTransactionMessage> kafkaTemplate;
 
     public List<TransactionDTO> getByAccountNumber(String accountNumber) {
         List<TransactionEntity> entityList = entityManager.getByAccountNumber(accountNumber);
@@ -43,5 +47,6 @@ public class TransactionsControllerService {
         Long id = entityManager.insertAndGetId(entity);
         accountsClient.updateAvailableBalance(entity.getAccountNumber(), entity.getAmount());
         verificationClient.verifyTransaction(id, entity.getAccountNumber());
+        kafkaTemplate.send("transaction-verification", UUID.randomUUID().toString(), new KafkaTransactionMessage(id, entity.getAccountNumber()));
     }
 }

@@ -30,6 +30,8 @@ arkenstone:
       username: arkenstone_user
       password: arkenstone_pass
       driver-class-name:
+  kafka:
+    url: arkenstone-kafka-broker:9092
 
   gateway:
     url: http://arkenstone-api-gateway:8081
@@ -51,6 +53,8 @@ arkenstone:
       username: arkenstone_user
       password: arkenstone_pass
       driver-class-name:
+  kafka:
+    url: localhost:9092
 
   gateway:
     url: http://localhost:8081
@@ -69,3 +73,5 @@ spring:
 arkenstone:
   gateway:
     url: http://localhost:8081
+  kafka:
+    url: localhost:9092

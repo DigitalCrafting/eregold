@@ -1,21 +1,32 @@
 package org.digitalcrafting.arkenstone.transactionVerification.domain;
 
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.digitalcrafting.arkenstone.transactionVerification.repository.accounts.AccountEntity;
 import org.digitalcrafting.arkenstone.transactionVerification.repository.accounts.AccountsMapper;
 import org.digitalcrafting.arkenstone.transactionVerification.repository.transactions.TransactionEntity;
 import org.digitalcrafting.arkenstone.transactionVerification.repository.transactions.TransactionsMapper;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TransactionVerificationService {
     private final AccountsMapper accountsMapper;
     private final TransactionsMapper transactionsMapper;
+
+    @KafkaListener(topics = "transaction-verification", groupId = "transaction-group")
+    public void listenForVerificationMessage(@Payload KafkaTransactionMessage message) {
+        log.info("Received kafka message: " + new Gson().toJson(message));
+//        verifyTransaction(message.getTransactionId(), message.getAccountNumber());
+    }
 
     /* Verification steps:
      *  1. get account history

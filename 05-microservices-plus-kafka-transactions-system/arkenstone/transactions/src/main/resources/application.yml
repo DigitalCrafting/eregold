@@ -29,6 +29,9 @@ arkenstone:
     url: http://arkenstone-api-gateway:8081
   transaction-verification:
     url: http://arkenstone-transaction-verification-service:8099
+  kafka:
+    url: arkenstone-kafka-broker:9092
+
 ---
 spring:
   config:
@@ -46,6 +49,8 @@ arkenstone:
     url: http://localhost:8081
   transaction-verification:
     url: http://localhost:8099
+  kafka:
+    url: localhost:9092
 ---
 spring:
   config:
@@ -63,3 +68,5 @@ arkenstone:
     url: http://localhost:8081
   transaction-verification:
     url: http://localhost:8099
+  kafka:
+    url: localhost:9092
