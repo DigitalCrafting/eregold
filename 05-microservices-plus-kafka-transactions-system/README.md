@@ -1,4 +1,4 @@
-# eregold - 05-microservices-plus-kafka-transactions-system - WIP
+# eregold - 05-microservices-plus-kafka-transactions-system
 
 This version of the **Eregold** application is the most complicated one. The difference from 
 [Version 04](https://github.com/DigitalCrafting/eregold/tree/master/04-web-app-plus-microservice-middleware) is that the transactions system will be expanded to use Kafka pub-sub model, to properly check if the transaction can be done and that the account balance is correctly updated.
@@ -88,8 +88,10 @@ The architecture is as follows:
   - Transactions
     - Transactions Service
       - microservice handling transactions related operations
+      - produces message to Kafka Broker when transaction verification is necessary
     - Transaction Verification Service
       - microservice handling transaction verification, and balance update
+      - consumes message from Kafka Broker and verifies the transaction
       - **Important!** This service connects directly to 2 databases simply because I wanted to have an example on how to connect to multiple databases from one service
     - Transactions DB
       - contains transactions related tables
