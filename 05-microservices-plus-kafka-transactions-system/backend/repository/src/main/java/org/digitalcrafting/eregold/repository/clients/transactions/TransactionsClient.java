@@ -13,6 +13,9 @@ public interface TransactionsClient {
     @GetMapping("/{accountNumber}")
     List<TransactionDTO> getByAccountNumber(@PathVariable String accountNumber);
 
+    @GetMapping("/{transactionId}/{accountNumber}")
+    String getTransactionStatus(@PathVariable Long transactionId, @PathVariable String accountNumber);
+
     @PostMapping
-    void make(@RequestBody TransactionDTO dto);
+    MakeTransactionResponse make(@RequestBody TransactionDTO dto);
 }

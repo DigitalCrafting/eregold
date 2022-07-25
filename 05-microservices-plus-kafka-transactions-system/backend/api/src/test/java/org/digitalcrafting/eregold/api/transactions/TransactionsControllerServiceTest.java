@@ -6,6 +6,7 @@ import org.digitalcrafting.eregold.domain.transactions.TransactionTypeEnum;
 import org.digitalcrafting.eregold.domain.transactions.TransactionsConverter;
 import org.digitalcrafting.eregold.repository.clients.accounts.AccountDTO;
 import org.digitalcrafting.eregold.repository.clients.accounts.AccountsClient;
+import org.digitalcrafting.eregold.repository.clients.transactions.MakeTransactionResponse;
 import org.digitalcrafting.eregold.repository.clients.transactions.TransactionDTO;
 import org.digitalcrafting.eregold.repository.clients.transactions.TransactionsClient;
 import org.junit.jupiter.api.BeforeAll;
@@ -90,6 +91,11 @@ class TransactionsControllerServiceTest {
             .description("Deposit")
             .accountNumber("12ERGD67890")
             .build();
+    private MakeTransactionResponse mockTransactionResponse = MakeTransactionResponse.builder()
+            .id(10L)
+            .accountNumber("12ERGD12345")
+            .build();
+
     private Date currentDate = new Date();
 
     @BeforeAll
@@ -107,6 +113,8 @@ class TransactionsControllerServiceTest {
     @Test
     public void should_makeTransferTransaction() {
         when(accountsClient.getByAccountNumber("12ERGD12345")).thenReturn(mockSrcAccountDTO);
+        when(transactionsClient.make(any())).thenReturn(mockTransactionResponse);
+        when(transactionsClient.getTransactionStatus(any(), any())).thenReturn("ACCEPTED");
         try (MockedStatic<TransactionsConverter> converter = Mockito.mockStatic(TransactionsConverter.class)) {
             converter.when(() -> TransactionsConverter.toTransferDTO(any(), any())).thenReturn(mockSrcTransferEntity);
         }

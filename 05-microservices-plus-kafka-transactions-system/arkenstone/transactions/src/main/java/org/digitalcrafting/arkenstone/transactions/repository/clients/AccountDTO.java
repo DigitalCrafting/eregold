@@ -1,4 +1,4 @@
-package org.digitalcrafting.arkenstone.transactions.repository.clients.accounts;
+package org.digitalcrafting.arkenstone.transactions.repository.clients;
 
 import lombok.Builder;
 import lombok.Data;

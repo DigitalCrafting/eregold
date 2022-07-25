@@ -1,16 +1,14 @@
 package org.digitalcrafting.arkenstone.transactions.api;
 
 import lombok.RequiredArgsConstructor;
-import org.digitalcrafting.arkenstone.transactions.domain.KafkaTransactionMessage;
-import org.digitalcrafting.arkenstone.transactions.domain.TransactionDTO;
-import org.digitalcrafting.arkenstone.transactions.domain.TransactionTypeEnum;
-import org.digitalcrafting.arkenstone.transactions.domain.TransactionsConverter;
-import org.digitalcrafting.arkenstone.transactions.repository.clients.accounts.AccountsClient;
-import org.digitalcrafting.arkenstone.transactions.repository.clients.verification.TransactionVerificationClient;
+import org.digitalcrafting.arkenstone.transactions.domain.*;
+import org.digitalcrafting.arkenstone.transactions.repository.clients.AccountsClient;
 import org.digitalcrafting.arkenstone.transactions.repository.db.TransactionEntity;
 import org.digitalcrafting.arkenstone.transactions.repository.db.TransactionsEntityManager;
+import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +18,6 @@ import java.util.UUID;
 public class TransactionsControllerService {
     private final AccountsClient accountsClient;
     private final TransactionsEntityManager entityManager;
-    private final TransactionVerificationClient verificationClient;
     private final KafkaTemplate<String, KafkaTransactionMessage> kafkaTemplate;
 
     public List<TransactionDTO> getByAccountNumber(String accountNumber) {
@@ -28,25 +25,32 @@ public class TransactionsControllerService {
         return TransactionsConverter.toDTOList(entityList);
     }
 
-    public void make(TransactionDTO transactionDTO) {
+    public String getTransactionStatus(Long transactionId, String accountNumber) {
+        return entityManager.getByPrimaryKey(transactionId, accountNumber).getStatus();
+    }
+
+    public MakeTransactionResponse make(TransactionDTO transactionDTO) {
         if (TransactionTypeEnum.DEPOSIT.equals(transactionDTO.getType())) {
-            makeDeposit(transactionDTO);
+            return makeDeposit(transactionDTO);
         } else if (TransactionTypeEnum.TRANSFER.equals(transactionDTO.getType())) {
-            makeTransfer(transactionDTO);
+            return makeTransfer(transactionDTO);
+        } else {
+            throw new HttpServerErrorException(HttpStatus.BAD_REQUEST);
         }
     }
 
-    private void makeDeposit(TransactionDTO transactionDTO) {
+    private MakeTransactionResponse makeDeposit(TransactionDTO transactionDTO) {
         TransactionEntity entity = TransactionsConverter.toDepositEntity(transactionDTO);
-        entityManager.insert(entity);
+        Long id = entityManager.insertAndGetId(entity);
         accountsClient.updateAvailableBalance(entity.getAccountNumber(), entity.getAmount());
+        return new MakeTransactionResponse(id, entity.getAccountNumber());
     }
 
-    private void makeTransfer(TransactionDTO transactionDTO) {
+    private MakeTransactionResponse makeTransfer(TransactionDTO transactionDTO) {
         TransactionEntity entity = TransactionsConverter.toTransferEntity(transactionDTO);
         Long id = entityManager.insertAndGetId(entity);
         accountsClient.updateAvailableBalance(entity.getAccountNumber(), entity.getAmount());
-        verificationClient.verifyTransaction(id, entity.getAccountNumber());
         kafkaTemplate.send("transaction-verification", UUID.randomUUID().toString(), new KafkaTransactionMessage(id, entity.getAccountNumber()));
+        return new MakeTransactionResponse(id, entity.getAccountNumber());
     }
 }

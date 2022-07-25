@@ -25,7 +25,7 @@ public class TransactionVerificationService {
     @KafkaListener(topics = "transaction-verification", groupId = "transaction-group")
     public void listenForVerificationMessage(@Payload KafkaTransactionMessage message) {
         log.info("Received kafka message: " + new Gson().toJson(message));
-//        verifyTransaction(message.getTransactionId(), message.getAccountNumber());
+        verifyTransaction(message.getTransactionId(), message.getAccountNumber());
     }
 
     /* Verification steps:
