@@ -154,7 +154,7 @@
                                     <outputDirectory>${basedir}/target/classes/public/</outputDirectory>
                                     <resources>
                                         <resource>
-                                            <directory>${basedir}/../../frontend/dist/eregold-ui/</directory>
+                                            <directory>${basedir}/../../../ui/angular/dist/eregold-ui/</directory>
                                         </resource>
                                     </resources>
                                 </configuration>

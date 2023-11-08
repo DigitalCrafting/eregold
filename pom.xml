@@ -1,0 +1,16 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <version>0.0.1-SNAPSHOT</version>
+    <groupId>org.digitalcrafting.eregold</groupId>
+    <artifactId>eregold-root</artifactId>
+    <packaging>pom</packaging>
+    <!--
+        This is a dummy pom file, link it in IntelliJ so that the whole project structure doesn't collapse
+        when you import one of the backends.
+
+        Otherwise, if you import let's say 01-basic-web-app/backend/pom.xml,
+        the project tree shows only 01-basic-web-app/backend structure,
+        which is annoying if you want to see all the code.
+     -->
+</project>
