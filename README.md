@@ -6,6 +6,14 @@ Behold! The mighty dwarves of The Kingdom of Erebor now provide banking services
 
 Goal of this project is to create different versions of the same application, **Eregold**. Each version will increase in complexity, from simple frontend -> backend -> db application, to a microservices one, which will hopefully help new developers understand all the layers of modern web applications.
 
+## CLI
+
+Project comes with a CLI, which can be used to run docker-compose commands for each project. From top level you can use it like:
+`./eregold -b 01 -f angular up`
+
+You can see possible flags with:
+`./eregold help`
+
 ## Versions
 ### [Basic Web Application](https://github.com/DigitalCrafting/eregold/tree/master/01-basic-web-app)
 This is the simplest, one jar web application and database. This kind of application is not really suitable for banking anymore, but it should serve as a starting point for everyone interested in how web application communicates from top to bottom.
@@ -39,9 +47,13 @@ the logic wasn't really properly placed.
 ## Tech stack
 
 ### Frontend
+#### React
+- React 18
+- Vite
+
+#### Angular
 - Angular 12
 - Webpack 5
-- NodeJS
 
 ### Backend
 - Java 11

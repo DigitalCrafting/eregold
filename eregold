@@ -1,0 +1,99 @@
+#!/bin/bash
+
+set -e
+
+isValuePresent () {
+  present='false'
+  for el in $2; do
+      if [[ "$el" == "$1" ]];
+      then
+          present=true;
+      fi
+  done
+  return 0
+}
+
+allowedBackendValues=("01" "02" "03" "04" "05")
+allowedFrontendValues=("angular" "react")
+
+backendPaths=(
+  ["01"]="01-basic-web-app"
+  ["02"]="02-stateless-web-app"
+  ["03"]="03-web-app-plus-monolith-middleware"
+  ["04"]="04-web-app-plus-microservice-middleware"
+  ["05"]="05-microservices-plus-kafka-transactions-system"
+)
+
+helpText="
+  Usage:
+     ./eregold [OPTIONS] [up|down|help]
+
+  Options:
+     -b  set the backend version to run, default is 01,
+         possible values: 01 | 02 | 03 | 04 | 05
+
+     -f  set the frontend version to run, default is angular,
+         possible values: angular | react (WIP)
+"
+
+if [ "$1" = "help" ] 
+then
+    echo "  Eregold CLI command"
+    echo "$helpText"
+    exit 0
+fi
+
+backend="01"
+frontend="angular"
+
+while getopts b:f: flag
+do
+    case "${flag}" in
+        b) backend=${OPTARG};;
+        f) frontend=${OPTARG};;
+        *) echo "$helpText"; exit 1;;
+    esac
+done
+shift "$(($OPTIND -1))"
+
+isValuePresent "$backend" "${allowedBackendValues[*]}"
+backMatched=$present
+
+if [[ "$backMatched" == 'false' ]];
+then
+  echo "Invalid backend value: $backend, expected one of: ${allowedBackendValues[*]}";
+  exit 1;
+fi
+
+isValuePresent "$frontend" "${allowedFrontendValues[*]}"
+frontMatched=$present
+
+if [[ "$frontMatched" == 'false' ]];
+then
+  echo "Invalid frontend value: $frontend, expected one of: ${allowedFrontendValues[*]}";
+  exit 1;
+fi
+
+if [[ "$frontend" == 'react' ]];
+then
+  echo "'react' frontend is currently in development, please use 'angular' for now.";
+  exit 0;
+fi
+
+
+if [[ $1 == 'up' ]];
+then
+  echo "Running backend $backend and frontend $frontend"
+  docker-compose -f ./"${backendPaths[$backend]}"/docker-compose-complete.yml up -d
+  docker-compose -f ./ui/"$frontend"/docker-compose.yml up -d
+elif [[ $1 == 'down' ]];
+then
+  echo "Stopping backend $backend and frontend $frontend"
+  docker-compose -f ./"${backendPaths[$backend]}"/docker-compose-complete.yml down
+  docker-compose -f ./ui/"$frontend"/docker-compose.yml down
+else
+  echo "Invalid command: $1, can be 'up', 'down' or 'help'"
+  exit 1
+fi
+
+exit 0

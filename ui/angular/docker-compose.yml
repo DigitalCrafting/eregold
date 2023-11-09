@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  eregold-frontend:
+    build: .
+    container_name: eregold-frontend
+    ports:
+      - 4200:4200
+    volumes:
+      - .:/app
