@@ -1,0 +1,5 @@
+export function AccountCreate() {
+    return (
+        <></>
+    );
+}
