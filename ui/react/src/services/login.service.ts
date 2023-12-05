@@ -1,7 +1,7 @@
 import eregoldApiClient from "./eregold-api.client";
 
 class LoginService {
-    public login(request: LoginRequest): Promise<LoginResponse> {
+    public login(request: LoginRequest) {
         return eregoldApiClient.post(`/login`, request);
     }
 }

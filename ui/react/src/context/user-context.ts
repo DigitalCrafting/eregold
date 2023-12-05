@@ -5,11 +5,11 @@ class UserContext {
         this._isLoggedIn = value;
     }
 
-    get isLoggedIn() {
+    get isLoggedIn(): boolean {
         return this._isLoggedIn || !!sessionStorage.getItem("token");
     }
 }
 
-const INSTANCE = new UserContext();
+const userContext = new UserContext();
 
-export default INSTANCE;
+export default userContext;

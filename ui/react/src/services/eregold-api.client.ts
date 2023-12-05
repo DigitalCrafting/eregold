@@ -1,7 +1,7 @@
 import axios, {AxiosHeaders, CanceledError} from 'axios';
 
 const axiosClient = axios.create({
-    baseURL: "http://localhost:8080/v1",
+    baseURL: "http://localhost:8080",
     withCredentials: true,
     headers: new AxiosHeaders({
         'Content-Type': 'application/json'

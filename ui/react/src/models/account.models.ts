@@ -12,6 +12,7 @@ export interface AccountModel {
 export interface CreateAccountRequest {
     accountType: AccountTypeEnum;
     currency: CurrencyEnum;
+    accountName: string;
 }
 
 export interface AccountDetailsModel {

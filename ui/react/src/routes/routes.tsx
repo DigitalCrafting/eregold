@@ -5,6 +5,7 @@ import {Dashboard} from "../modules/dashboard/Dashboard";
 import {AccountsList} from "../modules/accounts/AccountsList";
 import {AccountCreate} from "../modules/accounts/AccountCreate";
 import {AccountDetails} from "../modules/accounts/AccountDetails";
+import GuardedRoute from "./GuardedRoute";
 
 const router = createBrowserRouter([
     {path: '', element: <Navigate to="/ui"/>},
@@ -15,9 +16,9 @@ const router = createBrowserRouter([
         element: <Dashboard/>,
         children: [
             {path: '', element: <Navigate to="/ui/accounts"/>},
-            {path: 'accounts', element: <AccountsList/>},
-            {path: 'account/new', element: <AccountCreate/>},
-            {path: 'account/:id', element: <AccountDetails/>},
+            {path: 'accounts', element: <GuardedRoute element={<AccountsList/>} />},
+            {path: 'account/new', element: <GuardedRoute element={<AccountCreate/>} />},
+            {path: 'account/:id', element: <GuardedRoute element={<AccountDetails/>} />},
         ]
     }
 ]);

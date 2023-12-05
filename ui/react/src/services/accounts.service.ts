@@ -5,7 +5,7 @@ class AccountsService {
     public getAccounts() {
         const controller = new AbortController();
         const request = eregoldApiClient.get(
-            "/accounts",
+            "/v1/accounts",
             {
                 signal: controller.signal
             }
@@ -14,11 +14,11 @@ class AccountsService {
     }
 
     public getAccountDetails(accountNumber: string) {
-        return eregoldApiClient.get(`/accounts/${accountNumber}`);
+        return eregoldApiClient.get(`/v1/accounts/${accountNumber}`);
     }
 
     public createAccount(request: CreateAccountRequest) {
-        return eregoldApiClient.post("/accounts", request);
+        return eregoldApiClient.post("/v1/accounts", request);
     }
 }
 

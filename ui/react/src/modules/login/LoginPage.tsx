@@ -3,6 +3,10 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {FieldValues, useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {EregoldCard} from "../common/EregoldCard";
+import "../../context/user-context";
+import userContext from "../../context/user-context";
+import LoginService, {LoginRequest} from "../../services/login.service";
+import {AxiosResponse} from "axios";
 
 const loginSchema = z.object({
     userId: z.string().min(3),
@@ -12,22 +16,35 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export function LoginPage() {
+    const navigate = useNavigate();
+    if (userContext.isLoggedIn) {
+        navigate("/ui");
+    }
+
     const {
         register,
         handleSubmit,
         formState: {errors}
     } = useForm<LoginFormData>({resolver: zodResolver(loginSchema)});
-    const navigate = useNavigate();
-
-    const onSubmit = (data: FieldValues) => {
-
-    }
 
     const onRegisterClicked = () => {
         navigate("/register");
     }
 
-    const onLoginClicked = (data: FieldValues) => {
+    const onLoginClicked = async (data: FieldValues) => {
+        /* TODO move this logic to a service or custom hook  */
+        const pass = data['password'];
+        const userId = data['userId'];
+
+        const request: LoginRequest = {
+            userId: userId,
+            password: [...pass]
+        } as LoginRequest;
+
+        const resp: AxiosResponse = await LoginService.login(request);
+
+        sessionStorage.setItem("token", resp.data.token);
+        userContext.isLoggedIn = true;
         navigate("/ui");
     }
 

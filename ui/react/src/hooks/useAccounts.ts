@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {AccountModel} from "../models/account.models";
 import {CanceledError} from "../services/eregold-api.client";
 import {AxiosError} from "axios";
-import {AccountTypeEnum, CurrencyEnum} from "../models/enums";
+import AccountsService from "../services/accounts.service";
 
 const useAccounts = () => {
     const [accounts, setAccounts] = useState<Array<AccountModel>>([]);
@@ -13,16 +13,9 @@ const useAccounts = () => {
         setIsLoading(true);
 
         try {
-            setAccounts([
-                {
-                    accountName: "test",
-                    accountNumber: "123123",
-                    type: AccountTypeEnum.DEBIT,
-                    currency: CurrencyEnum.GLD,
-                    currentBalance: 123
-                }
-            ])
-
+            AccountsService.getAccounts().request.then(resp => {
+                setAccounts(resp.data);
+            });
         } catch (err) {
             if (err instanceof CanceledError) {
                 return;
