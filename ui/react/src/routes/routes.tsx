@@ -18,7 +18,7 @@ const router = createBrowserRouter([
             {path: '', element: <Navigate to="/ui/accounts"/>},
             {path: 'accounts', element: <GuardedRoute element={<AccountsList/>} />},
             {path: 'account/new', element: <GuardedRoute element={<AccountCreate/>} />},
-            {path: 'account/:id', element: <GuardedRoute element={<AccountDetails/>} />},
+            {path: 'account/:accountNumber', element: <GuardedRoute element={<AccountDetails/>} />},
         ]
     }
 ]);

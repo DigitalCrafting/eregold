@@ -1,16 +1,33 @@
 import {AccountDetailsModel} from "../../models/account.models";
 import {TransactionHistory} from "../transactions/TransactionHistory";
+import {useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import AccountsService from "../../services/accounts.service";
 
 export function AccountDetails() {
 
-    const accountDetails: AccountDetailsModel = {} as AccountDetailsModel;
+    const {accountNumber} = useParams();
+    const [accountDetails, setAccountDetails] = useState<AccountDetailsModel>();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (accountNumber) {
+            AccountsService.getAccountDetails(accountNumber).then(resp => {
+                setAccountDetails(resp.data);
+            })
+        } else {
+            setAccountDetails(undefined);
+        }
+    }, [accountNumber]);
 
     const onGoBackClicked = () => {
-
+        navigate('/ui/accounts');
     }
+
     const onMakeOwnDepositClicked = () => {
 
     }
+
     const onMakeOwnTransferClicked = () => {
 
     }
@@ -77,11 +94,15 @@ export function AccountDetails() {
                         </button>
                     </div>
                 </div>
-                <div className="row gy-4">
-                    <div className="col-12">
-                        <TransactionHistory/>
-                    </div>
-                </div>
+                {
+                    accountDetails ?
+                        <div className="row gy-4">
+                            <div className="col-12">
+                                <TransactionHistory transactionHistory={accountDetails.transactionsList}/>
+                            </div>
+                        </div> :
+                        <></>
+                }
             </div>
         </>
     );

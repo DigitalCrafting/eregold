@@ -1,11 +1,13 @@
 import useAccounts from "../../hooks/useAccounts";
 import {AccountModel} from "../../models/account.models";
+import {useNavigate} from "react-router-dom";
 
 export function AccountsList() {
     const {accounts, error, isLoading, setAccounts, setError} = useAccounts();
+    const navigate = useNavigate();
 
     const onDetailsClicked = (accountNumber: string) => {
-
+        navigate('/ui/account/' + accountNumber);
     }
 
     const onMakeOwnTransferClicked = () => {

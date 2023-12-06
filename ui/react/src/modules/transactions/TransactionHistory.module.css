@@ -1,0 +1,7 @@
+.incomingTransaction {
+    color: green;
+}
+
+.outgoingTransaction {
+    color: red;
+}
