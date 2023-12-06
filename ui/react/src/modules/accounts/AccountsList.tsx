@@ -1,10 +1,12 @@
-import useAccounts from "../../hooks/useAccounts";
 import {AccountModel} from "../../models/account.models";
 import {useNavigate} from "react-router-dom";
+import EregoldUserContext from "../../context/eregold-user-context";
+import {useContext} from "react";
 
 export function AccountsList() {
-    const {accounts, error, isLoading, setAccounts, setError} = useAccounts();
     const navigate = useNavigate();
+
+    const { accounts } = useContext(EregoldUserContext);
 
     const onDetailsClicked = (accountNumber: string) => {
         navigate('/ui/account/' + accountNumber);
@@ -15,7 +17,7 @@ export function AccountsList() {
     }
 
     const onMakeOwnDepositClicked = () => {
-
+        navigate('/ui/deposit');
     }
 
     const onAddAccountClicked = () => {

@@ -31,7 +31,7 @@ export function LoginPage() {
         navigate("/register");
     }
 
-    const onLoginClicked = async (data: FieldValues) => {
+    const onLoginClicked = (data: FieldValues) => {
         /* TODO move this logic to a service or custom hook  */
         const pass = data['password'];
         const userId = data['userId'];
@@ -41,11 +41,11 @@ export function LoginPage() {
             password: [...pass]
         } as LoginRequest;
 
-        const resp: AxiosResponse = await LoginService.login(request);
-
-        sessionStorage.setItem("token", resp.data.token);
-        userContext.isLoggedIn = true;
-        navigate("/ui");
+        LoginService.login(request).then(resp => {
+            sessionStorage.setItem("token", resp.data.token);
+            userContext.isLoggedIn = true;
+            navigate("/ui");
+        });
     }
 
     return (

@@ -12,7 +12,7 @@ export function TransactionHistory({transactionHistory}: TransactionHistoryProps
     }
 
     const tableRows = transactionHistory.map(transaction => {
-        return (<tr>
+        return (<tr key={transaction?.id}>
             <td>{transaction?.id}</td>
             <td>{transaction?.foreignAccountNumber}</td>
             <td className={transaction?.amount < 0 ? styles.outgoingTransaction : styles.incomingTransaction}>
