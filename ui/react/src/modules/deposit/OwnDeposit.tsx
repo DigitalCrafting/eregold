@@ -1,16 +1,19 @@
 import {AccountModel} from "../../models/account.models";
 import {useNavigate, useParams} from "react-router-dom";
 import {z} from "zod";
-import {useForm} from "react-hook-form";
+import {FieldValues, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useContext} from "react";
 import EregoldUserContext from "../../context/eregold-user-context";
 import {CurrencyEnum} from "../../models/enums";
+import TransactionsService from "../../services/transactions.service";
 
 const ownDepositSchema = z.object({
     dstAccount: z.string().length(18),
     description: z.string().min(3),
-    amount: z.number().min(0.01),
+    amount: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
+        message: "Expected number, received a string"
+    }),
     currency: z.string().min(1),
 });
 
@@ -19,7 +22,7 @@ type DepositFormData = z.infer<typeof ownDepositSchema>;
 export function OwnDeposit() {
     const navigate = useNavigate();
     const {accountNumber} = useParams();
-    const { accounts } = useContext(EregoldUserContext);
+    const { accounts, reloadAccounts } = useContext(EregoldUserContext);
     const currencyOption = CurrencyEnum.GLD; // Only single option right now
 
     const {
@@ -32,8 +35,12 @@ export function OwnDeposit() {
         navigate(-1);
     }
 
-    const onDepositClicked = () => {
-        /* TODO deposit */
+    const onDepositClicked = (data: FieldValues) => {
+        TransactionsService.deposit(data).then(() => {
+            reloadAccounts();
+            navigate(-1);
+            }
+        );
     }
 
     return (
@@ -89,7 +96,6 @@ export function OwnDeposit() {
                                         <label htmlFor="currencyId">Currency</label>
                                         <input
                                             {...register('currency')}
-                                            disabled={true}
                                             value={currencyOption}
                                             type="text"
                                             className="form-control"
@@ -126,7 +132,6 @@ export function OwnDeposit() {
                         <button type="submit"
                                 className="btn btn-primary float-right"
                                 id="depositButton"
-                                onClick={onDepositClicked}
                         >Deposit
                         </button>
                     </div>

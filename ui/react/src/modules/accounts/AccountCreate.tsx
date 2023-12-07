@@ -2,6 +2,7 @@ import {z} from "zod";
 import {AccountTypeEnum, CurrencyEnum} from "../../models/enums";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import useAccounts from "../../hooks/useAccounts";
 
 const createAccountSchema = z.object({
     accountType: z.nativeEnum(AccountTypeEnum),

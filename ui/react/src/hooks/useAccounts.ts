@@ -9,9 +9,9 @@ const useAccounts = () => {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
+    /* TODO fix this, there has to be a better way */
+    const reloadAccounts = () => {
         setIsLoading(true);
-
         try {
             AccountsService.getAccounts().request.then(resp => {
                 setAccounts(resp.data);
@@ -24,9 +24,13 @@ const useAccounts = () => {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    useEffect(() => {
+        reloadAccounts();
     }, []);
 
-    return {accounts, error, isLoading, setAccounts, setError};
+    return {accounts, error, isLoading, setAccounts, setError, reloadAccounts};
 }
 
 export default useAccounts;

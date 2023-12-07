@@ -10,3 +10,11 @@ export interface TransactionModel {
     amount: number;
     date: Date;
 }
+
+export interface MakeTransactionModel {
+    srcAccount?: string;
+    dstAccount?: string;
+    description?: string;
+    amount?: number;
+    currency?: CurrencyEnum;
+}

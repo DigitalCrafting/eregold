@@ -5,7 +5,6 @@ import {useNavigate, useParams} from "react-router-dom";
 import AccountsService from "../../services/accounts.service";
 
 export function AccountDetails() {
-
     const {accountNumber} = useParams();
     const [accountDetails, setAccountDetails] = useState<AccountDetailsModel>();
     const navigate = useNavigate();
@@ -25,11 +24,11 @@ export function AccountDetails() {
     }
 
     const onMakeOwnDepositClicked = () => {
-
+        navigate('/ui/deposit/' + accountNumber);
     }
 
     const onMakeOwnTransferClicked = () => {
-
+        navigate('/ui/transfer/' + accountNumber);
     }
 
     return (

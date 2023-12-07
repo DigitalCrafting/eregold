@@ -12,10 +12,10 @@ export function Dashboard() {
         navigate('login');
     }
 
-    const {accounts, error, isLoading, setAccounts, setError} = useAccounts();
+    const {accounts, error, isLoading, reloadAccounts} = useAccounts();
 
     return (
-        <EregoldUserContext.Provider value={{accounts}}>
+        <EregoldUserContext.Provider value={{accounts, reloadAccounts}}>
             <TopBar/>
             <DashboardCard>
                 <Outlet/>
