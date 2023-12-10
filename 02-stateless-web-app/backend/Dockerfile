@@ -4,18 +4,38 @@ FROM maven:3.9.5-amazoncorretto-11 AS build-image
 WORKDIR /app
 
 # Build application
-ADD . /app
+COPY ./ ./
 
 # This requires docker:buildkit enabled
-RUN --mount=type=cache,target=/root/.m2 mvn -f /app/pom.xml clean install
+RUN --mount=type=cache,target=/root/.m2 mvn -f /app/pom.xml clean package
 RUN cp ./api/target/eregold-app.jar ./eregold-app.jar
 
-# Main app image
-FROM openjdk:11-jre-slim
+# Base image to build a JRE
+FROM amazoncorretto:11-alpine as corretto-jdk
 
-RUN mkdir /app \
-    && groupadd --system --gid 3000 javauser \
-    && useradd --system --uid 1000 --shell /bin/false --gid javauser javauser
+# required for strip-debug to work
+RUN apk add --no-cache binutils
+
+# Build small JRE image
+RUN jlink \
+         --add-modules ALL-MODULE-PATH \
+         --strip-debug \
+         --no-man-pages \
+         --no-header-files \
+         --compress=2 \
+         --output /javaruntime
+
+# Main app image
+FROM alpine:latest
+
+ENV JAVA_HOME=/jre
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
+COPY --from=corretto-jdk /javaruntime $JAVA_HOME
+
+RUN mkdir /app
+RUN addgroup -S javauser && adduser -S javauser -s /bin/false -G javauser
+
 COPY --from=build-image /app/eregold-app.jar /app/eregold-app.jar
 RUN chown -R javauser:javauser /app
 USER javauser

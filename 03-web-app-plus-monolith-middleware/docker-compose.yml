@@ -4,7 +4,7 @@ services:
   eregold-backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile-complete
+      dockerfile: backend/Dockerfile-dev
     container_name: eregold-backend
     ports:
       - 8080:8080
@@ -18,7 +18,7 @@ services:
   arkenstone:
     build:
       context: ./middleware
-      dockerfile: Dockerfile-complete
+      dockerfile: middleware/Dockerfile-dev
     container_name: arkenstone
     ports:
       - 8081:8081

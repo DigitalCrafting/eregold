@@ -76,7 +76,7 @@ services:
   eregold-db-migration:
     build:
       context: ./database/schema
-      dockerfile: Dockerfile-complete
+      dockerfile: database/schema/Dockerfile-dev
       network: host
     container_name: eregold-db-migration
     command: [ "mvn", "-pl", "users,core-banking", "flyway:migrate" ]
