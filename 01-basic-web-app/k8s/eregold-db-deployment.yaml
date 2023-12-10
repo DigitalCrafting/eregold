@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: eregold-db
+  name: eregold-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: eregold-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/eregold-network: "true"
+        io.kompose.service: eregold-db
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: eregold_db
+            - name: POSTGRES_PASSWORD
+              value: eregold_pass
+            - name: POSTGRES_USER
+              value: eregold_user
+          image: postgres:14.0-alpine
+          name: eregold-db
+          ports:
+            - containerPort: 5432
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data/
+              name: eregold-db-claim0
+      restartPolicy: Always
+      volumes:
+        - name: eregold-db-claim0
+          persistentVolumeClaim:
+            claimName: eregold-db-claim0
+status: {}

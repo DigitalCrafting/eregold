@@ -4,7 +4,7 @@ services:
   eregold-backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile-complete
+      dockerfile: Dockerfile-dev
     container_name: eregold-backend
     ports:
       - 8080:8080
@@ -12,16 +12,6 @@ services:
       - ./backend:/app
     networks:
       - eregold-network
-#
-#  eregold-frontend:
-#    build: ./frontend
-#    container_name: eregold-frontend
-#    ports:
-#      - 4200:4200
-#    volumes:
-#      - ./frontend:/app
-#    networks:
-#      - eregold-network
 
   eregold-db:
     image: postgres:14.0-alpine
@@ -40,7 +30,7 @@ services:
   eregold-db-migration:
     build:
       context: ./database/schema
-      dockerfile: Dockerfile-complete
+      dockerfile: database/schema/Dockerfile-dev
       network: host
     container_name: eregold-db-migration
     volumes:

@@ -2,12 +2,10 @@ version: "3.7"
 
 services:
   eregold-backend:
-    build: ./backend
+    image: digital-crafting/eregold-be:01-1.0.0
     container_name: eregold-backend
     ports:
       - 8080:8080
-    volumes:
-      - ./backend:/app
     networks:
       - eregold-network
 

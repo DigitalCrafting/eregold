@@ -47,6 +47,7 @@ export function OwnTransfer() {
     const [formConfig, setFormConfig] = useState<OwnTransferFormConfig>(initialFormConfig);
     const currencyOption = CurrencyEnum.GLD; // Only single option right now
 
+    /* TODO fix this validation */
     ownTransferSchema.refine((data) => {
             if (formConfig) {
                 const selectedAccount = formConfig.srcAccountList.find(acc => acc.accountNumber === data.srcAccount);
