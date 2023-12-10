@@ -20,7 +20,7 @@ everyone interested in how web application communicates from top to bottom.
 
 ### Steps
 1. Run **docker-compose -f docker-compose-complete.yml up** in this directory
-2. Application will be available on **localhost:4200**
+2. Run any frontend from the [UI](https://github.com/DigitalCrafting/eregold/tree/master/ui) directory
 3. You can create your own user with fake data, for simplicity there is no validation except for *repeat password* matching
 
 ## Architecture
