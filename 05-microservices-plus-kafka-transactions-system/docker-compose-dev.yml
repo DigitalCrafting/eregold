@@ -28,10 +28,25 @@ services:
       - arkenstone-zookeeper
 
   # -------------------------------------
+  # ----------- EREGOLD UI --------------
+  # -------------------------------------
+#  eregold-frontend:
+#    build: ./frontend
+#    container_name: eregold-frontend
+#    ports:
+#      - 4200:4200
+#    volumes:
+#      - ./frontend:/app
+#    networks:
+#      - eregold-network
+
+  # -------------------------------------
   # ---  EREGOLD BACKEND-FOR-FRONTEND ---
   # -------------------------------------
   eregold-backend:
-    image: digital-crafting/eregold-be:05-1.0.0
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-dev
     container_name: eregold-backend
     ports:
       - 8080:8080
@@ -73,7 +88,9 @@ services:
   # ------ ARKENSTONE MIDDLEWARE --------
   # -------------------------------------
   arkenstone-api-gateway:
-    image: digital-crafting/arkenstone-gateway:05-1.0.0
+    build:
+      context: ./arkenstone/api-gateway
+      dockerfile: Dockerfile-dev
     container_name: arkenstone-api-gateway
     ports:
       - 8081:8081
@@ -83,7 +100,9 @@ services:
       - eregold-network
 
   arkenstone-accounts-service:
-    image: digital-crafting/arkenstone-accounts:05-1.0.0
+    build:
+      context: ./arkenstone/accounts
+      dockerfile: Dockerfile-dev
     container_name: arkenstone-accounts-service
     ports:
       - 8096:8096
@@ -109,7 +128,9 @@ services:
       - eregold-network
 
   arkenstone-customers-service:
-    image: digital-crafting/arkenstone-customers:05-1.0.0
+    build:
+      context: ./arkenstone/customers
+      dockerfile: Dockerfile-dev
     container_name: arkenstone-customers-service
     ports:
       - 8097:8097
@@ -135,7 +156,9 @@ services:
       - eregold-network
 
   arkenstone-transactions-service:
-    image: digital-crafting/arkenstone-transactions:05-1.0.0
+    build:
+      context: ./arkenstone/transactions
+      dockerfile: Dockerfile-dev
     container_name: arkenstone-transactions-service
     ports:
       - 8098:8098
@@ -162,7 +185,9 @@ services:
       - eregold-network
 
   arkenstone-transaction-verification-service:
-    image: digital-crafting/arkenstone-transaction-verification:05-1.0.0
+    build:
+      context: ./arkenstone/transaction-verification
+      dockerfile: Dockerfile-dev
     container_name: arkenstone-transaction-verification-service
     ports:
       - 8099:8099

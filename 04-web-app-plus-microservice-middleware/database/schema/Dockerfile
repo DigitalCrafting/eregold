@@ -1,0 +1,11 @@
+FROM maven:3.8.6-jdk-11-slim
+
+WORKDIR /temp
+
+COPY pom.xml pom.xml
+COPY accounts/pom.xml accounts/pom.xml
+COPY customers/pom.xml customers/pom.xml
+COPY transactions/pom.xml transactions/pom.xml
+COPY users/pom.xml users/pom.xml
+
+RUN mvn clean install

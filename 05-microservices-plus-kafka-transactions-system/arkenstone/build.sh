@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Set the working directory to where the script is
+set -e
 cd $(dirname $0)
 
 ./accounts/build.sh

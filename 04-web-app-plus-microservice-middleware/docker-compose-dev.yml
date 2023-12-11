@@ -1,37 +1,10 @@
 version: "3.7"
 
 services:
-  # -------------------------------------
-  # ---------- KAFKA BROKER -------------
-  # -------------------------------------
-  arkenstone-zookeeper:
-    image: wurstmeister/zookeeper
-    container_name: arkenstone-zookeeper
-    ports:
-      - "2181:2181"
-    networks:
-      - eregold-network
-
-  arkenstone-kafka-broker:
-    image: wurstmeister/kafka
-    container_name: arkenstone-kafka-broker
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_ADVERTISED_HOST_NAME: arkenstone-kafka-broker
-      KAFKA_ZOOKEEPER_CONNECT: arkenstone-zookeeper:2181
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
-      KAFKA_CREATE_TOPICS: "transaction-verification:1:1"
-    networks:
-      - eregold-network
-    depends_on:
-      - arkenstone-zookeeper
-
-  # -------------------------------------
-  # ---  EREGOLD BACKEND-FOR-FRONTEND ---
-  # -------------------------------------
   eregold-backend:
-    image: digital-crafting/eregold-be:05-1.0.0
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-dev
     container_name: eregold-backend
     ports:
       - 8080:8080
@@ -69,11 +42,10 @@ services:
     networks:
       - eregold-network
 
-  # -------------------------------------
-  # ------ ARKENSTONE MIDDLEWARE --------
-  # -------------------------------------
   arkenstone-api-gateway:
-    image: digital-crafting/arkenstone-gateway:05-1.0.0
+    build:
+      context: ./arkenstone/api-gateway
+      dockerfile: Dockerfile-dev
     container_name: arkenstone-api-gateway
     ports:
       - 8081:8081
@@ -83,7 +55,9 @@ services:
       - eregold-network
 
   arkenstone-accounts-service:
-    image: digital-crafting/arkenstone-accounts:05-1.0.0
+    build:
+      context: ./arkenstone/accounts
+      dockerfile: Dockerfile-dev
     container_name: arkenstone-accounts-service
     ports:
       - 8096:8096
@@ -108,8 +82,11 @@ services:
     networks:
       - eregold-network
 
+
   arkenstone-customers-service:
-    image: digital-crafting/arkenstone-customers:05-1.0.0
+    build:
+      context: ./arkenstone/customers
+      dockerfile: Dockerfile-dev
     container_name: arkenstone-customers-service
     ports:
       - 8097:8097
@@ -135,7 +112,9 @@ services:
       - eregold-network
 
   arkenstone-transactions-service:
-    image: digital-crafting/arkenstone-transactions:05-1.0.0
+    build:
+      context: ./arkenstone/transactions
+      dockerfile: Dockerfile-dev
     container_name: arkenstone-transactions-service
     ports:
       - 8098:8098
@@ -145,7 +124,6 @@ services:
       - eregold-network
     depends_on:
       - arkenstone-transactions-db
-      - arkenstone-kafka-broker
 
   arkenstone-transactions-db:
     image: postgres:14.0-alpine
@@ -160,20 +138,6 @@ services:
       - ./database/data-dump/transactions/volume:/var/lib/postgresql/data/
     networks:
       - eregold-network
-
-  arkenstone-transaction-verification-service:
-    image: digital-crafting/arkenstone-transaction-verification:05-1.0.0
-    container_name: arkenstone-transaction-verification-service
-    ports:
-      - 8099:8099
-    volumes:
-      - ./arkenstone/transaction-verification:/app
-    networks:
-      - eregold-network
-    depends_on:
-      - arkenstone-transactions-db
-      - arkenstone-accounts-db
-      - arkenstone-kafka-broker
 
 networks:
   eregold-network:

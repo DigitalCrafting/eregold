@@ -1,16 +1,6 @@
 version: "3.7"
 
 services:
-#  eregold-frontend:
-#    build: ./frontend
-#    container_name: eregold-frontend
-#    ports:
-#      - 4200:4200
-#    volumes:
-#      - ./frontend:/app
-#    networks:
-#      - eregold-network
-
   eregold-backend:
     build: ./backend
     container_name: eregold-backend
@@ -51,7 +41,7 @@ services:
       - eregold-network
 
   arkenstone-api-gateway:
-    build: ./arkenstone/api-gateway
+    image: digital-crafting/arkenstone-gateway:04-1.0.0
     container_name: arkenstone-api-gateway
     ports:
       - 8081:8081
@@ -61,7 +51,7 @@ services:
       - eregold-network
 
   arkenstone-accounts-service:
-    build: ./arkenstone/accounts
+    image: digital-crafting/arkenstone-accounts:04-1.0.0
     container_name: arkenstone-accounts-service
     ports:
       - 8096:8096
@@ -88,7 +78,7 @@ services:
 
 
   arkenstone-customers-service:
-    build: ./arkenstone/customers
+    image: digital-crafting/arkenstone-customers:04-1.0.0
     container_name: arkenstone-customers-service
     ports:
       - 8097:8097
@@ -114,7 +104,7 @@ services:
       - eregold-network
 
   arkenstone-transactions-service:
-    build: ./arkenstone/transactions
+    image: digital-crafting/arkenstone-transactions:04-1.0.0
     container_name: arkenstone-transactions-service
     ports:
       - 8098:8098

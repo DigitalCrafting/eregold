@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+cd $(dirname $0)
 
 BE_IMAGE_NAME=digital-crafting/eregold-be:03-1.0.0
 MW_IMAGE_NAME=digital-crafting/arkenstone-mw:03-1.0.0

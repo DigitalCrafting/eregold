@@ -17,8 +17,10 @@ FROM amazoncorretto:11-alpine as corretto-jdk
 RUN apk add --no-cache binutils
 
 # Build small JRE image
+# List required modules using jdeps, unfortunatelly, jdeps fails when running in the image.
+# Apparently, the issue is fixed in Java 18
 RUN jlink \
-         --add-modules ALL-MODULE-PATH \
+         --add-modules java.base,java.compiler,java.desktop,java.instrument,java.prefs,java.rmi,java.scripting,java.security.jgss,java.security.sasl,java.sql.rowset,jdk.attach,jdk.httpserver,jdk.jdi,jdk.jfr,jdk.management,jdk.unsupported \
          --strip-debug \
          --no-man-pages \
          --no-header-files \
