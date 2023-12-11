@@ -84,13 +84,13 @@ fi
 if [[ $1 == 'up' ]];
 then
   echo "Running backend $backend and frontend $frontend"
-  docker-compose -f ./"${backendPaths[$backend]}"/docker-compose-complete.yml up -d
-  docker-compose -f ./ui/"$frontend"/docker-compose.yml up -d
+  docker-compose -f ./"${backendPaths[$backend]}"/docker-compose-dev.yml up -d
+  docker-compose -f ./ui/"$frontend"/docker-compose-dev.yml up -d
 elif [[ $1 == 'down' ]];
 then
   echo "Stopping backend $backend and frontend $frontend"
-  docker-compose -f ./"${backendPaths[$backend]}"/docker-compose-complete.yml down
-  docker-compose -f ./ui/"$frontend"/docker-compose.yml down
+  docker-compose -f ./"${backendPaths[$backend]}"/docker-compose-dev.yml down
+  docker-compose -f ./ui/"$frontend"/docker-compose-dev.yml down
 else
   echo "Invalid command: $1, can be 'up', 'down' or 'help'"
   exit 1
