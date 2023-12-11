@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   eregold-frontend:
-    image: digital-crafting/eregold-ui-angular:1.0.0
+    image: digital-crafting/eregold-ui-react:1.0.0
     container_name: eregold-frontend
     ports:
-      - 4200:4200
+      - 5173:5173

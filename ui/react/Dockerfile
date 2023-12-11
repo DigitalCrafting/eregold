@@ -1,5 +1,5 @@
 # Image to build application
-FROM node:14.17.5 AS build-image
+FROM node:20.9.0 AS build-image
 
 WORKDIR /app
 

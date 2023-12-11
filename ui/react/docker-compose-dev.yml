@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  eregold-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    container_name: eregold-frontend
+    ports:
+      - 5173:5173
+    volumes:
+      - .:/app
