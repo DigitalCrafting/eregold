@@ -9,10 +9,18 @@ Goal of this project is to create different versions of the same application, **
 ## CLI
 
 Project comes with a CLI, which can be used to run docker-compose commands for each project. From top level you can use it like:
+`./eregold -b 01 -f angular build`
+
+And then:
 `./eregold -b 01 -f angular up`
+
+And when you are finished:
+`./eregold -b 01 -f angular down`
 
 You can see possible flags with:
 `./eregold help`
+
+By default the CLI does not use any backend or frontend version, since you might want to build just one backend or frontend version.
 
 ## Versions
 ### [Basic Web Application](https://github.com/DigitalCrafting/eregold/tree/master/01-basic-web-app)
