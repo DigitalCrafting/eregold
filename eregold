@@ -13,8 +13,8 @@ isValuePresent () {
   return 0
 }
 
-allowedBackendValues=("01" "02" "03" "04" "05")
-allowedFrontendValues=("angular" "react")
+allowedBackendValues=("none" "01" "02" "03" "04" "05")
+allowedFrontendValues=("none" "angular" "react")
 
 backendPaths=(
   ["01"]="01-basic-web-app"
@@ -26,14 +26,23 @@ backendPaths=(
 
 helpText="
   Usage:
-     ./eregold [OPTIONS] [up|down|help]
+     ./eregold [OPTIONS] [build|up|down|help]
+  
+  Commands:
+     build    runs the 'build-image.sh' script building final Docker image
+              for selected frontend and backend options
+
+     up       runs 'docker-compose up' for selected frontend and backend options
+
+     down     runs 'docker-compose down' for selected frontend and backend options
+
 
   Options:
-     -b  set the backend version to run, default is 01,
-         possible values: 01 | 02 | 03 | 04 | 05
+     -b       set the backend version to run, default is none,
+              possible values: none | 01 | 02 | 03 | 04 | 05
 
-     -f  set the frontend version to run, default is angular,
-         possible values: angular | react (WIP)
+     -f       set the frontend version to run, default is none,
+              possible values: none | angular | react (WIP)
 "
 
 if [ "$1" = "help" ] 
@@ -43,8 +52,8 @@ then
     exit 0
 fi
 
-backend="01"
-frontend="angular"
+backend="none"
+frontend="none"
 
 while getopts b:f: flag
 do
@@ -74,25 +83,47 @@ then
   exit 1;
 fi
 
-if [[ "$frontend" == 'react' ]];
+if [[ "$frontend" == 'none' ]] && [[ "$backend" == 'none' ]]
 then
-  echo "'react' frontend is currently in development, please use 'angular' for now.";
-  exit 0;
+  echo "You didn't select backend nor frontend for command. Exiting."
+  exit 0
 fi
 
-
-if [[ $1 == 'up' ]];
+if [[ $1 == 'build' ]]
+then
+  echo "Building images: for backend $backend and frontend $frontend"
+  if [[ $backend != 'none' ]]
+  then
+    ./"${backendPaths[$backend]}"/build-image.sh
+  fi
+  if [[ $frontend != 'none' ]]
+  then
+    ./ui/"$frontend"/build-image.sh
+  fi
+elif [[ $1 == 'up' ]];
 then
   echo "Running backend $backend and frontend $frontend"
-  docker-compose -f ./"${backendPaths[$backend]}"/docker-compose-dev.yml up -d
-  docker-compose -f ./ui/"$frontend"/docker-compose-dev.yml up -d
+  if [[ $backend != 'none' ]]
+  then
+    docker-compose -f ./"${backendPaths[$backend]}"/docker-compose.yml up -d
+  fi
+  if [[ $frontend != 'none' ]]
+  then
+    docker-compose -f ./ui/"$frontend"/docker-compose.yml up -d
+  fi
 elif [[ $1 == 'down' ]];
 then
   echo "Stopping backend $backend and frontend $frontend"
-  docker-compose -f ./"${backendPaths[$backend]}"/docker-compose-dev.yml down
-  docker-compose -f ./ui/"$frontend"/docker-compose-dev.yml down
+  if [[ $backend != 'none' ]]
+  then
+    docker-compose -f ./"${backendPaths[$backend]}"/docker-compose.yml down
+  fi
+  if [[ $frontend != 'none' ]]
+  then
+    docker-compose -f ./ui/"$frontend"/docker-compose.yml down
+  fi
 else
-  echo "Invalid command: $1, can be 'up', 'down' or 'help'"
+  echo "Invalid command: $1, can be 'build', 'up', 'down' or 'help'"
   exit 1
 fi
 

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+cd $(dirname $0)
 
 IMAGE_NAME=digital-crafting/eregold-be:01-1.0.0
 
