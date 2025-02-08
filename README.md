@@ -10,8 +10,8 @@ Goal of this project is to create different versions of the same application, **
 ! WARNING !
 
 There were a number of updates to docker and docker-compose since this project was created, 
-and, for now, only backend version <b>01</b> is working correctly (at least this one I tested).
-Also, the script is using <b>standalone</b> version of <b>docker-compose</b> (with the `-` syntax) as well as <b>buildkit</b>.
+and, for now, only backend version `01` can be run using my `CLI` (at least this one I tested).
+Also, the script is using `standalone` version of `docker-compose` (with the `-` syntax) as well as `buildkit`.
 
 ! WARNING !
 
