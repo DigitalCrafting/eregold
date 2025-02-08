@@ -8,6 +8,14 @@ Goal of this project is to create different versions of the same application, **
 
 ## CLI
 
+<span style="color:red">
+! WARNING ! 
+There were a number of updates to docker and docker-compose since this project was created, 
+and, for now, only backend version <b>01</b> is working correctly (at least this one I tested).
+Also, the script is using <b>standalone</b> version of <b>docker-compose</b> (with the `-` syntax) as well as <b>buildkit</b>.
+! WARNING !
+</span>
+
 Project comes with a CLI, which can be used to run docker-compose commands for each project. From top level you can use it like:
 `./eregold -b 01 -f angular build`
 
